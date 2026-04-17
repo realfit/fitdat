@@ -652,6 +652,97 @@ footer {
   .onto-id { width: 120px; }
   footer { flex-direction: column; align-items: flex-start; }
 }
+
+  /* ── ARCHITECTURE SUMMARY ── */
+  .arch-section {
+    padding: 64px 32px;
+    border-bottom: 1px solid var(--border-light);
+    background: var(--surface);
+  }
+  .arch-inner { max-width: 1100px; margin: 0 auto; }
+  .arch-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+    margin-top: 32px;
+  }
+  .arch-stack { display: flex; flex-direction: column; gap: 3px; }
+  .arch-layer {
+    border-radius: 8px;
+    padding: 16px 20px;
+    border: 1px solid var(--border);
+    position: relative;
+    transition: border-color .15s;
+    text-decoration: none;
+    display: block;
+  }
+  .arch-layer:hover { border-color: var(--teal-mid); }
+  .arch-layer-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--faint);
+    margin-bottom: 4px;
+    letter-spacing: .06em;
+  }
+  .arch-layer-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+  .arch-layer-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .arch-layer.gov { background: var(--teal-light); border-color: rgba(10,110,86,.2); }
+  .arch-layer.gov .arch-layer-name { color: var(--teal); }
+  .arch-layer.gov .arch-layer-desc { color: var(--teal); opacity: .7; }
+  .arch-layer.foundation { background: var(--teal-light); border-color: rgba(10,110,86,.15); }
+  .arch-layer.scoresets { background: var(--amber-light); border-color: rgba(154,103,0,.15); }
+  .arch-layer.apps { background: var(--purple-light); border-color: rgba(90,62,158,.15); }
+  .arch-connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .arch-explainer { display: flex; flex-direction: column; gap: 16px; justify-content: center; }
+  .arch-point {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .arch-point-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--teal-mid);
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+  .arch-point strong { color: var(--ink2); font-weight: 500; }
+  .arch-cta {
+    margin-top: 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--teal);
+    text-decoration: none;
+    transition: gap .15s;
+  }
+  .arch-cta:hover { gap: 10px; }
+  @media(max-width:768px) {
+    .arch-grid { grid-template-columns: 1fr; }
+  }
+
 </style>
 </head>
 <body>
@@ -661,6 +752,8 @@ footer {
     <a href="/" class="logo">FITDAT<sup>®</sup></a>
     <nav>
       <a href="library.html" class="nav-link nav-link-keep">Library</a>
+      <a href="scoresets.html" class="nav-link nav-link-keep">Score Sets</a>
+      <a href="architecture.html" class="nav-link nav-link-keep">Architecture</a>
       <a href="demo.html" class="nav-link nav-link-keep">Demo</a>
       <div class="nav-divider"></div>
       <a href="https://realfit.com" target="_blank" rel="noopener" class="nav-badge">Governed by REALFIT®</a>
@@ -717,6 +810,62 @@ footer {
         </div>
         <h3>Open infrastructure</h3>
         <p>FITDAT definitions are open for any developer to build Score Sets on. Scoring curves, component weights, and reference bands are proprietary to each Score Set — FITDAT defines only the foundation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="arch-section">
+  <div class="arch-inner">
+    <div class="section-header">
+      <div class="label">Ecosystem architecture</div>
+      <h2>FITDAT is the foundation. Score Sets are built on top of it.</h2>
+      <p>The REALFIT ecosystem has three layers. Understanding the separation between them is the key to understanding what FITDAT is for.</p>
+    </div>
+    <div class="arch-grid">
+      <div class="arch-stack">
+        <div class="arch-layer gov">
+          <div class="arch-layer-num">Governing authority</div>
+          <div class="arch-layer-name">REALFIT®</div>
+          <div class="arch-layer-desc">Sets standards · Issues certification · Maintains FITDAT</div>
+        </div>
+        <div class="arch-connector">↓</div>
+        <a href="architecture.html" class="arch-layer apps">
+          <div class="arch-layer-num">Layer 3</div>
+          <div class="arch-layer-name">Apps</div>
+          <div class="arch-layer-desc">REALFITSCORE · ScoreMy40 · Developer apps · Certified or independent</div>
+        </a>
+        <div class="arch-connector">↓</div>
+        <a href="scoresets.html" class="arch-layer scoresets">
+          <div class="arch-layer-num">Layer 2</div>
+          <div class="arch-layer-name">Score Sets</div>
+          <div class="arch-layer-desc">REALFIT Absolute Score · Army AFT · Marine PFT · Developer Score Sets</div>
+        </a>
+        <div class="arch-connector">↓</div>
+        <a href="library.html" class="arch-layer foundation">
+          <div class="arch-layer-num">Layer 1 — FITDAT®</div>
+          <div class="arch-layer-name">Open test library</div>
+          <div class="arch-layer-desc">Growing test library · protocols · normalization rules · fitness components · replacement groups</div>
+        </a>
+      </div>
+      <div class="arch-explainer">
+        <div class="arch-point">
+          <div class="arch-point-dot"></div>
+          <span><strong>FITDAT defines facts, not judgments.</strong> A 4.55-second 40-yard dash is a measurement. Whether that is "good" is the job of a Score Set — not the library. This separation is intentional and load-bearing.</span>
+        </div>
+        <div class="arch-point">
+          <div class="arch-point-dot"></div>
+          <span><strong>REALFIT publishes Score Sets, not just tests.</strong> The REALFIT Absolute Score™ is REALFIT's proprietary flagship. REALFIT also publishes standardized implementations of military and professional standards — Army AFT, Marine PFT, NFL Combine — all built on FITDAT definitions.</span>
+        </div>
+        <div class="arch-point">
+          <div class="arch-point-dot"></div>
+          <span><strong>Developers can build on the same foundation.</strong> Any developer can use FITDAT test definitions to build their own Score Set — their own scoring curves, their own weights, their own reference bands. REALFIT Certification is available for Score Sets that meet specification requirements.</span>
+        </div>
+        <div class="arch-point">
+          <div class="arch-point-dot"></div>
+          <span><strong>Every layer is versioned and auditable.</strong> FITDAT test versions, Score Set versions, and protocol versions are all declared in every output. Results are reproducible across time, populations, and deployments.</span>
+        </div>
+        <a href="architecture.html" class="arch-cta">Full architecture documentation →</a>
       </div>
     </div>
   </div>
@@ -959,7 +1108,7 @@ footer {
   <div class="cta-strip-inner">
     <a href="library.html" class="cta-card featured">
       <div class="cta-card-tag">Test library</div>
-      <h3>Browse all 14 specified tests</h3>
+      <h3>Browse the test library</h3>
       <p>Full TestDefinition, TestProtocol, and TestContext for each test in the REALFIT Absolute Score™ battery. Filter by component, sport, or population.</p>
       <div class="cta-card-link">Open the library →</div>
     </a>
