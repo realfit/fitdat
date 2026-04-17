@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REALFIT Absolute Score — Scoring Specification</title>
+<meta name="description" content="Complete open specification for the REALFIT Absolute Score™ — component weights, scoring tables, aggregation method, and reference bands. Published as a reference implementation.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0d1117;--ink2:#24292f;--muted:#57606a;--faint:#6e7781;
+  --border:#d0d7de;--border-light:#eaeef2;
+  --surface:#ffffff;--surface2:#f6f8fa;--surface3:#eaeef2;
+  --teal:#0a6e56;--teal-light:#e1f5ee;--teal-mid:#1d9e75;
+  --blue:#0550ae;--blue-light:#ddf4ff;
+  --amber:#9a6700;--amber-light:#fff8c5;
+  --purple:#5a3e9e;--purple-light:#f0ebff;
+  --green:#1a7f37;--green-light:#dcffe4;
+  --red:#a40e26;--red-light:#ffebe9;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;color:var(--ink2);background:var(--surface)}
+
+header{border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:100}
+.header-inner{max-width:1100px;margin:0 auto;padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'DM Mono',monospace;font-size:17px;font-weight:500;color:var(--ink);text-decoration:none;letter-spacing:-0.02em}
+.logo sup{font-size:10px;font-weight:400;color:var(--muted);vertical-align:super;margin-left:1px}
+nav{display:flex;align-items:center;gap:4px}
+.nav-link{padding:6px 12px;border-radius:6px;font-size:14px;color:var(--muted);text-decoration:none;transition:color .15s,background .15s}
+.nav-link:hover{color:var(--ink);background:var(--surface2)}
+.nav-link.active{color:var(--ink);font-weight:500}
+.nav-divider{width:1px;height:20px;background:var(--border);margin:0 4px}
+.nav-badge{padding:5px 12px;border-radius:6px;border:1px solid var(--border);font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;transition:all .15s;display:flex;align-items:center;gap:6px}
+.nav-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal-mid);flex-shrink:0}
+.nav-badge:hover{border-color:var(--teal-mid);color:var(--teal)}
+
+.page-header{padding:40px 32px 32px;border-bottom:1px solid var(--border-light)}
+.page-header-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:start}
+.breadcrumb{font-size:13px;color:var(--muted);margin-bottom:12px}
+.breadcrumb a{color:var(--muted);text-decoration:none}.breadcrumb a:hover{color:var(--ink)}
+.breadcrumb span{margin:0 6px;opacity:.5}
+.page-header h1{font-size:28px;font-weight:600;color:var(--ink);letter-spacing:-0.02em;margin-bottom:8px}
+.page-header p{font-size:15px;color:var(--muted);max-width:640px;line-height:1.7}
+.version-block{background:var(--teal-light);border:1px solid rgba(10,110,86,.2);border-radius:8px;padding:14px 18px;text-align:right;flex-shrink:0}
+.version-block .vb-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.version-block .vb-val{font-family:'DM Mono',monospace;font-size:14px;font-weight:500;color:var(--teal)}
+
+.content{max-width:1100px;margin:0 auto;padding:40px 32px 80px}
+
+/* Open notice */
+.open-notice{background:var(--green-light);border:1px solid rgba(26,127,55,.2);border-radius:10px;padding:20px 24px;margin-bottom:40px;display:flex;gap:16px;align-items:flex-start}
+.open-notice-dot{width:10px;height:10px;border-radius:50%;background:var(--green);flex-shrink:0;margin-top:5px}
+.open-notice p{font-size:14px;color:var(--green);line-height:1.7}
+.open-notice p strong{font-weight:500}
+
+/* Section layout */
+.spec-section{margin-bottom:48px}
+.spec-section-header{margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border-light)}
+.spec-section-header .label{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+.spec-section-header h2{font-size:20px;font-weight:600;color:var(--ink);letter-spacing:-0.01em;margin-bottom:6px}
+.spec-section-header p{font-size:14px;color:var(--muted);line-height:1.7;max-width:680px}
+
+/* Rationale block */
+.rationale{background:var(--blue-light);border:1px solid rgba(5,80,174,.15);border-left:3px solid var(--blue);border-radius:0 6px 6px 0;padding:14px 18px;margin-bottom:20px;font-size:13px;color:var(--blue);line-height:1.7}
+.rationale strong{font-weight:500}
+
+/* Formula block */
+.formula-block{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:20px 24px;margin-bottom:20px}
+.formula-block .f-label{font-family:'DM Mono',monospace;font-size:11px;color:var(--faint);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.formula-block .f-eq{font-family:'DM Mono',monospace;font-size:14px;color:var(--ink);line-height:1.8}
+.formula-block .f-note{font-size:12px;color:var(--muted);margin-top:8px}
+
+/* Component weight table */
+.weight-table{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:20px}
+.weight-table th{text-align:left;font-size:12px;font-weight:500;color:var(--muted);padding:8px 12px;border-bottom:2px solid var(--border);background:var(--surface2)}
+.weight-table td{padding:10px 12px;border-bottom:1px solid var(--border-light);vertical-align:middle}
+.weight-table tr:last-child td{border-bottom:none}
+.weight-table .comp-name{font-weight:500;color:var(--ink2)}
+.weight-table .comp-weight{font-family:'DM Mono',monospace;font-size:14px;font-weight:500}
+.weight-table .comp-weight.primary{color:var(--teal)}
+.weight-table .comp-weight.standard{color:var(--ink2)}
+.weight-bar-wrap{height:8px;background:var(--surface3);border-radius:4px;width:200px}
+.weight-bar{height:8px;border-radius:4px;background:var(--teal-mid)}
+.weight-table .comp-tests{font-size:12px;color:var(--muted)}
+.weight-table .comp-rationale{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* Reference bands */
+.bands-stack{display:flex;flex-direction:column;gap:3px;margin-bottom:20px}
+.band-row{display:flex;align-items:center;gap:12px;padding:10px 16px;border-radius:6px;font-size:14px}
+.band-row .band-label{font-weight:500;flex:1}
+.band-row .band-range{font-family:'DM Mono',monospace;font-size:12px;opacity:.8;flex-shrink:0}
+.band-row .band-note{font-size:12px;opacity:.7;flex:2}
+
+/* Scoring tables */
+.test-scoring-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-bottom:20px}
+.test-score-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.test-score-card-header{padding:12px 16px;background:var(--surface2);border-bottom:1px solid var(--border-light)}
+.test-score-card-header .tsc-name{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:2px}
+.test-score-card-header .tsc-meta{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace}
+.threshold-table{width:100%;border-collapse:collapse;font-size:13px}
+.threshold-table td{padding:7px 16px;border-bottom:1px solid var(--border-light)}
+.threshold-table tr:last-child td{border-bottom:none}
+.threshold-table .th-band{color:var(--muted);font-size:12px}
+.threshold-table .th-val{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:var(--ink2);text-align:right}
+.threshold-table .th-score{font-family:'DM Mono',monospace;font-size:12px;color:var(--faint);text-align:right;width:60px}
+.threshold-table tr.avg td{background:rgba(29,158,117,.05)}
+.threshold-table tr.avg .th-band{color:var(--teal);font-weight:500}
+
+/* Worked example */
+.example-block{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:24px;margin-bottom:20px}
+.example-block h3{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:16px}
+.example-table{width:100%;border-collapse:collapse;font-size:13px}
+.example-table th{text-align:left;font-size:11px;color:var(--muted);font-weight:500;padding:6px 10px;border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:.05em}
+.example-table td{padding:8px 10px;border-bottom:1px solid var(--border-light)}
+.example-table tr:last-child td{border-bottom:none}
+.example-table .ex-test{font-weight:500;color:var(--ink2)}
+.example-table .ex-val{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)}
+.example-table .ex-score{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--ink2);text-align:right}
+.example-table .ex-comp{font-size:11px;color:var(--faint)}
+.example-totals{margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.example-total{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px 14px;text-align:center}
+.example-total .et-label{font-size:11px;color:var(--muted);margin-bottom:4px;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.06em}
+.example-total .et-val{font-size:20px;font-weight:600;color:var(--ink)}
+.example-total.overall .et-val{color:var(--teal);font-size:28px}
+
+/* Changelog */
+.changelog{background:var(--surface2);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.changelog-row{display:flex;gap:16px;padding:12px 16px;border-bottom:1px solid var(--border-light);font-size:13px}
+.changelog-row:last-child{border-bottom:none}
+.changelog-version{font-family:'DM Mono',monospace;font-size:12px;color:var(--teal);width:80px;flex-shrink:0;font-weight:500}
+.changelog-date{font-family:'DM Mono',monospace;font-size:11px;color:var(--faint);width:90px;flex-shrink:0}
+.changelog-note{color:var(--muted);flex:1}
+
+@media(max-width:768px){
+  .page-header-inner{grid-template-columns:1fr}
+  .version-block{text-align:left}
+  .test-scoring-grid{grid-template-columns:1fr}
+  .weight-bar-wrap{display:none}
+  .example-totals{grid-template-columns:1fr 1fr}
+  .content{padding:24px 16px 60px}
+  .page-header{padding:32px 16px 24px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">FITDAT<sup>®</sup></a>
+    <nav>
+      <a href="library.html" class="nav-link nav-link-keep">Library</a>
+      <a href="scoresets.html" class="nav-link nav-link-keep">Score Sets</a>
+      <a href="architecture.html" class="nav-link nav-link-keep">Architecture</a>
+      <a href="scoring-spec.html" class="nav-link nav-link-keep active">Scoring spec</a>
+      <a href="demo.html" class="nav-link nav-link-keep">Demo</a>
+      <div class="nav-divider"></div>
+      <a href="https://realfit.com" target="_blank" rel="noopener" class="nav-badge">Governed by REALFIT®</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div>
+      <div class="breadcrumb"><a href="index.html">FITDAT®</a><span>/</span>Scoring specification</div>
+      <h1>REALFIT Absolute Score™ — scoring specification</h1>
+      <p>The complete, open methodology for the REALFIT Absolute Score. A universal, age-neutral standard — a 700 at 25 and a 700 at 45 mean exactly the same thing, making it the only score that tells you whether you are genuinely fitter than you were last year. 13-test battery, per-test component weights, aggregation formula, and reference bands — published in full. No black boxes.</p>
+    </div>
+    <div class="version-block">
+      <div class="vb-label">Spec version</div>
+      <div class="vb-val">RFS30 v1.0</div>
+      <div style="margin-top:6px;font-size:11px;color:var(--teal);font-family:'DM Mono',monospace">FITDAT v1.1</div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="open-notice">
+    <div class="open-notice-dot"></div>
+    <p><strong>This specification is published openly.</strong> The REALFIT Absolute Score is REALFIT's proprietary flagship Score Set — but its methodology is fully documented here. We believe complete transparency is the only credible foundation for a fitness standard. If you disagree with any scoring decision, the rationale is here. If you find an error, we want to know. This document is the ground truth — it matches the live implementation in REALFITSCORE.com and the REALFIT iOS app exactly.</p>
+  </div>
+
+  <!-- SECTION 1: OVERVIEW -->
+  <div class="spec-section">
+    <div class="spec-section-header">
+      <div class="label">Section 1</div>
+      <h2>What the REALFIT Absolute Score measures</h2>
+      <p>A single 0–1000 score representing an individual's overall physical fitness across all six fitness components, using a 14-test battery drawn from the FITDAT open library.</p>
+    </div>
+
+    <div class="rationale">
+      <strong>Design philosophy — why an absolute standard is a better benchmark.</strong> The score is deliberately population-neutral and age-neutral. A 700 means the same thing regardless of who earned it — there are no age adjustments, no gender adjustments, no occupation adjustments. This is intentional, and it matters for three reasons.
+    </div>
+    <div class="rationale" style="margin-top:8px">
+      <strong>Progress tracking.</strong> An age-adjusted or population-normed score can make you look like you're improving when you're actually declining — because the reference population is getting slower alongside you. The Absolute Score doesn't move unless you do. A 650 at 45 means you are genuinely as fit as a 650 at 25. That's the only benchmark that tells you whether your training is working.
+    </div>
+    <div class="rationale" style="margin-top:8px">
+      <strong>Aging honestly.</strong> Most fitness scoring systems make you look better as you age simply because the comparison group gets older too. The Absolute Score declines as fitness declines — which is uncomfortable but accurate. It gives you real information about what's happening to your body over time, which is the only basis for making real decisions about it.
+    </div>
+    <div class="rationale" style="margin-top:8px">
+      <strong>Cross-context comparison.</strong> A score earned in a high school gym and a score earned at an NFL combine are measured against the same standard. This makes REALFIT Absolute Scores comparable across populations, environments, institutions, and years. Score Sets that want age-normed or population-specific interpretations can layer Reference Bands on top — the underlying score does not change. The score measures what your body can actually do today, against a universal standard that never moves.
+    </div>
+
+    <table class="weight-table">
+      <thead><tr><th>Property</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td class="comp-name">Scale</td><td>0 to 1,000 (integer)</td></tr>
+        <tr><td class="comp-name">Tests required</td><td>13 tests — 12 fixed + 1 cardio slot (5K Run OR Concept2 Row — 2000m)</td></tr>
+        <tr><td class="comp-name">Score Set ID</td><td style="font-family:'DM Mono',monospace;font-size:12px">realfit_absolute</td></tr>
+        <tr><td class="comp-name">Standards version</td><td style="font-family:'DM Mono',monospace;font-size:12px">RFS30</td></tr>
+        <tr><td class="comp-name">FITDAT version</td><td style="font-family:'DM Mono',monospace;font-size:12px">1.1</td></tr>
+        <tr><td class="comp-name">Full battery required for overall score</td><td>Yes — all 13 tests must be completed</td></tr>
+        <tr><td class="comp-name">Individual test scores available without full battery</td><td>Yes — each test produces a 0–1000 score independently</td></tr>
+        <tr><td class="comp-name">Cardio slot</td><td>5K Run OR Concept2 Row — 2000m (mutually exclusive, athlete chooses one)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 2: COMPONENT WEIGHTS -->
+  <div class="spec-section">
+    <div class="spec-section-header">
+      <div class="label">Section 2</div>
+      <h2>How tests map to components</h2>
+      <p>Most fitness tests express more than one physical quality. Each test distributes its score across components with defined weights. The component scores that result from this distribution are then combined into the overall Absolute Score.</p>
+    </div>
+
+    <div class="rationale">
+      <strong>Why tests distribute across multiple components.</strong> A 40-yard dash is primarily a speed test — but it also expresses power and agility. Pull-ups are primarily muscular endurance — but they also reflect muscular strength. Forcing each test to belong to exactly one component would discard real information. The scoring model captures each test's full expression by distributing its score across every component it meaningfully reflects, using weights that sum to 1.0.
+    </div>
+
+    <style>
+      .comp-legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-bottom:20px;font-size:12px;color:var(--muted)}
+      .comp-legend span{display:flex;align-items:center;gap:5px}
+      .cl-sq{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+      .test-donut-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:32px}
+      .test-donut-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 12px;display:flex;flex-direction:column;align-items:center;gap:8px}
+      .test-donut-name{font-size:12px;font-weight:500;color:var(--ink2);text-align:center;line-height:1.4}
+      .test-donut-wrap{position:relative;width:88px;height:88px}
+    </style>
+
+    <div class="comp-legend">
+      <span><span class="cl-sq" style="background:#1D9E75"></span>Cardiovascular endurance</span>
+      <span><span class="cl-sq" style="background:#534AB7"></span>Muscular strength</span>
+      <span><span class="cl-sq" style="background:#378ADD"></span>Muscular endurance</span>
+      <span><span class="cl-sq" style="background:#EF9F27"></span>Power</span>
+      <span><span class="cl-sq" style="background:#D85A30"></span>Speed</span>
+      <span><span class="cl-sq" style="background:#D4537E"></span>Agility</span>
+    </div>
+
+    <div class="test-donut-grid" id="testDonutGrid"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <script>
+    (function(){
+      var COMP_COLORS = {
+        'Cardiovascular':'#1D9E75','Muscular strength':'#534AB7',
+        'Muscular endurance':'#378ADD','Power':'#EF9F27',
+        'Speed':'#D85A30','Agility':'#D4537E'
+      };
+      var TESTS = [
+        {name:'40 Yard Dash',dist:[['Speed',80],['Power',10],['Agility',10]]},
+        {name:'Standing Long Jump',dist:[['Power',80],['Muscular strength',10],['Agility',10]]},
+        {name:'Shuttle Run — 60 Yards',dist:[['Agility',75],['Speed',25]]},
+        {name:'Bench Press — 1RM',dist:[['Muscular strength',90],['Power',10]]},
+        {name:'Pull-Ups — Max Reps',dist:[['Muscular endurance',60],['Muscular strength',30],['Agility',10]]},
+        {name:'Sprint — 400m',dist:[['Muscular endurance',40],['Speed',40],['Cardiovascular',20]]},
+        {name:'Wall Sit',dist:[['Muscular endurance',60],['Muscular strength',40]]},
+        {name:'Squat Thrust Jumps — 2 min',dist:[['Muscular endurance',30],['Cardiovascular',25],['Muscular strength',20],['Power',15],['Agility',10]]},
+        {name:'5K Run / 2K Row',dist:[['Cardiovascular',80],['Muscular endurance',10],['Speed',10]]},
+        {name:'Medicine Ball Throw',dist:[['Power',80],['Muscular strength',10],['Agility',10]]},
+        {name:'Plank Hold',dist:[['Muscular endurance',75],['Muscular strength',25]]},
+        {name:'Push-Ups — Max Reps',dist:[['Muscular endurance',60],['Muscular strength',30],['Power',10]]},
+        {name:'Back Squat — 1RM',dist:[['Muscular strength',85],['Power',15]]}
+      ];
+      var isDark = matchMedia('(prefers-color-scheme: dark)').matches;
+      var grid = document.getElementById('testDonutGrid');
+      TESTS.forEach(function(test, i){
+        var card = document.createElement('div'); card.className = 'test-donut-card';
+        var name = document.createElement('div'); name.className = 'test-donut-name'; name.textContent = test.name;
+        var wrap = document.createElement('div'); wrap.className = 'test-donut-wrap';
+        var canvas = document.createElement('canvas');
+        canvas.id = 'td'+i;
+        canvas.setAttribute('role','img');
+        canvas.setAttribute('aria-label', test.name + ' component distribution');
+        wrap.appendChild(canvas); card.appendChild(name); card.appendChild(wrap); grid.appendChild(card);
+        new Chart(canvas, {
+          type:'doughnut',
+          data:{
+            labels: test.dist.map(function(d){return d[0];}),
+            datasets:[{
+              data: test.dist.map(function(d){return d[1];}),
+              backgroundColor: test.dist.map(function(d){return COMP_COLORS[d[0]];}),
+              borderWidth: isDark?1:1.5,
+              borderColor: isDark?'#1a1a1a':'#ffffff',
+              hoverOffset:3
+            }]
+          },
+          options:{
+            responsive:true, maintainAspectRatio:false, cutout:'62%',
+            plugins:{
+              legend:{display:false},
+              tooltip:{callbacks:{label:function(ctx){return ' '+ctx.label+': '+ctx.parsed+'%';}}}
+            }
+          }
+        });
+      });
+    })();
+    </script>
+
+    <div class="spec-section-header" style="margin-top:0">
+      <h2>Overall component weights</h2>
+      <p>Once component scores are calculated from the test distributions above, they are combined into the Absolute Score using these weights.</p>
+    </div>
+
+    <div class="rationale">
+      <strong>Near-equal weighting is the point, not a compromise.</strong> The REALFIT Absolute Score is a general fitness standard — it is designed to measure whole-person fitness across all populations, from sedentary adults to elite athletes. A general standard should not privilege speed over endurance, or strength over agility. No single physical quality defines fitness for everyone. Cardiovascular endurance receives a modest premium (25% vs 15%) because the science on its relationship to longevity and all-cause mortality is unambiguous. The remaining five components are equal because we found no defensible basis for ranking them against each other in a universal standard.
+    </div>
+    <div class="rationale" style="margin-top:8px">
+      <strong>Other Score Sets will — and should — weight differently.</strong> A police fitness standard should emphasize speed and muscular strength, because a foot pursuit and a physical confrontation are the job. A fire service standard should emphasize muscular and cardiovascular endurance, because carrying equipment up stairs in 60-pound gear for sustained periods is the job. These are not the same fitness profile, and a single Score Set should not pretend they are. The FITDAT library is the shared foundation — what you build on top of it should reflect your community's actual demands. The examples below show what those weights might look like.
+    </div>
+
+    <style>
+      .overall-donut-wrap{display:flex;align-items:center;gap:40px;flex-wrap:wrap;padding:4px 0 8px}
+      .overall-canvas-wrap{position:relative;width:180px;height:180px;flex-shrink:0}
+      .overall-legend{display:flex;flex-direction:column;gap:9px;font-size:13px}
+      .ol-row{display:flex;align-items:center;gap:10px}
+      .ol-sq{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+      .ol-name{flex:1;color:var(--ink2)}
+      .ol-pct{font-family:'DM Mono',monospace;font-weight:500;min-width:36px;text-align:right;font-size:12px;color:var(--muted)}
+      .ol-primary .ol-name,.ol-primary .ol-pct{color:var(--teal);font-weight:600}
+      .scoresets-compare{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+      .ss-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 16px;display:flex;flex-direction:column;align-items:center;gap:12px}
+      .ss-card-title{font-size:13px;font-weight:600;color:var(--ink);text-align:center}
+      .ss-card-sub{font-size:11px;color:var(--muted);text-align:center;margin-top:-8px;line-height:1.5}
+      .ss-canvas-wrap{position:relative;width:130px;height:130px}
+      .ss-legend{width:100%;display:flex;flex-direction:column;gap:6px;font-size:11px}
+      .ss-leg-row{display:flex;align-items:center;gap:7px}
+      .ss-leg-sq{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+      .ss-leg-name{flex:1;color:var(--muted)}
+      .ss-leg-pct{font-family:'DM Mono',monospace;font-weight:500;color:var(--ink2);min-width:28px;text-align:right}
+      .ss-leg-bold .ss-leg-name,.ss-leg-bold .ss-leg-pct{color:var(--ink);font-weight:600}
+      .dev-cta{margin-top:20px;padding:16px 20px;background:var(--teal-light);border:1px solid rgba(10,110,86,.2);border-radius:8px;font-size:13px;color:var(--teal);line-height:1.7}
+      .dev-cta strong{font-weight:500}
+      @media(max-width:640px){.scoresets-compare{grid-template-columns:1fr}}
+    </style>
+
+    <div class="overall-donut-wrap">
+      <div class="overall-canvas-wrap">
+        <canvas id="overallDonut" role="img" aria-label="Overall Absolute Score component weights: Cardiovascular Endurance 25%, all others 15% each">Cardiovascular Endurance 25%, Muscular Strength 15%, Muscular Endurance 15%, Power 15%, Speed 15%, Agility 15%</canvas>
+      </div>
+      <div class="overall-legend" id="overallLegend"></div>
+    </div>
+
+    <div class="scoresets-compare" id="ssCompare"></div>
+
+    <div class="dev-cta">
+      <strong>These are illustrative examples, not published Score Sets.</strong> They exist to show how FITDAT's component framework can be adapted for different communities. Any organization can build a Score Set on FITDAT definitions using their own weights — the tests, protocols, and measurement infrastructure are shared. Only the scoring logic changes. <a href="architecture.html" style="color:var(--teal);font-weight:500">Learn how to build your own →</a>
+    </div>
+
+    <div class="spec-section-header" style="margin-top:32px;margin-bottom:16px">
+      <h2>Sports examples</h2>
+      <p>Different sports demand radically different physical profiles. The same FITDAT tests — different weights.</p>
+    </div>
+
+    <div class="rationale">
+      <strong>Sport-specific Score Sets reward what the sport actually demands.</strong> An NFL receiver needs explosive speed and agility — the ability to separate from coverage in under two seconds. A soccer midfielder needs to sustain high-intensity effort for 90 minutes. A baseball player needs rotational power and burst speed for six seconds at a time. A CrossFit athlete needs everything simultaneously. A Score Set built for each of these communities would weight the same six components very differently — and every single one would use the same FITDAT test library as its foundation.
+    </div>
+
+    <div class="scoresets-compare" id="ssSports"></div>
+
+    <div class="dev-cta" style="margin-top:20px">
+      <strong>Sports Score Sets are one of the highest-value applications for FITDAT developers.</strong> Teams, academies, and combines already run these tests — they just don't have a standardized, versioned, reproducible scoring framework underneath them. FITDAT provides that foundation. Your Score Set provides the sport-specific interpretation on top. <a href="scoresets.html" style="color:var(--teal);font-weight:500">See existing Score Sets →</a>
+    </div>
+
+    <script>
+    (function(){
+      var COLORS = {
+        'Cardiovascular endurance':'#1D9E75','Muscular strength':'#534AB7',
+        'Muscular endurance':'#378ADD','Power':'#EF9F27',
+        'Speed':'#D85A30','Agility':'#D4537E'
+      };
+      var isDark = matchMedia('(prefers-color-scheme: dark)').matches;
+
+      // Overall donut
+      var COMPS = [
+        {name:'Cardiovascular endurance',pct:25,primary:true},
+        {name:'Muscular strength',pct:15},
+        {name:'Muscular endurance',pct:15},
+        {name:'Power',pct:15},
+        {name:'Speed',pct:15},
+        {name:'Agility',pct:15}
+      ];
+      new Chart(document.getElementById('overallDonut'),{
+        type:'doughnut',
+        data:{
+          labels:COMPS.map(function(c){return c.name;}),
+          datasets:[{
+            data:COMPS.map(function(c){return c.pct;}),
+            backgroundColor:COMPS.map(function(c){return COLORS[c.name];}),
+            borderWidth:isDark?1:2,
+            borderColor:isDark?'#1a1a1a':'#ffffff',
+            hoverOffset:4
+          }]
+        },
+        options:{responsive:true,maintainAspectRatio:false,cutout:'58%',
+          plugins:{legend:{display:false},
+            tooltip:{callbacks:{label:function(ctx){return ' '+ctx.label+': '+ctx.parsed+'%';}}}}}
+      });
+      var leg = document.getElementById('overallLegend');
+      COMPS.forEach(function(c){
+        var row = document.createElement('div');
+        row.className = 'ol-row'+(c.primary?' ol-primary':'');
+        row.innerHTML = '<span class="ol-sq" style="background:'+COLORS[c.name]+'"></span>'
+          +'<span class="ol-name">'+c.name+'</span>'
+          +'<span class="ol-pct">'+c.pct+'%</span>';
+        leg.appendChild(row);
+      });
+
+      // Comparison Score Sets
+      var SCORESETS = [
+        {
+          id:'police', title:'Law enforcement', sub:'Illustrative example — not a published Score Set',
+          comps:[
+            {name:'Speed',pct:30,bold:true},
+            {name:'Muscular strength',pct:25,bold:true},
+            {name:'Agility',pct:20,bold:true},
+            {name:'Muscular endurance',pct:15},
+            {name:'Cardiovascular endurance',pct:5},
+            {name:'Power',pct:5}
+          ]
+        },
+        {
+          id:'fire', title:'Fire service', sub:'Illustrative example — not a published Score Set',
+          comps:[
+            {name:'Muscular endurance',pct:35,bold:true},
+            {name:'Cardiovascular endurance',pct:30,bold:true},
+            {name:'Muscular strength',pct:20,bold:true},
+            {name:'Power',pct:10},
+            {name:'Speed',pct:3},
+            {name:'Agility',pct:2}
+          ]
+        },
+        {
+          id:'military', title:'Military (illustrative)', sub:'Illustrative example — not a published Score Set',
+          comps:[
+            {name:'Muscular endurance',pct:30,bold:true},
+            {name:'Cardiovascular endurance',pct:25,bold:true},
+            {name:'Muscular strength',pct:20,bold:true},
+            {name:'Speed',pct:10},
+            {name:'Power',pct:10},
+            {name:'Agility',pct:5}
+          ]
+        }
+      ];
+
+      var container = document.getElementById('ssCompare');
+      SCORESETS.forEach(function(ss){
+        var card = document.createElement('div'); card.className = 'ss-card';
+        var title = document.createElement('div'); title.className = 'ss-card-title'; title.textContent = ss.title;
+        var sub = document.createElement('div'); sub.className = 'ss-card-sub'; sub.textContent = ss.sub;
+        var wrap = document.createElement('div'); wrap.className = 'ss-canvas-wrap';
+        var canvas = document.createElement('canvas');
+        canvas.id = 'ss-'+ss.id;
+        canvas.setAttribute('role','img');
+        canvas.setAttribute('aria-label', ss.title + ' illustrative component weights');
+        wrap.appendChild(canvas);
+        var legEl = document.createElement('div'); legEl.className = 'ss-legend';
+        ss.comps.forEach(function(c){
+          var row = document.createElement('div');
+          row.className = 'ss-leg-row'+(c.bold?' ss-leg-bold':'');
+          row.innerHTML = '<span class="ss-leg-sq" style="background:'+COLORS[c.name]+'"></span>'
+            +'<span class="ss-leg-name">'+c.name+'</span>'
+            +'<span class="ss-leg-pct">'+c.pct+'%</span>';
+          legEl.appendChild(row);
+        });
+        card.appendChild(title); card.appendChild(sub);
+        card.appendChild(wrap); card.appendChild(legEl);
+        container.appendChild(card);
+        new Chart(canvas,{
+          type:'doughnut',
+          data:{
+            labels:ss.comps.map(function(c){return c.name;}),
+            datasets:[{
+              data:ss.comps.map(function(c){return c.pct;}),
+              backgroundColor:ss.comps.map(function(c){return COLORS[c.name];}),
+              borderWidth:isDark?1:1.5,
+              borderColor:isDark?'#1a1a1a':'#ffffff',
+              hoverOffset:3
+            }]
+          },
+          options:{responsive:true,maintainAspectRatio:false,cutout:'60%',
+            plugins:{legend:{display:false},
+              tooltip:{callbacks:{label:function(ctx){return ' '+ctx.label+': '+ctx.parsed+'%';}}}}}
+        });
+      });
+      // Sports Score Sets
+      var SPORTS_SCORESETS = [
+        {
+          id:'nfl-skill', title:'NFL skill positions', sub:'WR · CB · RB — illustrative',
+          comps:[
+            {name:'Speed',pct:30,bold:true},
+            {name:'Agility',pct:25,bold:true},
+            {name:'Power',pct:20,bold:true},
+            {name:'Muscular strength',pct:10},
+            {name:'Muscular endurance',pct:10},
+            {name:'Cardiovascular endurance',pct:5}
+          ]
+        },
+        {
+          id:'basketball', title:'Basketball', sub:'Guard / wing — illustrative',
+          comps:[
+            {name:'Speed',pct:25,bold:true},
+            {name:'Agility',pct:25,bold:true},
+            {name:'Power',pct:20,bold:true},
+            {name:'Muscular endurance',pct:15},
+            {name:'Muscular strength',pct:10},
+            {name:'Cardiovascular endurance',pct:5}
+          ]
+        },
+        {
+          id:'baseball', title:'Baseball', sub:'Position player — illustrative',
+          comps:[
+            {name:'Power',pct:35,bold:true},
+            {name:'Speed',pct:25,bold:true},
+            {name:'Agility',pct:20,bold:true},
+            {name:'Muscular strength',pct:10},
+            {name:'Muscular endurance',pct:5},
+            {name:'Cardiovascular endurance',pct:5}
+          ]
+        },
+        {
+          id:'soccer', title:'Soccer', sub:'Midfielder — illustrative',
+          comps:[
+            {name:'Cardiovascular endurance',pct:35,bold:true},
+            {name:'Speed',pct:25,bold:true},
+            {name:'Agility',pct:20,bold:true},
+            {name:'Muscular endurance',pct:10},
+            {name:'Power',pct:5},
+            {name:'Muscular strength',pct:5}
+          ]
+        },
+        {
+          id:'crossfit', title:'CrossFit', sub:'General fitness — illustrative',
+          comps:[
+            {name:'Muscular endurance',pct:25,bold:true},
+            {name:'Cardiovascular endurance',pct:25,bold:true},
+            {name:'Muscular strength',pct:20,bold:true},
+            {name:'Power',pct:15},
+            {name:'Speed',pct:10},
+            {name:'Agility',pct:5}
+          ]
+        }
+      ];
+
+      var sportsContainer = document.getElementById('ssSports');
+      sportsContainer.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px;margin-top:0';
+      SPORTS_SCORESETS.forEach(function(ss){
+        var card = document.createElement('div'); card.className = 'ss-card';
+        var title = document.createElement('div'); title.className = 'ss-card-title'; title.textContent = ss.title;
+        var sub = document.createElement('div'); sub.className = 'ss-card-sub'; sub.textContent = ss.sub;
+        var wrap = document.createElement('div'); wrap.className = 'ss-canvas-wrap';
+        var canvas = document.createElement('canvas');
+        canvas.id = 'ss-'+ss.id;
+        canvas.setAttribute('role','img');
+        canvas.setAttribute('aria-label', ss.title+' illustrative component weights');
+        wrap.appendChild(canvas);
+        var legEl = document.createElement('div'); legEl.className = 'ss-legend';
+        ss.comps.forEach(function(c){
+          var row = document.createElement('div');
+          row.className = 'ss-leg-row'+(c.bold?' ss-leg-bold':'');
+          row.innerHTML = '<span class="ss-leg-sq" style="background:'+COLORS[c.name]+'"></span>'
+            +'<span class="ss-leg-name">'+c.name+'</span>'
+            +'<span class="ss-leg-pct">'+c.pct+'%</span>';
+          legEl.appendChild(row);
+        });
+        card.appendChild(title); card.appendChild(sub);
+        card.appendChild(wrap); card.appendChild(legEl);
+        sportsContainer.appendChild(card);
+        new Chart(canvas,{
+          type:'doughnut',
+          data:{
+            labels:ss.comps.map(function(c){return c.name;}),
+            datasets:[{
+              data:ss.comps.map(function(c){return c.pct;}),
+              backgroundColor:ss.comps.map(function(c){return COLORS[c.name];}),
+              borderWidth:isDark?1:1.5,
+              borderColor:isDark?'#1a1a1a':'#ffffff',
+              hoverOffset:3
+            }]
+          },
+          options:{responsive:true,maintainAspectRatio:false,cutout:'60%',
+            plugins:{legend:{display:false},
+              tooltip:{callbacks:{label:function(ctx){return ' '+ctx.label+': '+ctx.parsed+'%';}}}}}
+        });
+      });
+    })();
+    </script>
+  </div>
+
+  <!-- SECTION 3: AGGREGATION -->
+  <div class="spec-section">
+    <div class="spec-section-header">
+      <div class="label">Section 3</div>
+      <h2>Aggregation method</h2>
+      <p>How individual test scores combine into component scores, and how component scores combine into the overall Absolute Score.</p>
+    </div>
+
+    <div class="rationale">
+      <strong>The key design decision — tests distribute across multiple components.</strong> Most fitness tests express more than one physical quality. A 40-yard dash is primarily a speed test, but it also expresses power and agility. Pull-ups are primarily muscular endurance, but they also reflect muscular strength. The scoring model captures this: each test distributes its score across multiple components with defined weights that reflect how much of each quality that test actually measures. This produces a more accurate component score than forcing each test to belong to exactly one component.
+    </div>
+
+    <div class="formula-block">
+      <div class="f-label">Step 1 — Individual test score (per test)</div>
+      <div class="f-eq">testScore = lookup(canonicalValue, scoringTable[testId])<br><br>Range: 0–1000 (integer)<br>Source: FITDAT RFS30 scoring tables (published in Section 5)</div>
+      <div class="f-note">Each test has its own scoring table mapping canonical values to scores. Tables are defined data points — not derived from a formula.</div>
+    </div>
+
+    <div class="formula-block">
+      <div class="f-label">Step 2 — Each test distributes its score across components</div>
+      <div class="f-eq">Per-test component distribution weights:<br><br>
+40 Yard Dash:               Speed 80% · Power 10% · Agility 10%<br>
+Standing Long Jump:         Power 80% · Muscular Strength 10% · Agility 10%<br>
+Shuttle Run — 60 Yards:     Agility 75% · Speed 25%<br>
+Bench Press — 1RM:          Muscular Strength 90% · Power 10%<br>
+Pull-Ups — Max Reps:        Muscular Endurance 60% · Muscular Strength 30% · Agility 10%<br>
+Sprint — 400m:              Muscular Endurance 40% · Speed 40% · Cardiovascular 20%<br>
+Wall Sit:                   Muscular Endurance 60% · Muscular Strength 40%<br>
+Squat Thrust Jumps:         Muscular Endurance 30% · Cardiovascular 25% · Muscular Strength 20% · Power 15% · Agility 10%<br>
+Run — 5K (or 2K Row):       Cardiovascular Endurance 80% · Muscular Endurance 10% · Speed 10%<br>
+Medicine Ball Throw:        Power 80% · Muscular Strength 10% · Agility 10%<br>
+Plank Hold:                 Muscular Endurance 75% · Muscular Strength 25%<br>
+Push-Ups — Max Reps:        Muscular Endurance 60% · Muscular Strength 30% · Power 10%<br>
+Back Squat — 1RM:           Muscular Strength 85% · Power 15%</div>
+      <div class="f-note">Weights sum to 1.0 per test. These distributions are defined in the scoring engine and represent how much of each fitness quality each test predominantly expresses.</div>
+    </div>
+
+    <div class="formula-block">
+      <div class="f-label">Step 3 — Component score (weighted average across all contributing tests)</div>
+      <div class="f-eq">componentScore[C] = weightedSum / weightTotal<br><br>where:<br>  weightedSum = Σ (testScore[t] × componentWeight[t][C]) for all tests t<br>  weightTotal = Σ (componentWeight[t][C]) for all tests t<br><br>Example — Speed component:<br>  weightedSum = (dash_score × 0.80) + (shuttle_score × 0.25) + (sprint_400m_score × 0.40)<br>  weightTotal = 0.80 + 0.25 + 0.40 = 1.45<br>  speedScore = weightedSum / 1.45</div>
+      <div class="f-note">Each component score is a weighted average of all tests that contribute to it. Tests that contribute more to a component (higher weight) influence that component score more strongly.</div>
+    </div>
+
+    <div class="formula-block">
+      <div class="f-label">Step 4 — Overall Absolute Score</div>
+      <div class="f-eq">absoluteScore = round(<br>  (cardiovascular_endurance × 0.25) +<br>  (muscular_strength        × 0.15) +<br>  (muscular_endurance       × 0.15) +<br>  (power                    × 0.15) +<br>  (speed                    × 0.15) +<br>  (agility                  × 0.15)<br>)</div>
+      <div class="f-note">Weighted sum of component scores. Rounded to nearest integer. Scale: 0–1000.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: REFERENCE BANDS -->
+  <div class="spec-section">
+    <div class="spec-section-header">
+      <div class="label">Section 4</div>
+      <h2>Reference bands</h2>
+      <p>Reference bands provide human-readable interpretation of numeric scores. They are non-scoring — they do not affect the underlying score, they only describe it.</p>
+    </div>
+
+    <div class="rationale">
+      <strong>Two band sets — overall and per-test.</strong> The overall score and each individual test score use the same 9-band interpretive scale. The labels are intentionally neutral and non-medical — they describe fitness performance, not health status. "Not Fit" is a description of where you are today on a fitness scale, not a clinical judgment.
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:20px">
+      <div>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--faint);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Overall score bands</div>
+        <div class="bands-stack">
+          <div class="band-row" style="background:#dcffe4;color:#1a7f37"><span class="band-label">Impossibly Fit</span><span class="band-range">950–1000</span></div>
+          <div class="band-row" style="background:#e1f5ee;color:#085041"><span class="band-label">Maximally Fit</span><span class="band-range">850–949</span></div>
+          <div class="band-row" style="background:#e1f5ee;color:#0F6E56"><span class="band-label">Exceptionally Fit</span><span class="band-range">700–849</span></div>
+          <div class="band-row" style="background:#ddf4ff;color:#0550ae"><span class="band-label">Well Fit</span><span class="band-range">500–699</span></div>
+          <div class="band-row" style="background:#fff8c5;color:#9a6700"><span class="band-label">Moderately Fit</span><span class="band-range">300–499</span></div>
+          <div class="band-row" style="background:#ffebe9;color:#a40e26"><span class="band-label">Minimally Fit</span><span class="band-range">100–299</span></div>
+          <div class="band-row" style="background:#ffebe9;color:#a40e26"><span class="band-label">Not Fit</span><span class="band-range">0–99</span></div>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--faint);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Per-test bands (all 14 tests)</div>
+        <div class="bands-stack">
+          <div class="band-row" style="background:#dcffe4;color:#1a7f37"><span class="band-label">Near Maximum</span><span class="band-range">951–1000</span></div>
+          <div class="band-row" style="background:#e1f5ee;color:#085041"><span class="band-label">Elite</span><span class="band-range">900–950</span></div>
+          <div class="band-row" style="background:#e1f5ee;color:#0F6E56"><span class="band-label">Near Elite</span><span class="band-range">750–899</span></div>
+          <div class="band-row" style="background:#ddf4ff;color:#0550ae"><span class="band-label">Well Above Average</span><span class="band-range">650–749</span></div>
+          <div class="band-row" style="background:#ddf4ff;color:#0550ae"><span class="band-label">Above Average</span><span class="band-range">551–649</span></div>
+          <div class="band-row" style="background:#fff8c5;color:#9a6700"><span class="band-label">Average</span><span class="band-range">500–550</span></div>
+          <div class="band-row" style="background:#ffebe9;color:#a40e26"><span class="band-label">Below Average</span><span class="band-range">300–499</span></div>
+          <div class="band-row" style="background:#ffebe9;color:#a40e26"><span class="band-label">Well Below Average</span><span class="band-range">100–299</span></div>
+          <div class="band-row" style="background:#ffebe9;color:#a40e26"><span class="band-label">Near Minimum</span><span class="band-range">0–99</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: SCORING TABLES -->
+  <div class="spec-section">
+    <div class="spec-section-header">
+      <div class="label">Section 5</div>
+      <h2>Scoring table thresholds — all 14 tests</h2>
+      <p>Key performance thresholds for each test at four score levels: 500 (Average), 750 (Near Elite), 900 (Elite), and 1000 (Near Maximum). Full tables are available in the FITDAT download.</p>
+    </div>
+
+    <div class="rationale">
+      <strong>How scoring tables are constructed.</strong> Scoring tables map measured performance to a 0–1000 score. Tables are not derived from a statistical formula — they are defined data points representing the known distribution of human performance for each test. The 500-point mark (Average) is calibrated to represent typical performance for a fit adult population. The 1000-point mark represents near-maximum human performance ever recorded. Tables are symmetric on the scoring scale but not on the performance scale — the difference between a 900 and a 1000 score is a much larger performance gap than the difference between a 500 and a 600.
+    </div>
+
+    <div class="test-scoring-grid">
+
+      <div class="test-score-card">
+        <div class="test-score-card-header">
+          <div class="tsc-name">40 Yard Dash</div>
+          <div class="tsc-meta">test_40yd_dash · seconds · lower = higher score</div>
+        </div>
+        <table class="threshold-table">
+          <tr class="avg"><td class="th-band">Average (500)</td><td class="th-val">7.47–7.50s</td><td class="th-score">500</td></tr>
+          <tr><td class="th-band">Near Elite (750)</td><td class="th-val">5.95–6.00s</td><td class="th-score">750</td></tr>
+          <tr><td class="th-band">Elite (900)</td><td class="th-val">4.93–5.00s</td><td class="th-score">900</td></tr>
+          <tr><td class="th-band">Near Maximum (1000)</td><td class="th-val">4.15–4.24s</td><td class="th-score">1000</td></tr>
+        </table>
+      </div>
+
+      <div class="test-score-card">
+        <div class="test-score-card-header">
+          <div class="tsc-name">Standing Long Jump</div>
+          <div class="tsc-meta">test_standing_long_jump · meters · higher = higher score</div>
+        </div>
+        <table class="threshold-table">
+          <tr class="avg"><td class="th-band">Average (500)</td><td class="th-val">1.83–1.84m (6'0")</td><td class="th-score">500</td></tr>
+          <tr><td class="th-band">Near Elite (750)</td><td class="th-val">2.24–2.26m (7'5")</td><td class="th-score">750</td></tr>
+          <tr><td class="th-band">Elite (900)</td><td class="th-val">2.49–2.59m (8'2")</td><td class="th-score">900</td></tr>
+          <tr><td class="th-band">Near Maximum (1000)</td><td class="th-val">3.51–3.81m (11'6"+)</td><td class="th-score">1000</td></tr>
+        </table>
+      </div>
+
+      <div class="test-score-card">
+        <div class="test-score-card-header">
+          <div class="tsc-name">Shuttle Run — 60 Yards</div>
+          <div class="tsc-meta">test_shuttle_60yd · seconds · lower = higher score</div>
+        </div>
+        <table class="threshold-table">
+          <tr class="avg"><td class="th-band">Average (500)</td><td class="th-val">16.00–16.08s</td><td class="th-score">500</td></tr>
+          <tr><td class="th-band">Near Elite (750)</td><td class="th-val">14.25–14.32s</td><td class="th-score">750</td></tr>
+          <tr><td class="th-band">Elite (900)</td><td class="th-val">13.00–13.08s</td><td class="th-score">900</td></tr>
+          <tr><td class="th-band">Near Maximum (1000)</td><td class="th-val">10.00–10.75s</td><td class="th-score">1000</td></tr>
+        </table>
+      </div>
+
+      <div class="test-score-card">
+        <div class="test-score-card-header">
+          <div class="tsc-name">Bench Press — 1 Rep Max</div>
+          <div class="tsc-meta">test_bench_press_1rm · kg · higher = higher score</div>
+        </div>
+        <table class="threshold-table">
+          <tr class="avg"><td class="th-band">Average (500)</td><td class="th-val">61–63 kg (135–138 lbs)</td><td class="th-score">500</td></tr>
+          <tr><td class="th-band">Near Elite (750)</td><td class="th-val">93–95 kg (205–210 lbs)</td><td class="th-score">750</td></tr>
+          <tr><td class="th-band">Elite (900)</td><td class="th-val">125–133 kg (275–293 lbs)</td><td class="th-score">900</td></tr>
+          <tr><td class="th-band">Near Maximum (1000)</td><td class="th-val">270–295 kg (595–650 lbs)</td><td class="th-score">1000</td></tr>
+        </table>
+      </div>
+
+      <div class="test-score-card">
+        <div class="test-score-card-header">
+          <div class="tsc-name">Pull-Ups — Max Reps</div>
+          <div class="tsc-meta">test_pullup_max · reps · higher = higher score</div>
+        </div>
+        <table class="threshold-table">
+          <tr class="avg"><td class="th-band">Average (500)</td><td class="th-val">5 reps</td><td class="th-score">500</td></tr>
+          <tr><td class="th-band">Near Elite (750)</td><td class="th-val">10 reps</td><td class="th-score">750</td></tr>
+          <tr><td class="th-band">Elite (900)</td><td class="th-val">20 reps</td><td class="th-score">900</td></tr>
+          <tr><td class="th-band">Near Maximum (1000)</td><td class="th-val">40+ reps</td><td class="th-score">1000</td></tr>
+        </table>
+      </div>
+
+      <div class="test-score-card">
+        <div class="test-score-card-header">
+          <div class="tsc-name">400m Sprint</div>
+          <div class="tsc-meta">test_400m_sprint · seconds · lower = higher score</div>
+        </div>
+        <table class="threshold-table">
+          <tr class="avg"><td class="th-band">Average (500)</td><td class="th-val">1:40–1:41 (100–101s)</td><td class="th-score">500</td></tr>
+          <tr><td class="th-band">Near Elite (750)</td><td class="th-val">1:15–1:16 (75–76s)</td><td class="th-score">750</td></tr>
+          <tr><td class="th-band">Elite (900)</td><td class="th-val">1:00–1:01 (60–61s)</td><td class="th-score">900</td></tr>
+          <tr><td class="th-band">Near Maximum (1000)</td><td class="th-val">0:42–0:44 (42–44s)</td><td class="th-score">1000</td></tr>
+        </table>
+      </div>
+
+      <div class="test-score-card">
+        <div class="test-score-card-header">
+          <div class="tsc-name">Wall Sit</div>
+          <div class="tsc-meta">test_wall_sit · seconds · higher = higher score</div>
+        </div>
+        <table class="threshold-table">
+          <tr class="avg"><td class="th-band">Average (500)</td><td class="th-val">1:30–1:31 (90–91s)</td><td class="th-score">500</td></tr>
+          <tr><td class="th-band">Near Elite (750)</td><td class="th-val">2:00–2:08 (120–128s)</td><td class="th-score">750</td></tr>
+          <tr><td class="th-band">Elite (900)</td><td class="th-val">4:00–4:12 (240–252s)</td><td class="th-score">900</td></tr>
+          <tr><td class="th-band">Near Maximum (1000)</td><td class="th-val">8:20+ (500s+)</td><td class="th-score">1000</td></tr>
+        </table>
+      </div>
+
+      <div class="test-score-card">
+        <div class="test-score-card-header">
+          <div class="tsc-name">Squat Thrust Jumps — 2 min</div>
+          <div class="tsc-meta">test_squat_thrust_jump_2min · reps · higher = higher score</div>
+        </div>
+        <table class="threshold-table">
+          <tr class="avg"><td class="th-band">Average (500)</td><td class="th-val">24 reps</td><td class="th-score">500</td></tr>
+          <tr><td class="th-band">Near Elite (750)</td><td class="th-val">36 reps</td><td class="th-score">750</td></tr>
+          <tr><td class="th-band">Elite (900)</td><td class="th-val">60 reps</td><td class="th-score">900</td></tr>
+          <tr><td class="th-band">Near Maximum (1000)</td><td class="th-val">100+ reps</td><td class="th-score">1000</td></tr>
+        </table>
+      </div>
+
+      <div class="test-score-card">
+        <div class="test-score-card-header">
+          <div class="tsc-name">5K Run</div>
+          <div class="tsc-meta">test_5k_run · seconds · lower = higher score</div>
+        </div>
+        <table class="threshold-table">
+          <tr class="avg"><td class="th-band">Average (500)</td><td class="th-val">25:00–25:11 (1500–1511s)</td><td class="th-score">500</td></tr>
+          <tr><td class="th-band">Near Elite (750)</td><td class="th-val">22:30–22:35 (1350–1355s)</td><td class="th-score">750</td></tr>
+          <tr><td class="th-band">Elite (900)</td><td class="th-val">19:30–19:41 (1170–1181s)</td><td class="th-score">900</td></tr>
+          <tr><td class="th-band">Near Maximum (1000)</td><td class="th-val">12:00–13:00 (720–780s)</td><td class="th-score">1000</td></tr>
+        </table>
+      </div>
+
+      <div class="test-score-card">
+        <div class="test-score-card-header">
+          <div class="tsc-name">Concept2 Row — 2000m</div>
+          <div class="tsc-meta">test_concept2_2k_row · seconds · lower = higher score</div>
+        </div>
+        <table class="threshold-table">
+          <tr class="avg"><td class="th-band">Average (500)</td><td class="th-val">8:30–8:31 (510–511s)</td><td class="th-score">500</td></tr>
+          <tr><td class="th-band">Near Elite (750)</td><td class="th-val">7:30–7:32 (450–452s)</td><td class="th-score">750</td></tr>
+          <tr><td class="th-band">Elite (900)</td><td class="th-val">7:00–7:02 (420–422s)</td><td class="th-score">900</td></tr>
+          <tr><td class="th-band">Near Maximum (1000)</td><td class="th-val">5:30–5:42 (330–342s)</td><td class="th-score">1000</td></tr>
+        </table>
+      </div>
+
+      <div class="test-score-card">
+        <div class="test-score-card-header">
+          <div class="tsc-name">Push-Ups — Max Reps</div>
+          <div class="tsc-meta">test_pushup_max · reps · higher = higher score</div>
+        </div>
+        <table class="threshold-table">
+          <tr class="avg"><td class="th-band">Average (500)</td><td class="th-val">25 reps</td><td class="th-score">500</td></tr>
+          <tr><td class="th-band">Near Elite (750)</td><td class="th-val">40 reps</td><td class="th-score">750</td></tr>
+          <tr><td class="th-band">Elite (900)</td><td class="th-val">60 reps</td><td class="th-score">900</td></tr>
+          <tr><td class="th-band">Near Maximum (1000)</td><td class="th-val">100+ reps</td><td class="th-score">1000</td></tr>
+        </table>
+      </div>
+
+      <div class="test-score-card">
+        <div class="test-score-card-header">
+          <div class="tsc-name">Medicine Ball Throw</div>
+          <div class="tsc-meta">test_medicine_ball_throw · meters · higher = higher score</div>
+        </div>
+        <table class="threshold-table">
+          <tr class="avg"><td class="th-band">Average (500)</td><td class="th-val">6.10–6.22m (20')</td><td class="th-score">500</td></tr>
+          <tr><td class="th-band">Near Elite (750)</td><td class="th-val">9.14–9.35m (30')</td><td class="th-score">750</td></tr>
+          <tr><td class="th-band">Elite (900)</td><td class="th-val">12.19–12.80m (40')</td><td class="th-score">900</td></tr>
+          <tr><td class="th-band">Near Maximum (1000)</td><td class="th-val">21.34–24.38m (70'+)</td><td class="th-score">1000</td></tr>
+        </table>
+      </div>
+
+      <div class="test-score-card">
+        <div class="test-score-card-header">
+          <div class="tsc-name">Plank Hold</div>
+          <div class="tsc-meta">test_plank_hold · seconds · higher = higher score</div>
+        </div>
+        <table class="threshold-table">
+          <tr class="avg"><td class="th-band">Average (500)</td><td class="th-val">1:30–1:31 (90–91s)</td><td class="th-score">500</td></tr>
+          <tr><td class="th-band">Near Elite (750)</td><td class="th-val">2:00–2:08 (120–128s)</td><td class="th-score">750</td></tr>
+          <tr><td class="th-band">Elite (900)</td><td class="th-val">4:00–4:12 (240–252s)</td><td class="th-score">900</td></tr>
+          <tr><td class="th-band">Near Maximum (1000)</td><td class="th-val">8:20+ (500s+)</td><td class="th-score">1000</td></tr>
+        </table>
+      </div>
+
+      <div class="test-score-card">
+        <div class="test-score-card-header">
+          <div class="tsc-name">Back Squat — 1 Rep Max</div>
+          <div class="tsc-meta">test_back_squat_1rm · kg · higher = higher score</div>
+        </div>
+        <table class="threshold-table">
+          <tr class="avg"><td class="th-band">Average (500)</td><td class="th-val">70–72 kg (155–160 lbs)</td><td class="th-score">500</td></tr>
+          <tr><td class="th-band">Near Elite (750)</td><td class="th-val">125–127 kg (275–280 lbs)</td><td class="th-score">750</td></tr>
+          <tr><td class="th-band">Elite (900)</td><td class="th-val">166–174 kg (365–383 lbs)</td><td class="th-score">900</td></tr>
+          <tr><td class="th-band">Near Maximum (1000)</td><td class="th-val">270–363 kg (595–800 lbs)</td><td class="th-score">1000</td></tr>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 6: WORKED EXAMPLE -->
+  <div class="spec-section">
+    <div class="spec-section-header">
+      <div class="label">Section 6</div>
+      <h2>Worked example</h2>
+      <p>A complete score calculation for a hypothetical athlete — showing every step from raw input to Absolute Score.</p>
+    </div>
+
+    <div class="example-block">
+      <h3>Hypothetical athlete — fit adult male, recreational athlete (5K Run as cardio choice)</h3>
+      <table class="example-table">
+        <thead>
+          <tr><th>Test</th><th>Result</th><th>Component</th><th>Score</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="ex-test">40 Yard Dash</td><td class="ex-val">5.10s</td><td class="ex-comp">Speed</td><td class="ex-score">890</td></tr>
+          <tr><td class="ex-test">Standing Long Jump</td><td class="ex-val">2.13m (7'0")</td><td class="ex-comp">Power</td><td class="ex-score">700</td></tr>
+          <tr><td class="ex-test">Shuttle Run — 60 Yards</td><td class="ex-val">14.80s</td><td class="ex-comp">Agility</td><td class="ex-score">710</td></tr>
+          <tr><td class="ex-test">Bench Press — 1RM</td><td class="ex-val">102 kg (225 lbs)</td><td class="ex-comp">Muscular Strength</td><td class="ex-score">780</td></tr>
+          <tr><td class="ex-test">Pull-Ups — Max Reps</td><td class="ex-val">12 reps</td><td class="ex-comp">Muscular Endurance</td><td class="ex-score">780</td></tr>
+          <tr><td class="ex-test">400m Sprint</td><td class="ex-val">72s (1:12)</td><td class="ex-comp">Muscular Endurance</td><td class="ex-score">780</td></tr>
+          <tr><td class="ex-test">Wall Sit</td><td class="ex-val">95s (1:35)</td><td class="ex-comp">Muscular Endurance</td><td class="ex-score">510</td></tr>
+          <tr><td class="ex-test">Squat Thrust Jumps</td><td class="ex-val">30 reps</td><td class="ex-comp">Muscular Endurance</td><td class="ex-score">640</td></tr>
+          <tr><td class="ex-test">5K Run</td><td class="ex-val">23:30 (1410s)</td><td class="ex-comp">Cardiovascular</td><td class="ex-score">720</td></tr>
+          <tr><td class="ex-test">Push-Ups — Max Reps</td><td class="ex-val">35 reps</td><td class="ex-comp">Muscular Endurance</td><td class="ex-score">675</td></tr>
+          <tr><td class="ex-test">Medicine Ball Throw</td><td class="ex-val">8.23m (27')</td><td class="ex-comp">Power</td><td class="ex-score">660</td></tr>
+          <tr><td class="ex-test">Plank Hold</td><td class="ex-val">110s (1:50)</td><td class="ex-comp">Muscular Endurance</td><td class="ex-score">570</td></tr>
+          <tr><td class="ex-test">Back Squat — 1RM</td><td class="ex-val">120 kg (264 lbs)</td><td class="ex-comp">Muscular Strength</td><td class="ex-score">740</td></tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top:20px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:6px;font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);line-height:1.9">
+        Speed component: 890 / 1 test = <strong style="color:var(--ink2)">890</strong><br>
+        Agility component: 710 / 1 test = <strong style="color:var(--ink2)">710</strong><br>
+        Power component: (700 + 660) / 2 tests = <strong style="color:var(--ink2)">680</strong><br>
+        Muscular Strength: (780 + 740) / 2 tests = <strong style="color:var(--ink2)">760</strong><br>
+        Muscular Endurance: (780 + 780 + 510 + 640 + 675 + 570) / 6 tests = <strong style="color:var(--ink2)">659</strong><br>
+        Cardiovascular: 720 / 1 test = <strong style="color:var(--ink2)">720</strong><br><br>
+        Absolute Score = (720×0.25) + (760×0.15) + (659×0.15) + (680×0.15) + (890×0.15) + (710×0.15)<br>
+        = 180 + 114 + 98.9 + 102 + 133.5 + 106.5 = <strong style="color:var(--teal);font-size:14px">735 — Exceptionally Fit</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7: CHANGELOG -->
+  <div class="spec-section">
+    <div class="spec-section-header">
+      <div class="label">Section 7</div>
+      <h2>Version history</h2>
+      <p>Changes to the scoring specification are documented here. Prior versions remain valid for results recorded under those versions.</p>
+    </div>
+    <div class="changelog">
+      <div class="changelog-row">
+        <div class="changelog-version">RFS30 v1.0</div>
+        <div class="changelog-date">Apr 2026</div>
+        <div class="changelog-note">Initial public release of open scoring specification. Component weights, scoring tables, aggregation method, and reference bands published in full. Specification matches live implementation in REALFITSCORE.com and REALFIT iOS app (TestFlight).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 8: DOWNLOAD / FEEDBACK -->
+  <div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:32px;display:grid;grid-template-columns:1fr 1fr;gap:24px">
+    <div>
+      <div style="font-size:16px;font-weight:600;color:var(--ink);margin-bottom:8px">Disagree with something?</div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:16px">If you think a scoring threshold is wrong, a component weight is unjustified, or an aggregation decision is flawed — tell us. This specification exists to be scrutinized. That's the point. Challenges to the methodology strengthen the standard.</p>
+      <a href="https://realfit.com/standards" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;background:var(--ink);color:#fff;border-radius:6px;font-size:13px;font-weight:500;text-decoration:none">Submit feedback via REALFIT.com →</a>
+    </div>
+    <div>
+      <div style="font-size:16px;font-weight:600;color:var(--ink);margin-bottom:8px">Build your own Score Set</div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:16px">This specification is a reference implementation showing how a Score Set should be built on FITDAT. Developers are encouraged to use it as a starting point — use the same tests, different weights, or entirely different scoring logic. The FITDAT library is the foundation either way.</p>
+      <a href="architecture.html" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;background:transparent;color:var(--teal);border:1px solid rgba(10,110,86,.3);border-radius:6px;font-size:13px;font-weight:500;text-decoration:none">Developer documentation →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer style="padding:28px 32px;border-top:1px solid var(--border);background:var(--surface2)">
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+    <div style="font-size:13px;color:var(--muted)">
+      <strong style="color:var(--ink)">FITDAT®</strong>
+      <span style="margin:0 8px;opacity:.4">·</span>
+      Governed by <a href="https://realfit.com" style="color:var(--muted);text-decoration:none">REALFIT®</a>
+      <span style="margin:0 8px;opacity:.4">·</span>
+      <a href="https://realfitscore.com" style="color:var(--muted);text-decoration:none">REALFITSCORE</a>
+      <span style="margin:0 8px;opacity:.4">·</span>
+      <a href="https://scoremy40.com" style="color:var(--muted);text-decoration:none">ScoreMy40</a>
+    </div>
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--faint)">RFS30 v1.0 · FITDAT® v1.1 · © 2026 REALFIT®</div>
+  </div>
+</footer>
+
+</body>
+</html>
