@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FITDAT® — The Open Fitness Test Library</title>
+<meta name="description" content="FITDAT® is the open test, protocol, and standards library for objective physical fitness measurement. Every test is fully specified before publication. Governed by REALFIT®.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --ink: #0d1117;
+  --ink2: #24292f;
+  --muted: #57606a;
+  --faint: #6e7781;
+  --border: #d0d7de;
+  --border-light: #eaeef2;
+  --surface: #ffffff;
+  --surface2: #f6f8fa;
+  --surface3: #eaeef2;
+  --teal: #0a6e56;
+  --teal-light: #e1f5ee;
+  --teal-mid: #1d9e75;
+  --blue: #0550ae;
+  --blue-light: #ddf4ff;
+  --amber: #9a6700;
+  --amber-light: #fff8c5;
+  --red: #a40e26;
+  --accent: #1d9e75;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink2);
+  background: var(--surface);
+}
+
+/* ── HEADER ── */
+header {
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 32px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.logo {
+  font-family: 'DM Mono', monospace;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+.logo sup {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--muted);
+  vertical-align: super;
+  margin-left: 1px;
+}
+
+nav { display: flex; align-items: center; gap: 4px; }
+
+.nav-link {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color .15s, background .15s;
+}
+.nav-link:hover { color: var(--ink); background: var(--surface2); }
+.nav-link.active { color: var(--ink); font-weight: 500; }
+
+.nav-divider { width: 1px; height: 20px; background: var(--border); margin: 0 4px; }
+
+.nav-badge {
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  transition: all .15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.nav-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+.nav-badge:hover { border-color: var(--accent); color: var(--teal); }
+
+/* ── HERO ── */
+.hero {
+  border-bottom: 1px solid var(--border-light);
+  padding: 80px 32px 72px;
+  background: var(--surface);
+}
+
+.hero-inner { max-width: 780px; margin: 0 auto; }
+
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--teal);
+  letter-spacing: 0.04em;
+  margin-bottom: 20px;
+  padding: 4px 10px;
+  background: var(--teal-light);
+  border-radius: 4px;
+  border: 1px solid rgba(10,110,86,0.15);
+}
+
+.hero h1 {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--teal);
+}
+
+.hero-lead {
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 620px;
+  margin-bottom: 36px;
+}
+
+.hero-lead strong { color: var(--ink2); font-weight: 500; }
+
+.hero-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+.btn-primary {
+  padding: 10px 22px;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: opacity .15s;
+  letter-spacing: 0.01em;
+}
+.btn-primary:hover { opacity: 0.85; }
+
+.btn-secondary {
+  padding: 10px 22px;
+  background: transparent;
+  color: var(--ink2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 400;
+  text-decoration: none;
+  transition: border-color .15s, background .15s;
+}
+.btn-secondary:hover { border-color: var(--ink2); background: var(--surface2); }
+
+/* ── PHILOSOPHY STRIP ── */
+.philosophy {
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  padding: 48px 32px;
+}
+
+.philosophy-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.philosophy-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 12px;
+}
+
+.philosophy-heading {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.philosophy-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.phil-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 22px;
+}
+
+.phil-card-icon {
+  width: 32px; height: 32px;
+  border-radius: 6px;
+  background: var(--teal-light);
+  border: 1px solid rgba(10,110,86,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.phil-card-icon svg { width: 16px; height: 16px; stroke: var(--teal); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+.phil-card h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.phil-card p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ── WHAT IS OUT OF SCOPE ── */
+.scope {
+  padding: 64px 32px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.scope-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+
+.scope-block h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+
+.scope-block .scope-sub {
+  font-size: 13px;
+  color: var(--faint);
+  margin-bottom: 20px;
+  font-family: 'DM Mono', monospace;
+}
+
+.scope-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+.scope-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--ink2);
+  line-height: 1.5;
+}
+
+.scope-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+.scope-dot.in { background: var(--teal-mid); }
+.scope-dot.out { background: var(--border); border: 1px solid var(--border); }
+
+.scope-list li.out-item { color: var(--muted); }
+
+.scope-note {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--amber-light);
+  border: 1px solid rgba(154,103,0,0.2);
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--amber);
+  line-height: 1.6;
+}
+
+/* ── ONTOLOGY ── */
+.ontology {
+  padding: 64px 32px;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+}
+
+.ontology-inner { max-width: 1100px; margin: 0 auto; }
+
+.section-header {
+  margin-bottom: 40px;
+}
+
+.section-header .label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 10px;
+}
+
+.section-header h2 {
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+
+.section-header p {
+  font-size: 15px;
+  color: var(--muted);
+  max-width: 620px;
+  line-height: 1.7;
+}
+
+.ontology-stack { display: flex; flex-direction: column; gap: 2px; }
+
+.onto-row {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color .15s;
+}
+
+.onto-row:hover { border-color: var(--teal-mid); }
+
+.onto-summary {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.onto-index {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--faint);
+  width: 48px;
+  text-align: center;
+  padding: 16px 0;
+  border-right: 1px solid var(--border-light);
+  flex-shrink: 0;
+}
+
+.onto-id {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--teal);
+  width: 180px;
+  padding: 16px 16px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border-light);
+}
+
+.onto-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  padding: 16px 20px;
+  flex: 1;
+}
+
+.onto-desc {
+  font-size: 13px;
+  color: var(--muted);
+  padding: 16px 20px;
+  flex: 2;
+}
+
+.onto-expand {
+  padding: 16px 20px;
+  font-size: 13px;
+  color: var(--faint);
+  flex-shrink: 0;
+  transition: color .15s;
+  user-select: none;
+}
+
+.onto-row:hover .onto-expand { color: var(--teal); }
+
+.onto-detail {
+  display: none;
+  border-top: 1px solid var(--border-light);
+  padding: 20px 20px 20px 48px;
+  background: var(--surface2);
+}
+
+.onto-detail.open { display: block; }
+
+.onto-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.onto-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.onto-field-key {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--faint);
+}
+
+.onto-field-val {
+  font-size: 13px;
+  color: var(--ink2);
+}
+
+.onto-note {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  border-left: 3px solid var(--teal-mid);
+}
+
+/* ── SPEC QUALITY ── */
+.spec-quality {
+  padding: 64px 32px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.spec-quality-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.spec-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.spec-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+  background: var(--surface);
+}
+
+.spec-card-layer {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 8px;
+}
+
+.spec-card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.spec-card p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.spec-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.spec-field-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+
+/* ── CTA STRIP ── */
+.cta-strip {
+  padding: 64px 32px;
+  background: var(--ink);
+  border-bottom: 1px solid var(--border);
+}
+
+.cta-strip-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.cta-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 28px 32px;
+  text-decoration: none;
+  display: block;
+  transition: border-color .15s, background .15s;
+}
+.cta-card:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.08); }
+.cta-card.featured { border-color: rgba(29,158,117,0.4); }
+.cta-card.featured:hover { border-color: var(--teal-mid); }
+
+.cta-card-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal-mid);
+  margin-bottom: 10px;
+}
+.cta-card.plain .cta-card-tag { color: rgba(255,255,255,0.35); }
+
+.cta-card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.cta-card p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.cta-card-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color .15s, gap .15s;
+}
+.cta-card:hover .cta-card-link { color: #fff; gap: 8px; }
+
+/* ── FOOTER ── */
+footer {
+  padding: 28px 32px;
+  border-top: 1px solid var(--border);
+  background: var(--surface2);
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-left { font-size: 13px; color: var(--muted); }
+.footer-left a { color: var(--muted); text-decoration: none; transition: color .15s; }
+.footer-left a:hover { color: var(--ink); }
+.footer-sep { margin: 0 8px; opacity: 0.4; }
+
+.footer-right {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--faint);
+  letter-spacing: 0.04em;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .header-inner { padding: 0 16px; }
+  nav .nav-link:not(.nav-link-keep) { display: none; }
+  .hero { padding: 48px 20px; }
+  .philosophy-inner { grid-template-columns: 1fr; }
+  .philosophy-grid { grid-template-columns: 1fr; }
+  .scope-inner { grid-template-columns: 1fr; }
+  .spec-grid { grid-template-columns: 1fr; }
+  .cta-strip-inner { grid-template-columns: 1fr; }
+  .onto-desc { display: none; }
+  .onto-id { width: 120px; }
+  footer { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo">FITDAT<sup>®</sup></a>
+    <nav>
+      <a href="library.html" class="nav-link nav-link-keep">Library</a>
+      <a href="demo.html" class="nav-link nav-link-keep">Demo</a>
+      <div class="nav-divider"></div>
+      <a href="https://realfit.com" target="_blank" rel="noopener" class="nav-badge">Governed by REALFIT®</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-kicker">FITDAT® v1.1 · Open standard · Governed by REALFIT®</div>
+    <h1>The open library for<br><em>objective fitness testing</em></h1>
+    <p class="hero-lead">
+      FITDAT® defines tests, protocols, metrics, and standards for physical fitness measurement.
+      Every test is <strong>fully specified before publication</strong> — definition, protocol, normalization rules, fitness components, and population context. No exceptions.
+    </p>
+    <div class="hero-actions">
+      <a href="library.html" class="btn-primary">Browse the test library →</a>
+      <a href="demo.html" class="btn-secondary">Try the scoring demo</a>
+    </div>
+  </div>
+</section>
+
+<section class="philosophy">
+  <div class="philosophy-inner">
+    <div>
+      <div class="philosophy-label">Core principles</div>
+      <div class="philosophy-heading">What FITDAT is — and isn't</div>
+    </div>
+    <div class="philosophy-grid">
+      <div class="phil-card">
+        <div class="phil-card-icon">
+          <svg viewBox="0 0 16 16"><path d="M8 2L2 6v8h4v-4h4v4h4V6L8 2z"/></svg>
+        </div>
+        <h3>Objective performance only</h3>
+        <p>FITDAT covers measurable fitness performance — speed, strength, power, endurance, agility. Body composition, subjective assessments, and self-reported data are out of scope.</p>
+      </div>
+      <div class="phil-card">
+        <div class="phil-card-icon">
+          <svg viewBox="0 0 16 16"><path d="M2 4h12M2 8h8M2 12h10"/></svg>
+        </div>
+        <h3>Fully specified or not published</h3>
+        <p>Every test in the library has a complete TestDefinition, TestProtocol, and TestContext before it appears here. The library grows constantly — but never at the expense of specification quality.</p>
+      </div>
+      <div class="phil-card">
+        <div class="phil-card-icon">
+          <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>
+        </div>
+        <h3>Tests are facts, not judgments</h3>
+        <p>FITDAT defines what was measured and how. Whether a result is "good" is the job of a Score Set — not the library. This separation is intentional and load-bearing.</p>
+      </div>
+      <div class="phil-card">
+        <div class="phil-card-icon">
+          <svg viewBox="0 0 16 16"><path d="M4 2h8v2l-2 4 2 4v2H4v-2l2-4-2-4V2z"/></svg>
+        </div>
+        <h3>Open infrastructure</h3>
+        <p>FITDAT definitions are open for any developer to build Score Sets on. Scoring curves, component weights, and reference bands are proprietary to each Score Set — FITDAT defines only the foundation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="scope">
+  <div class="scope-inner">
+    <div class="scope-block">
+      <h2>What FITDAT covers</h2>
+      <div class="scope-sub">in.scope</div>
+      <ul class="scope-list">
+        <li><span class="scope-dot in"></span>Sprint and dash tests — 10 yard to 400m</li>
+        <li><span class="scope-dot in"></span>Maximal strength — 1RM barbell lifts</li>
+        <li><span class="scope-dot in"></span>Muscular endurance — max reps, timed holds</li>
+        <li><span class="scope-dot in"></span>Power — jumps, throws, explosive movement</li>
+        <li><span class="scope-dot in"></span>Cardiovascular endurance — runs, rows, timed events</li>
+        <li><span class="scope-dot in"></span>Agility — shuttle runs, directional change tests</li>
+        <li><span class="scope-dot in"></span>Any test that produces an objective, repeatable measurement</li>
+      </ul>
+    </div>
+    <div class="scope-block">
+      <h2>What FITDAT does not cover</h2>
+      <div class="scope-sub">out.of.scope</div>
+      <ul class="scope-list">
+        <li class="out-item"><span class="scope-dot out"></span>Body composition — BMI, body fat percentage, measurements</li>
+        <li class="out-item"><span class="scope-dot out"></span>Subjective assessments — movement screens, pain scales, perceived exertion</li>
+        <li class="out-item"><span class="scope-dot out"></span>Self-reported data — activity logs, sleep tracking, nutrition</li>
+        <li class="out-item"><span class="scope-dot out"></span>Skill tests — sport-specific technique assessments</li>
+        <li class="out-item"><span class="scope-dot out"></span>Medical or clinical evaluations of any kind</li>
+      </ul>
+      <div class="scope-note">
+        The boundary is simple: if it cannot be measured objectively and reproduced by a different administrator with the same result, it does not belong in FITDAT.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ontology">
+  <div class="ontology-inner">
+    <div class="section-header">
+      <div class="label">Data model</div>
+      <h2>Six concepts. Every test uses all of them.</h2>
+      <p>The FITDAT ontology defines exactly what each concept means and how it relates to the others. Click any row to see what fields it contains.</p>
+    </div>
+
+    <div class="ontology-stack">
+
+      <div class="onto-row" onclick="toggleOnto(this)">
+        <div class="onto-summary">
+          <div class="onto-index">01</div>
+          <div class="onto-id">TestDefinition</div>
+          <div class="onto-name">What is being measured</div>
+          <div class="onto-desc">The capability construct, input type, canonical unit, and scoring direction</div>
+          <div class="onto-expand">+ expand</div>
+        </div>
+        <div class="onto-detail">
+          <div class="onto-fields">
+            <div class="onto-field"><div class="onto-field-key">testId</div><div class="onto-field-val">Unique identifier — e.g. test_40yd_dash</div></div>
+            <div class="onto-field"><div class="onto-field-key">testName</div><div class="onto-field-val">Display name — e.g. 40 Yard Dash</div></div>
+            <div class="onto-field"><div class="onto-field-key">componentId</div><div class="onto-field-val">Primary fitness component measured</div></div>
+            <div class="onto-field"><div class="onto-field-key">inputType</div><div class="onto-field-val">secondsOnly · minutesSeconds · repetitions · weight · distance</div></div>
+            <div class="onto-field"><div class="onto-field-key">canonicalUnit</div><div class="onto-field-val">The unit scores are calculated in — seconds, kg, meters, reps</div></div>
+            <div class="onto-field"><div class="onto-field-key">scoringDirection</div><div class="onto-field-val">Lower = higher score OR Higher = higher score</div></div>
+            <div class="onto-field"><div class="onto-field-key">normalizationRuleId</div><div class="onto-field-val">Reference to unit conversion rule, if required</div></div>
+            <div class="onto-field"><div class="onto-field-key">replacementGroupId</div><div class="onto-field-val">Which group this test belongs to for battery substitution</div></div>
+          </div>
+          <div class="onto-note">TestDefinition describes the construct — not the execution. Two tests with identical protocols but different constructs (e.g. Bench Press 1RM vs Back Squat 1RM) are separate TestDefinitions.</div>
+        </div>
+      </div>
+
+      <div class="onto-row" onclick="toggleOnto(this)">
+        <div class="onto-summary">
+          <div class="onto-index">02</div>
+          <div class="onto-id">TestProtocol</div>
+          <div class="onto-name">How it is executed</div>
+          <div class="onto-desc">Equipment, start conditions, measurement standard, and certification eligibility</div>
+          <div class="onto-expand">+ expand</div>
+        </div>
+        <div class="onto-detail">
+          <div class="onto-fields">
+            <div class="onto-field"><div class="onto-field-key">protocolId</div><div class="onto-field-val">Versioned protocol identifier</div></div>
+            <div class="onto-field"><div class="onto-field-key">description</div><div class="onto-field-val">Full execution instructions in plain language</div></div>
+            <div class="onto-field"><div class="onto-field-key">equipmentRequired</div><div class="onto-field-val">All required equipment listed explicitly</div></div>
+            <div class="onto-field"><div class="onto-field-key">startCondition</div><div class="onto-field-val">Exact starting position and conditions</div></div>
+            <div class="onto-field"><div class="onto-field-key">timingMethod</div><div class="onto-field-val">hand · electronic · n/a</div></div>
+            <div class="onto-field"><div class="onto-field-key">measurementStandard</div><div class="onto-field-val">Precision and attempt rules — e.g. nearest 0.01s, best of two</div></div>
+            <div class="onto-field"><div class="onto-field-key">certificationEligible</div><div class="onto-field-val">Whether a result can be REALFIT certified</div></div>
+            <div class="onto-field"><div class="onto-field-key">version</div><div class="onto-field-val">Protocol version — protocols are immutable once published</div></div>
+          </div>
+          <div class="onto-note">A TestDefinition may have multiple Protocols if the construct remains identical. Protocol changes are versioned — old protocols are never deleted, ensuring historical results remain reproducible.</div>
+        </div>
+      </div>
+
+      <div class="onto-row" onclick="toggleOnto(this)">
+        <div class="onto-summary">
+          <div class="onto-index">03</div>
+          <div class="onto-id">TestContext</div>
+          <div class="onto-name">Who and where it applies</div>
+          <div class="onto-desc">Sport tags, setting tags, population tags, and ecosystem relevance scores</div>
+          <div class="onto-expand">+ expand</div>
+        </div>
+        <div class="onto-detail">
+          <div class="onto-fields">
+            <div class="onto-field"><div class="onto-field-key">sportTags</div><div class="onto-field-val">Sports and activities this test is relevant to</div></div>
+            <div class="onto-field"><div class="onto-field-key">settingTags</div><div class="onto-field-val">gym · field · track · home · outdoor · water</div></div>
+            <div class="onto-field"><div class="onto-field-key">equipmentProfile</div><div class="onto-field-val">none · minimal · standard · specialized</div></div>
+            <div class="onto-field"><div class="onto-field-key">populationTags</div><div class="onto-field-val">pop_youth · pop_general_adult · pop_military · pop_elite · pop_masters_40+ etc.</div></div>
+            <div class="onto-field"><div class="onto-field-key">ecosystemRelevance</div><div class="onto-field-val">Relevance score 0–1 per context type: member, team, organization, affiliate, official</div></div>
+            <div class="onto-field"><div class="onto-field-key">coachingNotes</div><div class="onto-field-val">Implementation tips for administrators</div></div>
+          </div>
+          <div class="onto-note">TestContext makes the library searchable and filterable. Developers building Score Sets can query by sport, population, or setting to find relevant tests.</div>
+        </div>
+      </div>
+
+      <div class="onto-row" onclick="toggleOnto(this)">
+        <div class="onto-summary">
+          <div class="onto-index">04</div>
+          <div class="onto-id">NormalizationRule</div>
+          <div class="onto-name">How inputs become canonical</div>
+          <div class="onto-desc">Unit conversion — imperial to metric, mm:ss to seconds</div>
+          <div class="onto-expand">+ expand</div>
+        </div>
+        <div class="onto-detail">
+          <div class="onto-fields">
+            <div class="onto-field"><div class="onto-field-key">ruleId</div><div class="onto-field-val">e.g. norm_lbs_to_kg · norm_ftin_to_m · norm_mmss_to_seconds</div></div>
+            <div class="onto-field"><div class="onto-field-key">inputUnit</div><div class="onto-field-val">The unit entered by the user</div></div>
+            <div class="onto-field"><div class="onto-field-key">canonicalUnit</div><div class="onto-field-val">The unit used for scoring</div></div>
+            <div class="onto-field"><div class="onto-field-key">conversionFormula</div><div class="onto-field-val">Explicit arithmetic formula — no ambiguity</div></div>
+            <div class="onto-field"><div class="onto-field-key">precision</div><div class="onto-field-val">Rounding rule applied after conversion</div></div>
+            <div class="onto-field"><div class="onto-field-key">appliesTo</div><div class="onto-field-val">List of testIds that use this rule</div></div>
+          </div>
+          <div class="onto-note">Three rules cover the entire current library: lbs→kg (strength tests), feet+inches→meters (jump and throw tests), mm:ss→seconds (timed tests). Scores are always calculated in canonical units.</div>
+        </div>
+      </div>
+
+      <div class="onto-row" onclick="toggleOnto(this)">
+        <div class="onto-summary">
+          <div class="onto-index">05</div>
+          <div class="onto-id">FitnessComponent</div>
+          <div class="onto-name">What quality is expressed</div>
+          <div class="onto-desc">The six measurable components of physical fitness</div>
+          <div class="onto-expand">+ expand</div>
+        </div>
+        <div class="onto-detail">
+          <div class="onto-fields">
+            <div class="onto-field"><div class="onto-field-key">muscular_strength</div><div class="onto-field-val">Maximal force production against external resistance</div></div>
+            <div class="onto-field"><div class="onto-field-key">muscular_endurance</div><div class="onto-field-val">Sustained muscular output over repeated efforts or time</div></div>
+            <div class="onto-field"><div class="onto-field-key">cardiovascular_endurance</div><div class="onto-field-val">Sustained aerobic output over long duration</div></div>
+            <div class="onto-field"><div class="onto-field-key">power</div><div class="onto-field-val">Explosive force production — rate of work over distance</div></div>
+            <div class="onto-field"><div class="onto-field-key">speed</div><div class="onto-field-val">Explosive movement and sprint capability</div></div>
+            <div class="onto-field"><div class="onto-field-key">agility</div><div class="onto-field-val">Directional change speed and reactive movement</div></div>
+          </div>
+          <div class="onto-note">Each test has one primary FitnessComponent. Score Sets may assign weights across components — but FITDAT only defines which component a test predominantly expresses.</div>
+        </div>
+      </div>
+
+      <div class="onto-row" onclick="toggleOnto(this)">
+        <div class="onto-summary">
+          <div class="onto-index">06</div>
+          <div class="onto-id">ReplacementGroup</div>
+          <div class="onto-name">Which tests are interchangeable</div>
+          <div class="onto-desc">Structural equivalence groups for battery substitution</div>
+          <div class="onto-expand">+ expand</div>
+        </div>
+        <div class="onto-detail">
+          <div class="onto-fields">
+            <div class="onto-field"><div class="onto-field-key">replacementGroupId</div><div class="onto-field-val">e.g. rg_cardio_long · rg_upper_push_strength</div></div>
+            <div class="onto-field"><div class="onto-field-key">componentId</div><div class="onto-field-val">The component all tests in this group measure</div></div>
+            <div class="onto-field"><div class="onto-field-key">description</div><div class="onto-field-val">Plain language rationale for why these tests are equivalent</div></div>
+            <div class="onto-field"><div class="onto-field-key">allowedTestIds</div><div class="onto-field-val">All test IDs eligible for this group</div></div>
+            <div class="onto-field"><div class="onto-field-key">defaultTestId</div><div class="onto-field-val">The preferred test when no preference is specified</div></div>
+          </div>
+          <div class="onto-note">ReplacementGroups define structural equivalence — they do not authorize substitution in any specific battery. Whether one test can substitute for another within a Score Set is governed by that Score Set's specification.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="spec-quality">
+  <div class="spec-quality-inner">
+    <div class="section-header">
+      <div class="label">Specification depth</div>
+      <h2>What "fully specified" actually means</h2>
+      <p>Every test in the FITDAT library passes through three layers of specification before it is published. This is the bar.</p>
+    </div>
+    <div class="spec-grid">
+      <div class="spec-card">
+        <div class="spec-card-layer">Layer 1</div>
+        <h3>TestDefinition</h3>
+        <p>What the test measures, how input is collected, what unit scoring uses, and which fitness component it expresses.</p>
+        <div class="spec-fields">
+          <span class="spec-field-tag">testId</span>
+          <span class="spec-field-tag">componentId</span>
+          <span class="spec-field-tag">inputType</span>
+          <span class="spec-field-tag">canonicalUnit</span>
+          <span class="spec-field-tag">scoringDirection</span>
+          <span class="spec-field-tag">normalizationRuleId</span>
+          <span class="spec-field-tag">replacementGroupId</span>
+          <span class="spec-field-tag">isActive</span>
+          <span class="spec-field-tag">version</span>
+        </div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-card-layer">Layer 2</div>
+        <h3>TestProtocol</h3>
+        <p>Exact execution instructions — equipment, start position, timing method, measurement precision, attempt rules, and certification eligibility.</p>
+        <div class="spec-fields">
+          <span class="spec-field-tag">protocolId</span>
+          <span class="spec-field-tag">description</span>
+          <span class="spec-field-tag">equipmentRequired</span>
+          <span class="spec-field-tag">startCondition</span>
+          <span class="spec-field-tag">timingMethod</span>
+          <span class="spec-field-tag">measurementStandard</span>
+          <span class="spec-field-tag">certificationEligible</span>
+          <span class="spec-field-tag">version</span>
+        </div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-card-layer">Layer 3</div>
+        <h3>TestContext</h3>
+        <p>Discoverability metadata — sports, settings, equipment profile, population tags, and ecosystem relevance scores across five deployment contexts.</p>
+        <div class="spec-fields">
+          <span class="spec-field-tag">sportTags</span>
+          <span class="spec-field-tag">settingTags</span>
+          <span class="spec-field-tag">equipmentProfile</span>
+          <span class="spec-field-tag">populationTags</span>
+          <span class="spec-field-tag">ecosystemRelevance.member</span>
+          <span class="spec-field-tag">ecosystemRelevance.team</span>
+          <span class="spec-field-tag">ecosystemRelevance.organization</span>
+          <span class="spec-field-tag">coachingNotes</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-strip">
+  <div class="cta-strip-inner">
+    <a href="library.html" class="cta-card featured">
+      <div class="cta-card-tag">Test library</div>
+      <h3>Browse all 14 specified tests</h3>
+      <p>Full TestDefinition, TestProtocol, and TestContext for each test in the REALFIT Absolute Score™ battery. Filter by component, sport, or population.</p>
+      <div class="cta-card-link">Open the library →</div>
+    </a>
+    <a href="demo.html" class="cta-card plain">
+      <div class="cta-card-tag">Live demo</div>
+      <h3>Try the scoring engine</h3>
+      <p>Pick any test, enter a result, and see the REALFIT Absolute Score — plus the raw JSON payload and a copy-ready API snippet showing exactly what a Score Set returns.</p>
+      <div class="cta-card-link">Try the demo →</div>
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <strong style="color:var(--ink)">FITDAT®</strong>
+      <span class="footer-sep">·</span>
+      Governed by <a href="https://realfit.com">REALFIT®</a>
+      <span class="footer-sep">·</span>
+      <a href="https://realfitscore.com">REALFITSCORE</a>
+      <span class="footer-sep">·</span>
+      <a href="https://scoremy40.com">ScoreMy40</a>
+    </div>
+    <div class="footer-right">FITDAT® v1.1 · © 2026 REALFIT®</div>
+  </div>
+</footer>
+
+<script>
+function toggleOnto(row) {
+  const detail = row.querySelector('.onto-detail');
+  const expand = row.querySelector('.onto-expand');
+  const isOpen = detail.classList.contains('open');
+  detail.classList.toggle('open', !isOpen);
+  expand.textContent = isOpen ? '+ expand' : '− collapse';
+}
+</script>
+</body>
+</html>

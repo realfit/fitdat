@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FITDAT® Score Sets — Standards Built on FITDAT</title>
+<meta name="description" content="Score Sets built on FITDAT® — REALFIT Absolute Score, Army AFT, Marine Corps PFT, NFL Combine. See which FITDAT tests each standard uses and what it takes to pass.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0d1117;--ink2:#24292f;--muted:#57606a;--faint:#6e7781;
+  --border:#d0d7de;--border-light:#eaeef2;
+  --surface:#ffffff;--surface2:#f6f8fa;--surface3:#eaeef2;
+  --teal:#0a6e56;--teal-light:#e1f5ee;--teal-mid:#1d9e75;
+  --blue:#0550ae;--blue-light:#ddf4ff;
+  --amber:#9a6700;--amber-light:#fff8c5;
+  --red:#a40e26;--red-light:#ffebe9;
+  --purple:#5a3e9e;--purple-light:#f0ebff;
+  --green:#1a7f37;--green-light:#dcffe4;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;color:var(--ink2);background:var(--surface)}
+
+header{border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:100}
+.header-inner{max-width:1100px;margin:0 auto;padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'DM Mono',monospace;font-size:17px;font-weight:500;color:var(--ink);text-decoration:none;letter-spacing:-0.02em}
+.logo sup{font-size:10px;font-weight:400;color:var(--muted);vertical-align:super;margin-left:1px}
+nav{display:flex;align-items:center;gap:4px}
+.nav-link{padding:6px 12px;border-radius:6px;font-size:14px;color:var(--muted);text-decoration:none;transition:color .15s,background .15s}
+.nav-link:hover{color:var(--ink);background:var(--surface2)}
+.nav-link.active{color:var(--ink);font-weight:500}
+.nav-divider{width:1px;height:20px;background:var(--border);margin:0 4px}
+.nav-badge{padding:5px 12px;border-radius:6px;border:1px solid var(--border);font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;transition:all .15s;display:flex;align-items:center;gap:6px}
+.nav-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal-mid);flex-shrink:0}
+.nav-badge:hover{border-color:var(--teal-mid);color:var(--teal)}
+
+.page-header{padding:40px 32px 32px;border-bottom:1px solid var(--border-light)}
+.page-header-inner{max-width:1100px;margin:0 auto}
+.breadcrumb{font-size:13px;color:var(--muted);margin-bottom:12px}
+.breadcrumb a{color:var(--muted);text-decoration:none}.breadcrumb a:hover{color:var(--ink)}
+.breadcrumb span{margin:0 6px;opacity:.5}
+.page-header h1{font-size:28px;font-weight:600;color:var(--ink);letter-spacing:-0.02em;margin-bottom:8px}
+.page-header p{font-size:15px;color:var(--muted);max-width:680px;line-height:1.7}
+
+.concept-strip{background:var(--surface2);border-bottom:1px solid var(--border);padding:20px 32px}
+.concept-inner{max-width:1100px;margin:0 auto;display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.concept-box{flex:1;min-width:200px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px}
+.concept-box-label{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+.concept-box p{font-size:13px;color:var(--muted);line-height:1.5}
+.concept-arrow{display:flex;align-items:center;padding-top:14px;color:var(--border);font-size:18px;flex-shrink:0}
+
+.content{max-width:1100px;margin:0 auto;padding:40px 32px 80px}
+
+/* Score Set cards */
+.ss-grid{display:flex;flex-direction:column;gap:32px}
+
+.ss-card{border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.ss-card.flagship{border-color:rgba(29,158,117,.3)}
+
+.ss-header{padding:24px 28px;display:flex;align-items:flex-start;gap:20px;cursor:pointer;background:var(--surface)}
+.ss-header:hover{background:var(--surface2)}
+
+.ss-icon{width:48px;height:48px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;font-family:'DM Mono',monospace;font-weight:500;letter-spacing:-0.05em}
+.ss-icon.realfit{background:var(--teal-light);color:var(--teal);border:1px solid rgba(10,110,86,.15);font-size:13px}
+.ss-icon.army{background:var(--amber-light);color:var(--amber);border:1px solid rgba(154,103,0,.15);font-size:12px}
+.ss-icon.marines{background:var(--red-light);color:var(--red);border:1px solid rgba(164,14,38,.15);font-size:12px}
+.ss-icon.nfl{background:var(--blue-light);color:var(--blue);border:1px solid rgba(5,80,174,.15);font-size:12px}
+
+.ss-meta{flex:1}
+.ss-eyebrow{font-family:'DM Mono',monospace;font-size:11px;color:var(--faint);letter-spacing:.06em;margin-bottom:4px}
+.ss-name{font-size:20px;font-weight:600;color:var(--ink);letter-spacing:-0.01em;margin-bottom:6px}
+.ss-desc{font-size:14px;color:var(--muted);line-height:1.6;max-width:600px}
+.ss-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.ss-badge{font-size:11px;padding:3px 8px;border-radius:4px;font-family:'DM Mono',monospace}
+.ss-badge.flagship-badge{background:var(--teal-light);color:var(--teal);border:1px solid rgba(10,110,86,.15)}
+.ss-badge.reference{background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
+.ss-badge.military{background:var(--amber-light);color:var(--amber);border:1px solid rgba(154,103,0,.15)}
+.ss-badge.sport{background:var(--blue-light);color:var(--blue);border:1px solid rgba(5,80,174,.15)}
+.ss-badge.passrate{background:var(--red-light);color:var(--red);border:1px solid rgba(164,14,38,.15)}
+
+.ss-toggle{font-size:13px;color:var(--faint);flex-shrink:0;margin-top:4px;user-select:none;transition:color .15s}
+.ss-card:hover .ss-toggle{color:var(--teal)}
+
+.ss-body{display:none;border-top:1px solid var(--border-light)}
+.ss-body.open{display:block}
+
+.ss-inner{padding:24px 28px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+
+.ss-section-title{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
+
+/* Events table */
+.events-table{width:100%;border-collapse:collapse;font-size:13px}
+.events-table th{text-align:left;font-weight:500;color:var(--muted);font-size:12px;padding:6px 10px;border-bottom:1px solid var(--border);background:var(--surface2)}
+.events-table td{padding:9px 10px;border-bottom:1px solid var(--border-light);vertical-align:top}
+.events-table tr:last-child td{border-bottom:none}
+.events-table .event-name{font-weight:500;color:var(--ink2)}
+.events-table .event-fitdat{font-family:'DM Mono',monospace;font-size:11px;color:var(--teal)}
+.events-table .event-standard{color:var(--muted);font-size:12px}
+.events-table .event-score{font-family:'DM Mono',monospace;font-size:12px;color:var(--ink2)}
+
+/* Standards ladder */
+.standards-ladder{display:flex;flex-direction:column;gap:4px}
+.std-rung{display:flex;gap:10px;align-items:flex-start;padding:8px 12px;border-radius:6px;font-size:13px}
+.std-rung-label{font-weight:500;color:var(--ink2);flex:1}
+.std-rung-val{font-family:'DM Mono',monospace;font-size:12px;text-align:right;flex-shrink:0}
+.std-rung.top{background:var(--green-light);color:var(--green)}.std-rung.top .std-rung-val{color:var(--green)}
+.std-rung.high{background:var(--teal-light)}.std-rung.high .std-rung-label{color:var(--teal)}.std-rung.high .std-rung-val{color:var(--teal)}
+.std-rung.mid{background:var(--blue-light)}.std-rung.mid .std-rung-label{color:var(--blue)}.std-rung.mid .std-rung-val{color:var(--blue)}
+.std-rung.pass{background:var(--amber-light)}.std-rung.pass .std-rung-label{color:var(--amber)}.std-rung.pass .std-rung-val{color:var(--amber)}
+.std-rung.fail{background:var(--red-light)}.std-rung.fail .std-rung-label{color:var(--red)}.std-rung.fail .std-rung-val{color:var(--red)}
+
+/* Reality check box */
+.reality-box{grid-column:1/-1;padding:16px 20px;border-radius:8px;font-size:14px;line-height:1.7;border-left:3px solid}
+.reality-box.military{background:var(--amber-light);border-color:var(--amber);color:var(--amber)}
+.reality-box.sport{background:var(--blue-light);border-color:var(--blue);color:var(--blue)}
+.reality-box.flagship{background:var(--teal-light);border-color:var(--teal-mid);color:var(--teal)}
+.reality-box strong{font-weight:600}
+
+.fitdat-ref-note{grid-column:1/-1;padding:12px 16px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;font-size:13px;color:var(--muted);line-height:1.6}
+.fitdat-ref-note a{color:var(--teal);text-decoration:none}.fitdat-ref-note a:hover{text-decoration:underline}
+
+.ss-footer-bar{padding:12px 28px;background:var(--surface2);border-top:1px solid var(--border-light);font-family:'DM Mono',monospace;font-size:11px;color:var(--faint);display:flex;gap:20px;flex-wrap:wrap}
+
+/* Build your own CTA */
+.build-cta{margin-top:48px;padding:40px;background:var(--ink);border-radius:12px;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center}
+.build-cta h2{font-size:22px;font-weight:600;color:#fff;letter-spacing:-0.01em;margin-bottom:8px}
+.build-cta p{font-size:14px;color:rgba(255,255,255,.5);line-height:1.7;max-width:520px}
+.build-cta-btn{padding:12px 24px;background:var(--teal-mid);color:#fff;border-radius:6px;font-size:14px;font-weight:500;text-decoration:none;white-space:nowrap;transition:opacity .15s;flex-shrink:0}
+.build-cta-btn:hover{opacity:.88}
+
+@media(max-width:768px){
+  .header-inner{padding:0 16px}
+  nav .nav-link:not(.nav-link-keep){display:none}
+  .concept-arrow{display:none}
+  .ss-inner{grid-template-columns:1fr}
+  .build-cta{grid-template-columns:1fr}
+  .content{padding:24px 16px 60px}
+  .page-header{padding:32px 16px 24px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">FITDAT<sup>®</sup></a>
+    <nav>
+      <a href="library.html" class="nav-link nav-link-keep">Library</a>
+      <a href="scoresets.html" class="nav-link nav-link-keep active">Score Sets</a>
+      <a href="demo.html" class="nav-link nav-link-keep">Demo</a>
+      <div class="nav-divider"></div>
+      <a href="https://realfit.com" target="_blank" rel="noopener" class="nav-badge">Governed by REALFIT®</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb"><a href="index.html">FITDAT®</a><span>/</span>Score Sets</div>
+    <h1>Score Sets built on FITDAT</h1>
+    <p>A Score Set takes FITDAT test definitions and applies its own scoring logic, component weights, and standards. FITDAT defines what was measured and how — the Score Set decides what it means. Below are four Score Sets that use FITDAT tests, from the REALFIT Absolute Score to widely recognized military and professional standards.</p>
+  </div>
+</div>
+
+<div class="concept-strip">
+  <div class="concept-inner">
+    <div class="concept-box">
+      <div class="concept-box-label">FITDAT defines</div>
+      <p>The test, the protocol, the unit, the normalization rule. Immutable facts.</p>
+    </div>
+    <div class="concept-arrow">→</div>
+    <div class="concept-box">
+      <div class="concept-box-label">Score Set applies</div>
+      <p>Its own scoring curve, component weights, passing thresholds, and reference bands.</p>
+    </div>
+    <div class="concept-arrow">→</div>
+    <div class="concept-box">
+      <div class="concept-box-label">Result is</div>
+      <p>A reproducible, auditable score with known provenance — both the measurement and the interpretation fully declared.</p>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="ss-grid">
+
+    <!-- REALFIT ABSOLUTE SCORE -->
+    <div class="ss-card flagship">
+      <div class="ss-header" onclick="toggleSS(this)">
+        <div class="ss-icon realfit">RFS</div>
+        <div class="ss-meta">
+          <div class="ss-eyebrow">Flagship Score Set · Governed by REALFIT®</div>
+          <div class="ss-name">REALFIT Absolute Score™</div>
+          <div class="ss-desc">The first Score Set built on FITDAT. A single 0–1000 score across all six fitness components using all 14 FITDAT battery tests. Designed for any population, any age, any fitness level.</div>
+          <div class="ss-badges">
+            <span class="ss-badge flagship-badge">REALFIT certified</span>
+            <span class="ss-badge reference">14 tests</span>
+            <span class="ss-badge reference">6 components</span>
+            <span class="ss-badge reference">0–1000 scale</span>
+            <span class="ss-badge reference">General population</span>
+          </div>
+        </div>
+        <div class="ss-toggle">+ expand</div>
+      </div>
+      <div class="ss-body">
+        <div class="ss-inner">
+          <div>
+            <div class="ss-section-title">Tests used</div>
+            <table class="events-table">
+              <tr><th>Test</th><th>FITDAT ID</th><th>Component</th></tr>
+              <tr><td class="event-name">40 Yard Dash</td><td class="event-fitdat">test_40yd_dash</td><td class="event-standard">Speed</td></tr>
+              <tr><td class="event-name">Standing Long Jump</td><td class="event-fitdat">test_standing_long_jump</td><td class="event-standard">Power</td></tr>
+              <tr><td class="event-name">Shuttle Run — 60 Yards</td><td class="event-fitdat">test_shuttle_60yd</td><td class="event-standard">Agility</td></tr>
+              <tr><td class="event-name">Bench Press — 1RM</td><td class="event-fitdat">test_bench_press_1rm</td><td class="event-standard">Muscular strength</td></tr>
+              <tr><td class="event-name">Pull-Ups — Max Reps</td><td class="event-fitdat">test_pullup_max</td><td class="event-standard">Muscular endurance</td></tr>
+              <tr><td class="event-name">400m Sprint</td><td class="event-fitdat">test_400m_sprint</td><td class="event-standard">Muscular endurance</td></tr>
+              <tr><td class="event-name">Wall Sit</td><td class="event-fitdat">test_wall_sit</td><td class="event-standard">Muscular endurance</td></tr>
+              <tr><td class="event-name">Squat Thrust Jumps — 2 min</td><td class="event-fitdat">test_squat_thrust_jump_2min</td><td class="event-standard">Muscular endurance</td></tr>
+              <tr><td class="event-name">5K Run</td><td class="event-fitdat">test_5k_run</td><td class="event-standard">Cardiovascular</td></tr>
+              <tr><td class="event-name">Concept2 Row — 2000m</td><td class="event-fitdat">test_concept2_2k_row</td><td class="event-standard">Cardiovascular</td></tr>
+              <tr><td class="event-name">Push-Ups — Max Reps</td><td class="event-fitdat">test_pushup_max</td><td class="event-standard">Muscular endurance</td></tr>
+              <tr><td class="event-name">Medicine Ball Throw</td><td class="event-fitdat">test_medicine_ball_throw</td><td class="event-standard">Power</td></tr>
+              <tr><td class="event-name">Plank Hold</td><td class="event-fitdat">test_plank_hold</td><td class="event-standard">Muscular endurance</td></tr>
+              <tr><td class="event-name">Back Squat — 1RM</td><td class="event-fitdat">test_back_squat_1rm</td><td class="event-standard">Muscular strength</td></tr>
+            </table>
+          </div>
+          <div>
+            <div class="ss-section-title">Reference bands</div>
+            <div class="standards-ladder">
+              <div class="std-rung top"><span class="std-rung-label">Near maximum</span><span class="std-rung-val">951–1000</span></div>
+              <div class="std-rung top"><span class="std-rung-label">Elite</span><span class="std-rung-val">900–950</span></div>
+              <div class="std-rung high"><span class="std-rung-label">Near elite</span><span class="std-rung-val">750–899</span></div>
+              <div class="std-rung mid"><span class="std-rung-label">Well above average</span><span class="std-rung-val">651–749</span></div>
+              <div class="std-rung mid"><span class="std-rung-label">Above average</span><span class="std-rung-val">551–650</span></div>
+              <div class="std-rung pass"><span class="std-rung-label">Average</span><span class="std-rung-val">500–550</span></div>
+              <div class="std-rung fail"><span class="std-rung-label">Below average</span><span class="std-rung-val">300–499</span></div>
+              <div class="std-rung fail"><span class="std-rung-label">Well below average</span><span class="std-rung-val">100–299</span></div>
+              <div class="std-rung fail"><span class="std-rung-label">Near minimum</span><span class="std-rung-val">0–99</span></div>
+            </div>
+          </div>
+          <div class="reality-box flagship">
+            <strong>Design principle.</strong> The REALFIT Absolute Score is population-neutral and age-neutral by design — the same score means the same thing regardless of who takes it. A 700 is a 700. This is intentional: REALFIT believes fitness data should be comparable across time, populations, and contexts. Score Sets that want age-normed or gender-normed interpretations can layer that on top as Reference Bands — the underlying score does not change.
+          </div>
+          <div class="fitdat-ref-note">
+            Scoring curves, component weights, and aggregation logic are proprietary to REALFIT® and not published in FITDAT. The test definitions, protocols, and normalization rules are open — see the <a href="library.html">FITDAT library</a>. Try the live scoring engine at <a href="https://realfitscore.com" target="_blank">REALFITSCORE.com</a>.
+          </div>
+        </div>
+        <div class="ss-footer-bar">
+          <span>Score Set owner: REALFIT®</span>
+          <span>Scale: 0–1000</span>
+          <span>FITDAT tests: 14</span>
+          <span>Version: REALFIT Absolute Score v1.0</span>
+          <span>Status: Active</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARMY AFT -->
+    <div class="ss-card">
+      <div class="ss-header" onclick="toggleSS(this)">
+        <div class="ss-icon army">AFT</div>
+        <div class="ss-meta">
+          <div class="ss-eyebrow">U.S. Army · Effective June 1, 2025</div>
+          <div class="ss-name">Army Fitness Test (AFT)</div>
+          <div class="ss-desc">The official physical fitness test for all U.S. Army soldiers, replacing the ACFT in June 2025. Five events scored 0–100 each. Minimum 60 per event required. Combat MOS soldiers need 350 total; general standard is 300.</div>
+          <div class="ss-badges">
+            <span class="ss-badge military">Military standard</span>
+            <span class="ss-badge reference">5 events</span>
+            <span class="ss-badge reference">0–500 scale</span>
+            <span class="ss-badge reference">Age-normed</span>
+            <span class="ss-badge passrate">Est. 30–40% civilian fail rate</span>
+          </div>
+        </div>
+        <div class="ss-toggle">+ expand</div>
+      </div>
+      <div class="ss-body">
+        <div class="ss-inner">
+          <div>
+            <div class="ss-section-title">Events and FITDAT mapping</div>
+            <table class="events-table">
+              <tr><th>AFT Event</th><th>FITDAT mapping</th><th>Minimum (60 pts, age 22–26)</th></tr>
+              <tr>
+                <td class="event-name">3-Rep Max Deadlift (MDL)</td>
+                <td class="event-fitdat">test_back_squat_1rm<br><span style="color:var(--faint);font-size:11px">Hex bar variant — same construct</span></td>
+                <td class="event-standard">~140 lbs (63.5 kg)</td>
+              </tr>
+              <tr>
+                <td class="event-name">Hand-Release Push-Up (HRP)</td>
+                <td class="event-fitdat">test_pushup_max<br><span style="color:var(--faint);font-size:11px">Hand-release variant protocol</span></td>
+                <td class="event-standard">10 reps (male)<br>10 reps (female)</td>
+              </tr>
+              <tr>
+                <td class="event-name">Sprint-Drag-Carry (SDC)</td>
+                <td class="event-fitdat">New test required<br><span style="color:var(--faint);font-size:11px">5×50m multi-task shuttle</span></td>
+                <td class="event-standard">~3:00 min (male)<br>~3:35 min (female)</td>
+              </tr>
+              <tr>
+                <td class="event-name">Plank (PLK)</td>
+                <td class="event-fitdat">test_plank_hold</td>
+                <td class="event-standard">1:30 (male &amp; female, ages 17–26)</td>
+              </tr>
+              <tr>
+                <td class="event-name">2-Mile Run (2MR)</td>
+                <td class="event-fitdat">New test required<br><span style="color:var(--faint);font-size:11px">2-mile run not in current library</span></td>
+                <td class="event-standard">~17:00 (male)<br>~19:30 (female)</td>
+              </tr>
+            </table>
+          </div>
+          <div>
+            <div class="ss-section-title">Passing thresholds — general standard (ages 22–26)</div>
+            <div class="standards-ladder">
+              <div class="std-rung top"><span class="std-rung-label">Outstanding (top 5%)</span><span class="std-rung-val">480–500 pts</span></div>
+              <div class="std-rung high"><span class="std-rung-label">Top 20% of soldiers</span><span class="std-rung-val">450–479 pts</span></div>
+              <div class="std-rung mid"><span class="std-rung-label">Above average — promotable</span><span class="std-rung-val">400–449 pts</span></div>
+              <div class="std-rung pass"><span class="std-rung-label">Passing — general MOS</span><span class="std-rung-val">300 pts (60/event)</span></div>
+              <div class="std-rung pass"><span class="std-rung-label">Passing — combat MOS</span><span class="std-rung-val">350 pts (70/event)</span></div>
+              <div class="std-rung fail"><span class="std-rung-label">Fail — remedial training</span><span class="std-rung-val">&lt;300 pts or &lt;60 any event</span></div>
+              <div class="std-rung fail"><span class="std-rung-label">Two consecutive fails</span><span class="std-rung-val">Separation risk</span></div>
+            </div>
+          </div>
+          <div class="reality-box military">
+            <strong>Reality check.</strong> The AFT minimum bar is low by design — it represents the floor of military readiness, not fitness. A passing score of 300 (60 per event) requires roughly: 140 lb deadlift, 10 hand-release push-ups, a 3:00 sprint-drag-carry, a 1:30 plank, and a 17-minute 2-mile run. Fitness research suggests a significant portion of American civilians aged 18–35 cannot meet these minimums without training — particularly the 2-mile run and the deadlift. The AFT replaced the ACFT on June 1, 2025 — older ACFT scores remain valid for promotion until September 30, 2025.
+          </div>
+          <div class="fitdat-ref-note">
+            The AFT uses 4 of 5 events that map to FITDAT tests. The Sprint-Drag-Carry (5×50m multi-task shuttle) and 2-Mile Run are not currently in the FITDAT library — both are candidates for future specification. Official AFT scoring tables: <a href="https://www.army.mil/aft/" target="_blank" rel="noopener">army.mil/aft</a>
+          </div>
+        </div>
+        <div class="ss-footer-bar">
+          <span>Score Set owner: U.S. Army</span>
+          <span>Scale: 0–500 (100 per event)</span>
+          <span>FITDAT tests mapped: 3 of 5</span>
+          <span>Effective: June 1, 2025</span>
+          <span>Source: army.mil/aft</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MARINE PFT -->
+    <div class="ss-card">
+      <div class="ss-header" onclick="toggleSS(this)">
+        <div class="ss-icon marines">PFT</div>
+        <div class="ss-meta">
+          <div class="ss-eyebrow">U.S. Marine Corps · Annual requirement</div>
+          <div class="ss-name">Marine Corps Physical Fitness Test (PFT)</div>
+          <div class="ss-desc">Three-event annual fitness test for all Marines. Pull-ups (or push-ups), plank, and a 3-mile run. Perfect score is 300. Marines cannot score minimum standards and pass — "exceeding the standard is the standard."</div>
+          <div class="ss-badges">
+            <span class="ss-badge military">Military standard</span>
+            <span class="ss-badge reference">3 events</span>
+            <span class="ss-badge reference">0–300 scale</span>
+            <span class="ss-badge reference">Age and gender normed</span>
+            <span class="ss-badge passrate">Minimum: 135 points</span>
+          </div>
+        </div>
+        <div class="ss-toggle">+ expand</div>
+      </div>
+      <div class="ss-body">
+        <div class="ss-inner">
+          <div>
+            <div class="ss-section-title">Events and FITDAT mapping</div>
+            <table class="events-table">
+              <tr><th>PFT Event</th><th>FITDAT mapping</th><th>Max score benchmark (M, age 21–25)</th></tr>
+              <tr>
+                <td class="event-name">Pull-Ups (preferred)<br><span style="color:var(--faint);font-size:12px">or Push-Ups (max 70 pts)</span></td>
+                <td class="event-fitdat">test_pullup_max<br>or test_pushup_max</td>
+                <td class="event-standard">20 pull-ups = 100 pts<br>Push-ups: max 70 pts only</td>
+              </tr>
+              <tr>
+                <td class="event-name">Plank<br><span style="color:var(--faint);font-size:12px">Replaced crunches Jan 2020</span></td>
+                <td class="event-fitdat">test_plank_hold</td>
+                <td class="event-standard">3:45 = 100 pts<br>Min: ~1:03 passing threshold</td>
+              </tr>
+              <tr>
+                <td class="event-name">3-Mile Run</td>
+                <td class="event-fitdat">New test required<br><span style="color:var(--faint);font-size:11px">3-mile run not in current library</span></td>
+                <td class="event-standard">18:00 = 100 pts (male)<br>Pass: under 28:00 (male)</td>
+              </tr>
+            </table>
+          </div>
+          <div>
+            <div class="ss-section-title">Score interpretation — male Marines, age 21–25</div>
+            <div class="standards-ladder">
+              <div class="std-rung top"><span class="std-rung-label">First class — excellent</span><span class="std-rung-val">235–300 pts</span></div>
+              <div class="std-rung high"><span class="std-rung-label">Second class — good</span><span class="std-rung-val">200–234 pts</span></div>
+              <div class="std-rung mid"><span class="std-rung-label">Third class — passing</span><span class="std-rung-val">135–199 pts</span></div>
+              <div class="std-rung fail"><span class="std-rung-label">Fail — remedial required</span><span class="std-rung-val">&lt;135 pts</span></div>
+            </div>
+            <div style="margin-top:16px">
+              <div class="ss-section-title">What "max score" requires (age 21–25, male)</div>
+              <div class="standards-ladder">
+                <div class="std-rung high"><span class="std-rung-label">Pull-ups: 20 reps</span><span class="std-rung-val">100 pts</span></div>
+                <div class="std-rung high"><span class="std-rung-label">Plank: 3 min 45 sec</span><span class="std-rung-val">100 pts</span></div>
+                <div class="std-rung high"><span class="std-rung-label">3-mile run: 18:00</span><span class="std-rung-val">100 pts</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="reality-box military">
+            <strong>Reality check.</strong> 20 pull-ups, a 3:45 plank, and an 18-minute 3-mile run is a genuinely elite level of fitness by civilian standards. Even the minimum passing standard — 3 pull-ups, a 1:03 plank, and a 28-minute 3-mile run — is beyond what most untrained adults can achieve. The Marine Corps deliberately sets its minimum above what the general population can do without preparation. The PFT is conducted annually between January and June; the CFT (Combat Fitness Test) is conducted July through December.
+          </div>
+          <div class="fitdat-ref-note">
+            2 of 3 PFT events map directly to FITDAT tests (pull-ups, plank). The 3-mile run is a candidate for a future FITDAT specification. Official PFT standards: <a href="https://www.marines.com/become-a-marine/requirements/physical-fitness.html" target="_blank" rel="noopener">marines.com</a>
+          </div>
+        </div>
+        <div class="ss-footer-bar">
+          <span>Score Set owner: U.S. Marine Corps</span>
+          <span>Scale: 0–300</span>
+          <span>FITDAT tests mapped: 2 of 3</span>
+          <span>Annual requirement</span>
+          <span>Source: marines.mil</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- NFL COMBINE -->
+    <div class="ss-card">
+      <div class="ss-header" onclick="toggleSS(this)">
+        <div class="ss-icon nfl">NFL</div>
+        <div class="ss-meta">
+          <div class="ss-eyebrow">NFL Scouting Combine · Annual · Indianapolis</div>
+          <div class="ss-name">NFL Scouting Combine</div>
+          <div class="ss-desc">The premier evaluation for NFL draft prospects. Six athletic tests measured in a standardized setting. No single passing score — results are interpreted by scouts relative to positional averages and historical benchmarks. Speed and explosion are prized above all.</div>
+          <div class="ss-badges">
+            <span class="ss-badge sport">Professional sport standard</span>
+            <span class="ss-badge reference">6 tests</span>
+            <span class="ss-badge reference">Invite only</span>
+            <span class="ss-badge reference">Position-relative scoring</span>
+          </div>
+        </div>
+        <div class="ss-toggle">+ expand</div>
+      </div>
+      <div class="ss-body">
+        <div class="ss-inner">
+          <div>
+            <div class="ss-section-title">Events and FITDAT mapping</div>
+            <table class="events-table">
+              <tr><th>Combine Event</th><th>FITDAT mapping</th><th>All-position average</th></tr>
+              <tr>
+                <td class="event-name">40-Yard Dash</td>
+                <td class="event-fitdat">test_40yd_dash</td>
+                <td class="event-standard">WR: 4.52s · RB: 4.54s<br>LB: 4.65s · OL: 5.12s</td>
+              </tr>
+              <tr>
+                <td class="event-name">Bench Press — 225 lbs max reps</td>
+                <td class="event-fitdat">test_bench_press_1rm<br><span style="color:var(--faint);font-size:11px">Fixed-weight reps variant</span></td>
+                <td class="event-standard">OL avg: 25–30 reps<br>WR avg: 12–15 reps</td>
+              </tr>
+              <tr>
+                <td class="event-name">Vertical Jump</td>
+                <td class="event-fitdat">New test required<br><span style="color:var(--faint);font-size:11px">Not in current FITDAT library</span></td>
+                <td class="event-standard">All-position avg: ~33"<br>Elite: 40"+ </td>
+              </tr>
+              <tr>
+                <td class="event-name">Broad Jump (Standing Long Jump)</td>
+                <td class="event-fitdat">test_standing_long_jump</td>
+                <td class="event-standard">All-position avg: ~119"<br>Elite: 130"+ (10'10"+)</td>
+              </tr>
+              <tr>
+                <td class="event-name">3-Cone Drill</td>
+                <td class="event-fitdat">New test required<br><span style="color:var(--faint);font-size:11px">L-shaped cone agility drill</span></td>
+                <td class="event-standard">WR avg: ~6.9s<br>OL avg: ~7.8s</td>
+              </tr>
+              <tr>
+                <td class="event-name">20-Yard Shuttle (5-10-5)</td>
+                <td class="event-fitdat">test_shuttle_60yd<br><span style="color:var(--faint);font-size:11px">Shorter variant, same construct</span></td>
+                <td class="event-standard">WR avg: ~4.25s<br>OL avg: ~4.75s</td>
+              </tr>
+            </table>
+          </div>
+          <div>
+            <div class="ss-section-title">Draft stock benchmarks — WR/CB (most speed-sensitive)</div>
+            <div class="standards-ladder">
+              <div class="std-rung top"><span class="std-rung-label">Historic (record territory)</span><span class="std-rung-val">&lt;4.25s 40</span></div>
+              <div class="std-rung top"><span class="std-rung-label">Elite — top 10 all-time</span><span class="std-rung-val">&lt;4.30s 40</span></div>
+              <div class="std-rung high"><span class="std-rung-label">First-round speed</span><span class="std-rung-val">4.30–4.39s 40</span></div>
+              <div class="std-rung mid"><span class="std-rung-label">NFL starter speed</span><span class="std-rung-val">4.40–4.49s 40</span></div>
+              <div class="std-rung pass"><span class="std-rung-label">WR/CB positional average</span><span class="std-rung-val">~4.52s 40</span></div>
+              <div class="std-rung fail"><span class="std-rung-label">Below positional threshold</span><span class="std-rung-val">&gt;4.65s 40 (WR/CB)</span></div>
+            </div>
+            <div style="margin-top:16px">
+              <div class="ss-section-title">Bench press benchmark (225 lbs max reps)</div>
+              <div class="standards-ladder">
+                <div class="std-rung top"><span class="std-rung-label">Record territory (OL)</span><span class="std-rung-val">40+ reps</span></div>
+                <div class="std-rung high"><span class="std-rung-label">Elite OL/DL</span><span class="std-rung-val">30–39 reps</span></div>
+                <div class="std-rung mid"><span class="std-rung-label">Strong OL/DL average</span><span class="std-rung-val">25–29 reps</span></div>
+                <div class="std-rung pass"><span class="std-rung-label">WR/CB average</span><span class="std-rung-val">12–15 reps</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="reality-box sport">
+            <strong>Context.</strong> NFL Combine numbers are not "passing" standards — they are benchmarks scouts use relative to position expectations. An offensive lineman running a 5.10s 40 is fine; a wide receiver running 5.10s is likely not drafted. The fastest-ever 40 is Xavier Worthy's 4.21 seconds (2024). The average WR has run a 4.52s over the last 23 years of combine data. For context: most fit recreational athletes run a 40 between 5.0 and 6.5 seconds — putting them below the slowest OL in NFL history.
+          </div>
+          <div class="fitdat-ref-note">
+            3 of 6 Combine events map to current FITDAT tests. Vertical jump and 3-cone drill are strong candidates for future FITDAT specification. The 5-10-5 shuttle uses the same agility construct as <a href="library.html">test_shuttle_60yd</a> at a shorter distance. Official Combine results: <a href="https://www.nfl.com/combine/" target="_blank" rel="noopener">nfl.com/combine</a>
+          </div>
+        </div>
+        <div class="ss-footer-bar">
+          <span>Score Set owner: NFL</span>
+          <span>Scale: benchmark-relative (no single score)</span>
+          <span>FITDAT tests mapped: 3 of 6</span>
+          <span>Annual — February · Indianapolis</span>
+          <span>Invite only</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BUILD YOUR OWN CTA -->
+  <div class="build-cta">
+    <div>
+      <h2>Want to build your own Score Set?</h2>
+      <p>FITDAT is open infrastructure. Any developer can use FITDAT test definitions to build a custom Score Set — your own scoring curves, component weights, and reference bands, built on top of standardized, reproducible test definitions. REALFIT certification is available for Score Sets that meet specification requirements.</p>
+    </div>
+    <a href="https://fitdat.com" class="build-cta-btn">Explore FITDAT →</a>
+  </div>
+
+</div>
+
+<footer style="padding:28px 32px;border-top:1px solid var(--border);background:var(--surface2)">
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+    <div style="font-size:13px;color:var(--muted)">
+      <strong style="color:var(--ink)">FITDAT®</strong>
+      <span style="margin:0 8px;opacity:.4">·</span>
+      Governed by <a href="https://realfit.com" style="color:var(--muted);text-decoration:none">REALFIT®</a>
+      <span style="margin:0 8px;opacity:.4">·</span>
+      <a href="https://realfitscore.com" style="color:var(--muted);text-decoration:none">REALFITSCORE</a>
+      <span style="margin:0 8px;opacity:.4">·</span>
+      <a href="https://scoremy40.com" style="color:var(--muted);text-decoration:none">ScoreMy40</a>
+    </div>
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--faint)">FITDAT® v1.1 · © 2026 REALFIT®</div>
+  </div>
+</footer>
+
+<script>
+function toggleSS(header) {
+  const card = header.closest('.ss-card');
+  const body = card.querySelector('.ss-body');
+  const toggle = header.querySelector('.ss-toggle');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  toggle.textContent = isOpen ? '+ expand' : '− collapse';
+}
+</script>
+</body>
+</html>

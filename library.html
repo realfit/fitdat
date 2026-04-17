@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FITDAT® Test Library — All Tests</title>
+<meta name="description" content="Browse all FITDAT® test specifications. Full TestDefinition, TestProtocol, and TestContext for each test. Governed by REALFIT®.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0d1117;--ink2:#24292f;--muted:#57606a;--faint:#6e7781;
+  --border:#d0d7de;--border-light:#eaeef2;
+  --surface:#ffffff;--surface2:#f6f8fa;--surface3:#eaeef2;
+  --teal:#0a6e56;--teal-light:#e1f5ee;--teal-mid:#1d9e75;
+  --blue:#0550ae;--blue-light:#ddf4ff;
+  --amber:#9a6700;--amber-light:#fff8c5;
+  --purple:#5a3e9e;--purple-light:#f0ebff;
+  --coral:#a0391a;--coral-light:#fff0eb;
+  --green-light:#dcffe4;--green:#1a7f37;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;color:var(--ink2);background:var(--surface)}
+
+header{border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:100}
+.header-inner{max-width:1100px;margin:0 auto;padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.logo{font-family:'DM Mono',monospace;font-size:17px;font-weight:500;color:var(--ink);text-decoration:none;letter-spacing:-0.02em}
+.logo sup{font-size:10px;font-weight:400;color:var(--muted);vertical-align:super;margin-left:1px}
+nav{display:flex;align-items:center;gap:4px}
+.nav-link{padding:6px 12px;border-radius:6px;font-size:14px;color:var(--muted);text-decoration:none;transition:color .15s,background .15s}
+.nav-link:hover{color:var(--ink);background:var(--surface2)}
+.nav-link.active{color:var(--ink);font-weight:500}
+.nav-divider{width:1px;height:20px;background:var(--border);margin:0 4px}
+.nav-badge{padding:5px 12px;border-radius:6px;border:1px solid var(--border);font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;transition:all .15s;display:flex;align-items:center;gap:6px}
+.nav-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal-mid);flex-shrink:0}
+.nav-badge:hover{border-color:var(--teal-mid);color:var(--teal)}
+
+.page-header{padding:40px 32px 32px;border-bottom:1px solid var(--border-light);background:var(--surface)}
+.page-header-inner{max-width:1100px;margin:0 auto}
+.breadcrumb{font-size:13px;color:var(--muted);margin-bottom:12px}
+.breadcrumb a{color:var(--muted);text-decoration:none}
+.breadcrumb a:hover{color:var(--ink)}
+.breadcrumb span{margin:0 6px;opacity:.5}
+.page-header h1{font-size:28px;font-weight:600;color:var(--ink);letter-spacing:-0.02em;margin-bottom:8px}
+.page-header p{font-size:15px;color:var(--muted);max-width:600px;line-height:1.6}
+
+.lib-layout{max-width:1100px;margin:0 auto;padding:32px 32px 80px;display:grid;grid-template-columns:220px 1fr;gap:32px;align-items:start}
+
+/* Sidebar */
+.sidebar{position:sticky;top:72px}
+.filter-section{margin-bottom:24px}
+.filter-label{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+.filter-btns{display:flex;flex-direction:column;gap:3px}
+.filter-btn{padding:7px 12px;border-radius:6px;border:none;background:transparent;text-align:left;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--muted);cursor:pointer;transition:color .15s,background .15s;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.filter-btn:hover{color:var(--ink);background:var(--surface2)}
+.filter-btn.active{color:var(--ink);background:var(--surface2);font-weight:500}
+.filter-btn .count{font-family:'DM Mono',monospace;font-size:11px;color:var(--faint);background:var(--surface3);padding:1px 6px;border-radius:10px}
+.filter-btn.active .count{background:var(--border);color:var(--muted)}
+
+.sidebar-note{margin-top:24px;padding:12px 14px;background:var(--amber-light);border:1px solid rgba(154,103,0,.2);border-radius:6px;font-size:12px;color:var(--amber);line-height:1.6}
+
+/* Test list */
+.test-list{display:flex;flex-direction:column;gap:12px}
+
+.test-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color .15s}
+.test-card:hover{border-color:var(--teal-mid)}
+.test-card.hidden{display:none}
+
+.test-card-header{padding:16px 20px;cursor:pointer;display:flex;align-items:flex-start;gap:16px}
+.test-card-num{font-family:'DM Mono',monospace;font-size:12px;color:var(--faint);width:28px;flex-shrink:0;padding-top:2px}
+.test-card-main{flex:1;min-width:0}
+.test-card-name{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:6px;letter-spacing:-0.01em}
+.test-card-meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.tag{font-size:11px;padding:2px 8px;border-radius:4px;font-family:'DM Mono',monospace;white-space:nowrap}
+.tag.component{background:var(--teal-light);color:var(--teal);border:1px solid rgba(10,110,86,.15)}
+.tag.input{background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
+.tag.unit{background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
+.tag.cert{background:var(--green-light);color:var(--green);border:1px solid rgba(26,127,55,.15)}
+.tag.group{background:var(--purple-light);color:var(--purple);border:1px solid rgba(90,62,158,.15)}
+.tag.equip{background:var(--amber-light);color:var(--amber);border:1px solid rgba(154,103,0,.15)}
+.test-card-toggle{font-size:13px;color:var(--faint);flex-shrink:0;padding-top:2px;user-select:none;transition:color .15s}
+.test-card:hover .test-card-toggle{color:var(--teal)}
+
+.test-card-body{display:none;border-top:1px solid var(--border-light)}
+.test-card-body.open{display:block}
+
+.test-tabs{display:flex;border-bottom:1px solid var(--border-light);padding:0 20px;background:var(--surface2)}
+.test-tab{padding:10px 16px;font-size:13px;font-weight:500;color:var(--muted);border:none;background:transparent;cursor:pointer;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;font-family:'DM Sans',sans-serif;margin-bottom:-1px}
+.test-tab:hover{color:var(--ink)}
+.test-tab.active{color:var(--teal);border-bottom-color:var(--teal)}
+
+.test-panel{display:none;padding:20px}
+.test-panel.active{display:block}
+
+.spec-table{width:100%;border-collapse:collapse;font-size:13px}
+.spec-table tr{border-bottom:1px solid var(--border-light)}
+.spec-table tr:last-child{border-bottom:none}
+.spec-table td{padding:8px 12px;vertical-align:top;line-height:1.5}
+.spec-table td:first-child{font-family:'DM Mono',monospace;font-size:11px;color:var(--faint);width:180px;padding-top:10px;white-space:nowrap}
+.spec-table td:last-child{color:var(--ink2)}
+.spec-val-code{font-family:'DM Mono',monospace;font-size:12px;color:var(--teal)}
+.spec-val-note{font-size:12px;color:var(--muted);margin-top:3px;font-style:italic}
+
+.tags-wrap{display:flex;flex-wrap:wrap;gap:4px}
+.tag-sm{font-size:11px;padding:2px 7px;border-radius:4px;background:var(--surface2);border:1px solid var(--border);color:var(--muted);font-family:'DM Mono',monospace}
+
+.relevance-bars{display:flex;flex-direction:column;gap:5px}
+.rel-row{display:flex;align-items:center;gap:8px;font-size:12px}
+.rel-label{width:90px;color:var(--muted);font-family:'DM Mono',monospace;font-size:11px}
+.rel-bar-wrap{flex:1;height:6px;background:var(--surface3);border-radius:3px;overflow:hidden}
+.rel-bar{height:6px;border-radius:3px;background:var(--teal-mid);transition:width .3s}
+.rel-val{width:32px;text-align:right;font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)}
+
+.coaching-note{margin-top:16px;padding:12px 14px;background:var(--blue-light);border:1px solid rgba(5,80,174,.15);border-radius:6px;font-size:13px;color:var(--blue);line-height:1.6;border-left:3px solid var(--blue)}
+
+/* Replacement group callout */
+.rg-callout{padding:12px 14px;background:var(--purple-light);border:1px solid rgba(90,62,158,.15);border-radius:6px;font-size:13px;color:var(--purple);line-height:1.6;border-left:3px solid var(--purple);margin-top:12px}
+
+/* Version badge */
+.version-bar{background:var(--surface2);border-top:1px solid var(--border-light);padding:10px 20px;display:flex;align-items:center;gap:16px;font-family:'DM Mono',monospace;font-size:11px;color:var(--faint)}
+.version-bar .vb-item{display:flex;align-items:center;gap:5px}
+.version-bar .vb-dot{width:6px;height:6px;border-radius:50%;background:var(--teal-mid)}
+
+/* Stats bar */
+.lib-stats{background:var(--surface2);border-bottom:1px solid var(--border);padding:12px 32px}
+.lib-stats-inner{max-width:1100px;margin:0 auto;display:flex;gap:32px;align-items:center;flex-wrap:wrap}
+.stat-item{font-size:13px;color:var(--muted)}
+.stat-item strong{color:var(--ink);font-weight:600}
+
+@media(max-width:768px){
+  .header-inner{padding:0 16px}
+  nav .nav-link:not(.nav-link-keep){display:none}
+  .lib-layout{grid-template-columns:1fr;padding:16px 16px 60px}
+  .sidebar{position:static}
+  .test-tabs{padding:0 12px;overflow-x:auto}
+  .spec-table td:first-child{width:120px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">FITDAT<sup>®</sup></a>
+    <nav>
+      <a href="library.html" class="nav-link nav-link-keep active">Library</a>
+      <a href="demo.html" class="nav-link nav-link-keep">Demo</a>
+      <div class="nav-divider"></div>
+      <a href="https://realfit.com" target="_blank" rel="noopener" class="nav-badge">Governed by REALFIT®</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb"><a href="index.html">FITDAT®</a><span>/</span>Test library</div>
+    <h1>Test library</h1>
+    <p>All 14 tests in the REALFIT Absolute Score™ battery, fully specified to FITDAT v1.1. Click any test to expand all three specification layers.</p>
+  </div>
+</div>
+
+<div class="lib-stats">
+  <div class="lib-stats-inner">
+    <div class="stat-item"><strong>14</strong> tests specified</div>
+    <div class="stat-item"><strong>6</strong> fitness components</div>
+    <div class="stat-item"><strong>3</strong> normalization rules</div>
+    <div class="stat-item"><strong>8</strong> replacement groups</div>
+    <div class="stat-item"><strong>FITDAT v1.1</strong></div>
+    <div class="stat-item">Governed by <strong>REALFIT®</strong></div>
+  </div>
+</div>
+
+<div class="lib-layout">
+
+  <aside class="sidebar">
+    <div class="filter-section">
+      <div class="filter-label">Filter by component</div>
+      <div class="filter-btns" id="componentFilters">
+        <button class="filter-btn active" data-filter="all" onclick="setFilter('all',this)">All tests <span class="count">14</span></button>
+        <button class="filter-btn" data-filter="speed" onclick="setFilter('speed',this)">Speed <span class="count">2</span></button>
+        <button class="filter-btn" data-filter="muscular_strength" onclick="setFilter('muscular_strength',this)">Muscular strength <span class="count">3</span></button>
+        <button class="filter-btn" data-filter="muscular_endurance" onclick="setFilter('muscular_endurance',this)">Muscular endurance <span class="count">6</span></button>
+        <button class="filter-btn" data-filter="cardiovascular_endurance" onclick="setFilter('cardiovascular_endurance',this)">Cardiovascular <span class="count">2</span></button>
+        <button class="filter-btn" data-filter="power" onclick="setFilter('power',this)">Power <span class="count">3</span></button>
+        <button class="filter-btn" data-filter="agility" onclick="setFilter('agility',this)">Agility <span class="count">1</span></button>
+      </div>
+    </div>
+    <div class="filter-section">
+      <div class="filter-label">Filter by equipment</div>
+      <div class="filter-btns">
+        <button class="filter-btn" data-equip="none" onclick="setEquipFilter('none',this)">No equipment <span class="count">4</span></button>
+        <button class="filter-btn" data-equip="minimal" onclick="setEquipFilter('minimal',this)">Minimal <span class="count">6</span></button>
+        <button class="filter-btn" data-equip="standard" onclick="setEquipFilter('standard',this)">Standard gym <span class="count">4</span></button>
+      </div>
+    </div>
+    <div class="sidebar-note">
+      This library covers the REALFIT Absolute Score™ battery. Additional tests are added as they reach full specification. The library never publishes a test without a complete TestDefinition, TestProtocol, and TestContext.
+    </div>
+  </aside>
+
+  <div class="test-list" id="testList">
+
+    <!-- TEST 1: 40 Yard Dash -->
+    <div class="test-card" data-component="speed" data-equip="minimal">
+      <div class="test-card-header" onclick="toggleCard(this)">
+        <div class="test-card-num">01</div>
+        <div class="test-card-main">
+          <div class="test-card-name">40 Yard Dash</div>
+          <div class="test-card-meta">
+            <span class="tag component">Speed</span>
+            <span class="tag input">secondsOnly</span>
+            <span class="tag unit">seconds</span>
+            <span class="tag cert">certification eligible</span>
+            <span class="tag group">rg_short_sprint</span>
+          </div>
+        </div>
+        <div class="test-card-toggle">+ expand</div>
+      </div>
+      <div class="test-card-body">
+        <div class="test-tabs">
+          <button class="test-tab active" onclick="showTab(this,'def-1')">TestDefinition</button>
+          <button class="test-tab" onclick="showTab(this,'proto-1')">TestProtocol</button>
+          <button class="test-tab" onclick="showTab(this,'ctx-1')">TestContext</button>
+        </div>
+        <div class="test-panel active" id="def-1">
+          <table class="spec-table">
+            <tr><td>testId</td><td><span class="spec-val-code">test_40yd_dash</span></td></tr>
+            <tr><td>componentId</td><td>speed</td></tr>
+            <tr><td>inputType</td><td>secondsOnly</td></tr>
+            <tr><td>canonicalUnit</td><td>seconds</td></tr>
+            <tr><td>scoringDirection</td><td>Lower time = higher score</td></tr>
+            <tr><td>normalizationRule</td><td>Not required — input equals canonical unit</td></tr>
+            <tr><td>replacementGroupId</td><td><span class="spec-val-code">rg_short_sprint</span></td></tr>
+            <tr><td>certificationEligible</td><td>true</td></tr>
+            <tr><td>version</td><td>1.0.0</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="proto-1">
+          <table class="spec-table">
+            <tr><td>protocolId</td><td><span class="spec-val-code">proto_40yd_dash_v1</span></td></tr>
+            <tr><td>description</td><td>Standing start. Athlete initiates on own movement. Distance: 40 yards (36.576 meters) on flat surface. Time from first movement to finish line crossing. Best of two attempts recommended.</td></tr>
+            <tr><td>equipmentRequired</td><td>Stopwatch or electronic timing gate, flat surface (turf or track), measured 40-yard distance</td></tr>
+            <tr><td>startCondition</td><td>Standing start. Athlete self-initiates.</td></tr>
+            <tr><td>timingMethod</td><td>hand or electronic</td></tr>
+            <tr><td>measurementStandard</td><td>Nearest 0.01 seconds. Best of two attempts.</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="ctx-1">
+          <table class="spec-table">
+            <tr><td>sportTags</td><td><div class="tags-wrap"><span class="tag-sm">football</span><span class="tag-sm">baseball</span><span class="tag-sm">soccer</span><span class="tag-sm">basketball</span><span class="tag-sm">combine_general</span><span class="tag-sm">track</span></div></td></tr>
+            <tr><td>settingTags</td><td><div class="tags-wrap"><span class="tag-sm">field</span><span class="tag-sm">track</span></div></td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">minimal</span></td></tr>
+            <tr><td>populationTags</td><td><div class="tags-wrap"><span class="tag-sm">general_adult</span><span class="tag-sm">youth</span><span class="tag-sm">high_school</span><span class="tag-sm">collegiate</span><span class="tag-sm">elite</span></div></td></tr>
+            <tr><td>ecosystemRelevance</td><td>
+              <div class="relevance-bars">
+                <div class="rel-row"><div class="rel-label">member</div><div class="rel-bar-wrap"><div class="rel-bar" style="width:85%"></div></div><div class="rel-val">0.85</div></div>
+                <div class="rel-row"><div class="rel-label">team</div><div class="rel-bar-wrap"><div class="rel-bar" style="width:97%"></div></div><div class="rel-val">0.97</div></div>
+                <div class="rel-row"><div class="rel-label">organization</div><div class="rel-bar-wrap"><div class="rel-bar" style="width:70%"></div></div><div class="rel-val">0.70</div></div>
+                <div class="rel-row"><div class="rel-label">affiliate</div><div class="rel-bar-wrap"><div class="rel-bar" style="width:80%"></div></div><div class="rel-val">0.80</div></div>
+                <div class="rel-row"><div class="rel-label">official</div><div class="rel-bar-wrap"><div class="rel-bar" style="width:90%"></div></div><div class="rel-val">0.90</div></div>
+              </div>
+            </td></tr>
+            <tr><td>coachingNotes</td><td>Best performed on artificial turf or rubberized track. Electronic timing preferred for Official certification.</td></tr>
+          </table>
+        </div>
+        <div class="version-bar"><div class="vb-item"><div class="vb-dot"></div>FITDAT v1.1</div><div class="vb-item">test_40yd_dash v1.0.0</div><div class="vb-item">proto_40yd_dash_v1</div></div>
+      </div>
+    </div>
+
+    <!-- TEST 2: Standing Long Jump -->
+    <div class="test-card" data-component="power" data-equip="minimal">
+      <div class="test-card-header" onclick="toggleCard(this)">
+        <div class="test-card-num">02</div>
+        <div class="test-card-main">
+          <div class="test-card-name">Standing Long Jump</div>
+          <div class="test-card-meta">
+            <span class="tag component">Power</span>
+            <span class="tag input">distance</span>
+            <span class="tag unit">meters</span>
+            <span class="tag cert">certification eligible</span>
+            <span class="tag group">rg_lower_power</span>
+          </div>
+        </div>
+        <div class="test-card-toggle">+ expand</div>
+      </div>
+      <div class="test-card-body">
+        <div class="test-tabs">
+          <button class="test-tab active" onclick="showTab(this,'def-2')">TestDefinition</button>
+          <button class="test-tab" onclick="showTab(this,'proto-2')">TestProtocol</button>
+          <button class="test-tab" onclick="showTab(this,'ctx-2')">TestContext</button>
+        </div>
+        <div class="test-panel active" id="def-2">
+          <table class="spec-table">
+            <tr><td>testId</td><td><span class="spec-val-code">test_standing_long_jump</span></td></tr>
+            <tr><td>componentId</td><td>power</td></tr>
+            <tr><td>inputType</td><td>distance</td></tr>
+            <tr><td>canonicalUnit</td><td>meters</td></tr>
+            <tr><td>scoringDirection</td><td>Longer distance = higher score</td></tr>
+            <tr><td>normalizationRule</td><td><span class="spec-val-code">norm_ftin_to_m</span> — (feet × 0.3048) + (inches × 0.0254)</td></tr>
+            <tr><td>replacementGroupId</td><td><span class="spec-val-code">rg_lower_power</span></td></tr>
+            <tr><td>version</td><td>1.0.0</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="proto-2">
+          <table class="spec-table">
+            <tr><td>protocolId</td><td><span class="spec-val-code">proto_standing_long_jump_v1</span></td></tr>
+            <tr><td>description</td><td>Two-foot takeoff from behind marked line. Arms may swing for momentum. Distance measured from takeoff line to nearest heel contact on landing. Best of two attempts.</td></tr>
+            <tr><td>equipmentRequired</td><td>Measuring tape or marked floor grid, flat non-slip surface, chalk or tape for takeoff line</td></tr>
+            <tr><td>startCondition</td><td>Both feet behind takeoff line. Stationary before jump.</td></tr>
+            <tr><td>measurementStandard</td><td>Nearest 0.01 meters. Nearest heel on landing. Best of two attempts.</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="ctx-2">
+          <table class="spec-table">
+            <tr><td>sportTags</td><td><div class="tags-wrap"><span class="tag-sm">football</span><span class="tag-sm">baseball</span><span class="tag-sm">soccer</span><span class="tag-sm">basketball</span><span class="tag-sm">combine_general</span><span class="tag-sm">track</span></div></td></tr>
+            <tr><td>settingTags</td><td><div class="tags-wrap"><span class="tag-sm">field</span><span class="tag-sm">gym</span><span class="tag-sm">track</span><span class="tag-sm">outdoor_general</span></div></td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">minimal</span></td></tr>
+            <tr><td>populationTags</td><td><div class="tags-wrap"><span class="tag-sm">general_adult</span><span class="tag-sm">youth</span><span class="tag-sm">high_school</span><span class="tag-sm">collegiate</span><span class="tag-sm">elite</span><span class="tag-sm">military</span></div></td></tr>
+            <tr><td>coachingNotes</td><td>Requires only flat surface and measuring tape. Usable indoors on gym floor with tape markings.</td></tr>
+          </table>
+        </div>
+        <div class="version-bar"><div class="vb-item"><div class="vb-dot"></div>FITDAT v1.1</div><div class="vb-item">test_standing_long_jump v1.0.0</div></div>
+      </div>
+    </div>
+
+    <!-- TEST 3: Shuttle Run 60 Yards -->
+    <div class="test-card" data-component="agility" data-equip="minimal">
+      <div class="test-card-header" onclick="toggleCard(this)">
+        <div class="test-card-num">03</div>
+        <div class="test-card-main">
+          <div class="test-card-name">Shuttle Run — 60 Yards</div>
+          <div class="test-card-meta">
+            <span class="tag component">Agility</span>
+            <span class="tag input">secondsOnly</span>
+            <span class="tag unit">seconds</span>
+            <span class="tag cert">certification eligible</span>
+          </div>
+        </div>
+        <div class="test-card-toggle">+ expand</div>
+      </div>
+      <div class="test-card-body">
+        <div class="test-tabs">
+          <button class="test-tab active" onclick="showTab(this,'def-3')">TestDefinition</button>
+          <button class="test-tab" onclick="showTab(this,'proto-3')">TestProtocol</button>
+          <button class="test-tab" onclick="showTab(this,'ctx-3')">TestContext</button>
+        </div>
+        <div class="test-panel active" id="def-3">
+          <table class="spec-table">
+            <tr><td>testId</td><td><span class="spec-val-code">test_shuttle_60yd</span></td></tr>
+            <tr><td>componentId</td><td>agility</td></tr>
+            <tr><td>inputType</td><td>secondsOnly</td></tr>
+            <tr><td>canonicalUnit</td><td>seconds</td></tr>
+            <tr><td>scoringDirection</td><td>Lower time = higher score</td></tr>
+            <tr><td>normalizationRule</td><td>Not required</td></tr>
+            <tr><td>replacementGroupId</td><td>none</td></tr>
+            <tr><td>version</td><td>1.0.0</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="proto-3">
+          <table class="spec-table">
+            <tr><td>protocolId</td><td><span class="spec-val-code">proto_shuttle_60yd_v1</span></td></tr>
+            <tr><td>description</td><td>Repeated shuttle run totaling 60 yards with directional changes. Athlete runs set distance, touches or crosses line, reverses direction, repeats until total 60 yards completed. Time from start to final line crossing.</td></tr>
+            <tr><td>equipmentRequired</td><td>Stopwatch or electronic timing, flat surface, marked turnaround lines</td></tr>
+            <tr><td>startCondition</td><td>Standing start at first line.</td></tr>
+            <tr><td>timingMethod</td><td>hand or electronic</td></tr>
+            <tr><td>measurementStandard</td><td>Nearest 0.01 seconds. Single attempt.</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="ctx-3">
+          <table class="spec-table">
+            <tr><td>sportTags</td><td><div class="tags-wrap"><span class="tag-sm">football</span><span class="tag-sm">baseball</span><span class="tag-sm">soccer</span><span class="tag-sm">basketball</span><span class="tag-sm">combine_general</span></div></td></tr>
+            <tr><td>settingTags</td><td><div class="tags-wrap"><span class="tag-sm">field</span><span class="tag-sm">gym</span><span class="tag-sm">track</span></div></td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">minimal</span></td></tr>
+            <tr><td>populationTags</td><td><div class="tags-wrap"><span class="tag-sm">general_adult</span><span class="tag-sm">youth</span><span class="tag-sm">high_school</span><span class="tag-sm">collegiate</span><span class="tag-sm">elite</span></div></td></tr>
+            <tr><td>coachingNotes</td><td>Turnaround lines must be clearly marked and consistent. Turf or rubberized surface recommended.</td></tr>
+          </table>
+        </div>
+        <div class="version-bar"><div class="vb-item"><div class="vb-dot"></div>FITDAT v1.1</div><div class="vb-item">test_shuttle_60yd v1.0.0</div></div>
+      </div>
+    </div>
+
+    <!-- TEST 4: Bench Press 1RM -->
+    <div class="test-card" data-component="muscular_strength" data-equip="standard">
+      <div class="test-card-header" onclick="toggleCard(this)">
+        <div class="test-card-num">04</div>
+        <div class="test-card-main">
+          <div class="test-card-name">Bench Press — 1 Rep Max</div>
+          <div class="test-card-meta">
+            <span class="tag component">Muscular strength</span>
+            <span class="tag input">weight</span>
+            <span class="tag unit">kg</span>
+            <span class="tag cert">certification eligible</span>
+            <span class="tag group">rg_upper_push_strength</span>
+          </div>
+        </div>
+        <div class="test-card-toggle">+ expand</div>
+      </div>
+      <div class="test-card-body">
+        <div class="test-tabs">
+          <button class="test-tab active" onclick="showTab(this,'def-4')">TestDefinition</button>
+          <button class="test-tab" onclick="showTab(this,'proto-4')">TestProtocol</button>
+          <button class="test-tab" onclick="showTab(this,'ctx-4')">TestContext</button>
+        </div>
+        <div class="test-panel active" id="def-4">
+          <table class="spec-table">
+            <tr><td>testId</td><td><span class="spec-val-code">test_bench_press_1rm</span></td></tr>
+            <tr><td>componentId</td><td>muscular_strength</td></tr>
+            <tr><td>inputType</td><td>weight (with optional reps 1–8 for estimated 1RM)</td></tr>
+            <tr><td>canonicalUnit</td><td>kg</td></tr>
+            <tr><td>scoringDirection</td><td>Higher weight = higher score</td></tr>
+            <tr><td>normalizationRule</td><td><span class="spec-val-code">norm_lbs_to_kg</span> — value × 0.453592</td></tr>
+            <tr><td>replacementGroupId</td><td><span class="spec-val-code">rg_upper_push_strength</span></td></tr>
+            <tr><td>version</td><td>1.0.0</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="proto-4">
+          <table class="spec-table">
+            <tr><td>protocolId</td><td><span class="spec-val-code">proto_bench_press_1rm_v1</span></td></tr>
+            <tr><td>description</td><td>Supine on bench. Barbell lowered to chest under control. Full extension at top. Feet flat on floor. No bounce off chest. Direct 1RM or estimated 1RM from entered weight and repetitions (1–8 reps).</td></tr>
+            <tr><td>equipmentRequired</td><td>Barbell, weight bench, weight plates, safety spotter or rack with safeties</td></tr>
+            <tr><td>startCondition</td><td>Supine on bench. Barbell at full arm extension.</td></tr>
+            <tr><td>measurementStandard</td><td>Weight in lbs or kg. Reps 1–8 for estimated max. Direct 1RM as single max lift.</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="ctx-4">
+          <table class="spec-table">
+            <tr><td>sportTags</td><td><div class="tags-wrap"><span class="tag-sm">football</span><span class="tag-sm">baseball</span><span class="tag-sm">crossfit</span><span class="tag-sm">military</span><span class="tag-sm">combine_general</span><span class="tag-sm">general_fitness</span></div></td></tr>
+            <tr><td>settingTags</td><td><div class="tags-wrap"><span class="tag-sm">gym</span></div></td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">standard</span></td></tr>
+            <tr><td>populationTags</td><td><div class="tags-wrap"><span class="tag-sm">general_adult</span><span class="tag-sm">high_school</span><span class="tag-sm">collegiate</span><span class="tag-sm">elite</span><span class="tag-sm">military</span></div></td></tr>
+            <tr><td>coachingNotes</td><td>Estimated 1RM supported via Epley or Brzycki formulas. Spotter required. Gym setting only.</td></tr>
+          </table>
+        </div>
+        <div class="version-bar"><div class="vb-item"><div class="vb-dot"></div>FITDAT v1.1</div><div class="vb-item">test_bench_press_1rm v1.0.0</div></div>
+      </div>
+    </div>
+
+    <!-- TEST 5: Pull-Ups -->
+    <div class="test-card" data-component="muscular_endurance" data-equip="minimal">
+      <div class="test-card-header" onclick="toggleCard(this)">
+        <div class="test-card-num">05</div>
+        <div class="test-card-main">
+          <div class="test-card-name">Pull-Ups — Max Reps</div>
+          <div class="test-card-meta">
+            <span class="tag component">Muscular endurance</span>
+            <span class="tag input">repetitions</span>
+            <span class="tag unit">reps</span>
+            <span class="tag cert">certification eligible</span>
+            <span class="tag group">rg_upper_pull_strength</span>
+          </div>
+        </div>
+        <div class="test-card-toggle">+ expand</div>
+      </div>
+      <div class="test-card-body">
+        <div class="test-tabs">
+          <button class="test-tab active" onclick="showTab(this,'def-5')">TestDefinition</button>
+          <button class="test-tab" onclick="showTab(this,'proto-5')">TestProtocol</button>
+          <button class="test-tab" onclick="showTab(this,'ctx-5')">TestContext</button>
+        </div>
+        <div class="test-panel active" id="def-5">
+          <table class="spec-table">
+            <tr><td>testId</td><td><span class="spec-val-code">test_pullup_max</span></td></tr>
+            <tr><td>componentId</td><td>muscular_endurance</td></tr>
+            <tr><td>inputType</td><td>repetitions</td></tr>
+            <tr><td>canonicalUnit</td><td>repetitions</td></tr>
+            <tr><td>scoringDirection</td><td>More repetitions = higher score</td></tr>
+            <tr><td>normalizationRule</td><td>Not required</td></tr>
+            <tr><td>replacementGroupId</td><td><span class="spec-val-code">rg_upper_pull_strength</span></td></tr>
+            <tr><td>version</td><td>1.0.0</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="proto-5">
+          <table class="spec-table">
+            <tr><td>protocolId</td><td><span class="spec-val-code">proto_pullup_max_v1</span></td></tr>
+            <tr><td>description</td><td>Dead hang start from full arm extension. Overhand grip (palms away) shoulder-width apart. Pull until chin clears bar. Controlled descent to full extension required between reps. No kipping or swinging.</td></tr>
+            <tr><td>equipmentRequired</td><td>Pull-up bar at appropriate height</td></tr>
+            <tr><td>startCondition</td><td>Dead hang. Full arm extension. Overhand grip.</td></tr>
+            <tr><td>measurementStandard</td><td>Integer count of complete valid repetitions.</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="ctx-5">
+          <table class="spec-table">
+            <tr><td>sportTags</td><td><div class="tags-wrap"><span class="tag-sm">military</span><span class="tag-sm">crossfit</span><span class="tag-sm">gymnastics</span><span class="tag-sm">general_fitness</span><span class="tag-sm">martial_arts</span></div></td></tr>
+            <tr><td>settingTags</td><td><div class="tags-wrap"><span class="tag-sm">gym</span><span class="tag-sm">outdoor_general</span><span class="tag-sm">home</span></div></td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">minimal</span></td></tr>
+            <tr><td>populationTags</td><td><div class="tags-wrap"><span class="tag-sm">general_adult</span><span class="tag-sm">youth</span><span class="tag-sm">high_school</span><span class="tag-sm">collegiate</span><span class="tag-sm">elite</span><span class="tag-sm">military</span><span class="tag-sm">first_responder</span></div></td></tr>
+            <tr><td>coachingNotes</td><td>Dead hang and controlled descent required. Kipping invalidates the rep. Widely used in military and first responder standards.</td></tr>
+          </table>
+        </div>
+        <div class="version-bar"><div class="vb-item"><div class="vb-dot"></div>FITDAT v1.1</div><div class="vb-item">test_pullup_max v1.0.0</div></div>
+      </div>
+    </div>
+
+    <!-- TEST 6: 400m Sprint -->
+    <div class="test-card" data-component="muscular_endurance" data-equip="minimal">
+      <div class="test-card-header" onclick="toggleCard(this)">
+        <div class="test-card-num">06</div>
+        <div class="test-card-main">
+          <div class="test-card-name">400m Sprint</div>
+          <div class="test-card-meta">
+            <span class="tag component">Muscular endurance</span>
+            <span class="tag input">secondsOnly</span>
+            <span class="tag unit">seconds</span>
+            <span class="tag cert">certification eligible</span>
+          </div>
+        </div>
+        <div class="test-card-toggle">+ expand</div>
+      </div>
+      <div class="test-card-body">
+        <div class="test-tabs">
+          <button class="test-tab active" onclick="showTab(this,'def-6')">TestDefinition</button>
+          <button class="test-tab" onclick="showTab(this,'proto-6')">TestProtocol</button>
+          <button class="test-tab" onclick="showTab(this,'ctx-6')">TestContext</button>
+        </div>
+        <div class="test-panel active" id="def-6">
+          <table class="spec-table">
+            <tr><td>testId</td><td><span class="spec-val-code">test_400m_sprint</span></td></tr>
+            <tr><td>componentId</td><td>muscular_endurance</td></tr>
+            <tr><td>inputType</td><td>secondsOnly</td></tr>
+            <tr><td>canonicalUnit</td><td>seconds</td></tr>
+            <tr><td>scoringDirection</td><td>Lower time = higher score</td></tr>
+            <tr><td>normalizationRule</td><td>Not required</td></tr>
+            <tr><td>replacementGroupId</td><td>none</td></tr>
+            <tr><td>version</td><td>1.0.0</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="proto-6">
+          <table class="spec-table">
+            <tr><td>protocolId</td><td><span class="spec-val-code">proto_400m_sprint_v1</span></td></tr>
+            <tr><td>description</td><td>400-meter sprint on track or measured flat surface. Standing start. Single all-out effort. Time from start signal to finish line crossing.</td></tr>
+            <tr><td>equipmentRequired</td><td>Stopwatch or electronic timing, 400m track or measured flat surface</td></tr>
+            <tr><td>measurementStandard</td><td>Nearest 0.01 seconds. Single attempt.</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="ctx-6">
+          <table class="spec-table">
+            <tr><td>sportTags</td><td><div class="tags-wrap"><span class="tag-sm">track</span><span class="tag-sm">football</span><span class="tag-sm">soccer</span><span class="tag-sm">military</span><span class="tag-sm">combine_general</span><span class="tag-sm">general_fitness</span></div></td></tr>
+            <tr><td>settingTags</td><td><div class="tags-wrap"><span class="tag-sm">track</span><span class="tag-sm">field</span><span class="tag-sm">outdoor_general</span></div></td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">minimal</span></td></tr>
+            <tr><td>populationTags</td><td><div class="tags-wrap"><span class="tag-sm">general_adult</span><span class="tag-sm">youth</span><span class="tag-sm">high_school</span><span class="tag-sm">collegiate</span><span class="tag-sm">elite</span><span class="tag-sm">military</span><span class="tag-sm">first_responder</span></div></td></tr>
+            <tr><td>coachingNotes</td><td>Use 400m track when available for standard conditions. Full effort single attempt.</td></tr>
+          </table>
+        </div>
+        <div class="version-bar"><div class="vb-item"><div class="vb-dot"></div>FITDAT v1.1</div><div class="vb-item">test_400m_sprint v1.0.0</div></div>
+      </div>
+    </div>
+
+    <!-- TEST 7: Wall Sit -->
+    <div class="test-card" data-component="muscular_endurance" data-equip="none">
+      <div class="test-card-header" onclick="toggleCard(this)">
+        <div class="test-card-num">07</div>
+        <div class="test-card-main">
+          <div class="test-card-name">Wall Sit</div>
+          <div class="test-card-meta">
+            <span class="tag component">Muscular endurance</span>
+            <span class="tag input">secondsOnly</span>
+            <span class="tag unit">seconds</span>
+            <span class="tag cert">certification eligible</span>
+            <span class="tag group">rg_isometric_hold</span>
+          </div>
+        </div>
+        <div class="test-card-toggle">+ expand</div>
+      </div>
+      <div class="test-card-body">
+        <div class="test-tabs">
+          <button class="test-tab active" onclick="showTab(this,'def-7')">TestDefinition</button>
+          <button class="test-tab" onclick="showTab(this,'proto-7')">TestProtocol</button>
+          <button class="test-tab" onclick="showTab(this,'ctx-7')">TestContext</button>
+        </div>
+        <div class="test-panel active" id="def-7">
+          <table class="spec-table">
+            <tr><td>testId</td><td><span class="spec-val-code">test_wall_sit</span></td></tr>
+            <tr><td>componentId</td><td>muscular_endurance</td></tr>
+            <tr><td>inputType</td><td>secondsOnly</td></tr>
+            <tr><td>canonicalUnit</td><td>seconds</td></tr>
+            <tr><td>scoringDirection</td><td>Longer time = higher score</td></tr>
+            <tr><td>replacementGroupId</td><td><span class="spec-val-code">rg_isometric_hold</span></td></tr>
+            <tr><td>version</td><td>1.0.0</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="proto-7">
+          <table class="spec-table">
+            <tr><td>protocolId</td><td><span class="spec-val-code">proto_wall_sit_v1</span></td></tr>
+            <tr><td>description</td><td>Back flat against wall. Feet shoulder-width apart approx 60cm from wall. Knees at approximately 90 degrees. Thighs parallel to floor. Arms at sides or on thighs (not used for support). Timer starts when position is set and verified. Timer stops when any position break occurs.</td></tr>
+            <tr><td>equipmentRequired</td><td>Flat wall, stopwatch</td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">none</span></td></tr>
+            <tr><td>measurementStandard</td><td>Nearest whole second. Single attempt.</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="ctx-7">
+          <table class="spec-table">
+            <tr><td>sportTags</td><td><div class="tags-wrap"><span class="tag-sm">general_fitness</span><span class="tag-sm">military</span><span class="tag-sm">crossfit</span><span class="tag-sm">law_enforcement</span><span class="tag-sm">fire</span></div></td></tr>
+            <tr><td>settingTags</td><td><div class="tags-wrap"><span class="tag-sm">gym</span><span class="tag-sm">home</span><span class="tag-sm">outdoor_general</span></div></td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">none</span></td></tr>
+            <tr><td>populationTags</td><td><div class="tags-wrap"><span class="tag-sm">general_adult</span><span class="tag-sm">masters_40</span><span class="tag-sm">masters_50</span><span class="tag-sm">masters_60plus</span><span class="tag-sm">youth</span><span class="tag-sm">military</span><span class="tag-sm">first_responder</span></div></td></tr>
+            <tr><td>coachingNotes</td><td>No equipment required beyond a wall. Highly accessible. Arms must not rest on legs — position break invalidates result.</td></tr>
+          </table>
+        </div>
+        <div class="version-bar"><div class="vb-item"><div class="vb-dot"></div>FITDAT v1.1</div><div class="vb-item">test_wall_sit v1.0.0</div></div>
+      </div>
+    </div>
+
+    <!-- TEST 8: Squat Thrust Jumps -->
+    <div class="test-card" data-component="muscular_endurance" data-equip="none">
+      <div class="test-card-header" onclick="toggleCard(this)">
+        <div class="test-card-num">08</div>
+        <div class="test-card-main">
+          <div class="test-card-name">Squat Thrust Jumps — 2 Minutes</div>
+          <div class="test-card-meta">
+            <span class="tag component">Muscular endurance</span>
+            <span class="tag input">repetitions</span>
+            <span class="tag unit">reps</span>
+            <span class="tag cert">certification eligible</span>
+          </div>
+        </div>
+        <div class="test-card-toggle">+ expand</div>
+      </div>
+      <div class="test-card-body">
+        <div class="test-tabs">
+          <button class="test-tab active" onclick="showTab(this,'def-8')">TestDefinition</button>
+          <button class="test-tab" onclick="showTab(this,'proto-8')">TestProtocol</button>
+          <button class="test-tab" onclick="showTab(this,'ctx-8')">TestContext</button>
+        </div>
+        <div class="test-panel active" id="def-8">
+          <table class="spec-table">
+            <tr><td>testId</td><td><span class="spec-val-code">test_squat_thrust_jump_2min</span></td></tr>
+            <tr><td>componentId</td><td>muscular_endurance</td></tr>
+            <tr><td>inputType</td><td>repetitions</td></tr>
+            <tr><td>canonicalUnit</td><td>repetitions</td></tr>
+            <tr><td>scoringDirection</td><td>More repetitions = higher score</td></tr>
+            <tr><td>replacementGroupId</td><td>none</td></tr>
+            <tr><td>version</td><td>1.0.0</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="proto-8">
+          <table class="spec-table">
+            <tr><td>protocolId</td><td><span class="spec-val-code">proto_squat_thrust_jump_2min_v1</span></td></tr>
+            <tr><td>description</td><td>Standing start. Movement sequence: squat down, thrust feet back to full plank, return feet to squat position, jump vertically with arm extension overhead. Full plank extension required each rep. Full jump with arm extension required each rep. Total valid repetitions in exactly 2 minutes.</td></tr>
+            <tr><td>equipmentRequired</td><td>2-minute timer, flat non-slip surface</td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">none</span></td></tr>
+            <tr><td>measurementStandard</td><td>Integer count of complete valid repetitions in exactly 120 seconds.</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="ctx-8">
+          <table class="spec-table">
+            <tr><td>sportTags</td><td><div class="tags-wrap"><span class="tag-sm">military</span><span class="tag-sm">crossfit</span><span class="tag-sm">fire</span><span class="tag-sm">law_enforcement</span><span class="tag-sm">general_fitness</span></div></td></tr>
+            <tr><td>settingTags</td><td><div class="tags-wrap"><span class="tag-sm">gym</span><span class="tag-sm">field</span><span class="tag-sm">outdoor_general</span><span class="tag-sm">home</span></div></td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">none</span></td></tr>
+            <tr><td>populationTags</td><td><div class="tags-wrap"><span class="tag-sm">general_adult</span><span class="tag-sm">high_school</span><span class="tag-sm">collegiate</span><span class="tag-sm">elite</span><span class="tag-sm">military</span><span class="tag-sm">first_responder</span></div></td></tr>
+            <tr><td>coachingNotes</td><td>Full plank and full overhead jump required each rep. Partial reps do not count. Requires no equipment — administrable anywhere.</td></tr>
+          </table>
+        </div>
+        <div class="version-bar"><div class="vb-item"><div class="vb-dot"></div>FITDAT v1.1</div><div class="vb-item">test_squat_thrust_jump_2min v1.0.0</div></div>
+      </div>
+    </div>
+
+    <!-- TEST 9: 5K Run -->
+    <div class="test-card" data-component="cardiovascular_endurance" data-equip="minimal">
+      <div class="test-card-header" onclick="toggleCard(this)">
+        <div class="test-card-num">09</div>
+        <div class="test-card-main">
+          <div class="test-card-name">5K Run</div>
+          <div class="test-card-meta">
+            <span class="tag component">Cardiovascular endurance</span>
+            <span class="tag input">minutesSeconds</span>
+            <span class="tag unit">seconds</span>
+            <span class="tag cert">certification eligible</span>
+            <span class="tag group">rg_cardio_long</span>
+          </div>
+        </div>
+        <div class="test-card-toggle">+ expand</div>
+      </div>
+      <div class="test-card-body">
+        <div class="test-tabs">
+          <button class="test-tab active" onclick="showTab(this,'def-9')">TestDefinition</button>
+          <button class="test-tab" onclick="showTab(this,'proto-9')">TestProtocol</button>
+          <button class="test-tab" onclick="showTab(this,'ctx-9')">TestContext</button>
+        </div>
+        <div class="test-panel active" id="def-9">
+          <table class="spec-table">
+            <tr><td>testId</td><td><span class="spec-val-code">test_5k_run</span></td></tr>
+            <tr><td>componentId</td><td>cardiovascular_endurance</td></tr>
+            <tr><td>inputType</td><td>minutesSeconds</td></tr>
+            <tr><td>canonicalUnit</td><td>seconds</td></tr>
+            <tr><td>scoringDirection</td><td>Lower time = higher score</td></tr>
+            <tr><td>normalizationRule</td><td><span class="spec-val-code">norm_mmss_to_seconds</span> — (minutes × 60) + seconds</td></tr>
+            <tr><td>replacementGroupId</td><td><span class="spec-val-code">rg_cardio_long</span></td></tr>
+            <tr><td>version</td><td>1.0.0</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="proto-9">
+          <table class="spec-table">
+            <tr><td>protocolId</td><td><span class="spec-val-code">proto_5k_run_v1</span></td></tr>
+            <tr><td>description</td><td>5000 meter continuous run on road, track, or measured flat course. Standing start. Time from start signal to finish line crossing. GPS or measured course required.</td></tr>
+            <tr><td>equipmentRequired</td><td>Stopwatch or GPS timing, measured 5K course or 400m track</td></tr>
+            <tr><td>measurementStandard</td><td>Total time in mm:ss. Normalized to total seconds.</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="ctx-9">
+          <table class="spec-table">
+            <tr><td>sportTags</td><td><div class="tags-wrap"><span class="tag-sm">track</span><span class="tag-sm">military</span><span class="tag-sm">general_fitness</span><span class="tag-sm">crossfit</span><span class="tag-sm">fire</span><span class="tag-sm">law_enforcement</span></div></td></tr>
+            <tr><td>settingTags</td><td><div class="tags-wrap"><span class="tag-sm">track</span><span class="tag-sm">outdoor_general</span></div></td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">minimal</span></td></tr>
+            <tr><td>populationTags</td><td><div class="tags-wrap"><span class="tag-sm">general_adult</span><span class="tag-sm">masters_40</span><span class="tag-sm">masters_50</span><span class="tag-sm">masters_60plus</span><span class="tag-sm">youth</span><span class="tag-sm">high_school</span><span class="tag-sm">collegiate</span><span class="tag-sm">military</span><span class="tag-sm">first_responder</span></div></td></tr>
+            <tr><td>coachingNotes</td><td>GPS watch or certified measured course required for Official certification. Flat course preferred for comparability.</td></tr>
+          </table>
+        </div>
+        <div class="version-bar"><div class="vb-item"><div class="vb-dot"></div>FITDAT v1.1</div><div class="vb-item">test_5k_run v1.0.0</div></div>
+      </div>
+    </div>
+
+    <!-- TEST 10: Concept2 Row 2000m -->
+    <div class="test-card" data-component="cardiovascular_endurance" data-equip="standard">
+      <div class="test-card-header" onclick="toggleCard(this)">
+        <div class="test-card-num">10</div>
+        <div class="test-card-main">
+          <div class="test-card-name">Concept2 Row — 2000m</div>
+          <div class="test-card-meta">
+            <span class="tag component">Cardiovascular endurance</span>
+            <span class="tag input">minutesSeconds</span>
+            <span class="tag unit">seconds</span>
+            <span class="tag cert">certification eligible</span>
+            <span class="tag group">rg_cardio_long</span>
+          </div>
+        </div>
+        <div class="test-card-toggle">+ expand</div>
+      </div>
+      <div class="test-card-body">
+        <div class="test-tabs">
+          <button class="test-tab active" onclick="showTab(this,'def-10')">TestDefinition</button>
+          <button class="test-tab" onclick="showTab(this,'proto-10')">TestProtocol</button>
+          <button class="test-tab" onclick="showTab(this,'ctx-10')">TestContext</button>
+        </div>
+        <div class="test-panel active" id="def-10">
+          <table class="spec-table">
+            <tr><td>testId</td><td><span class="spec-val-code">test_concept2_2k_row</span></td></tr>
+            <tr><td>componentId</td><td>cardiovascular_endurance</td></tr>
+            <tr><td>inputType</td><td>minutesSeconds</td></tr>
+            <tr><td>canonicalUnit</td><td>seconds</td></tr>
+            <tr><td>scoringDirection</td><td>Lower time = higher score</td></tr>
+            <tr><td>normalizationRule</td><td><span class="spec-val-code">norm_mmss_to_seconds</span></td></tr>
+            <tr><td>replacementGroupId</td><td><span class="spec-val-code">rg_cardio_long</span> — interchangeable with 5K Run</td></tr>
+            <tr><td>version</td><td>1.0.0</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="proto-10">
+          <table class="spec-table">
+            <tr><td>protocolId</td><td><span class="spec-val-code">proto_concept2_2k_row_v1</span></td></tr>
+            <tr><td>description</td><td>2000 meter row on Concept2 ergometer (Model C, D, or E). Damper setting athlete choice — must be recorded. Athlete programs 2000m on monitor. Starts on own initiation. Time recorded from monitor at completion.</td></tr>
+            <tr><td>equipmentRequired</td><td>Concept2 ergometer (Model C, D, or E), PM3, PM4, or PM5 performance monitor</td></tr>
+            <tr><td>startCondition</td><td>Seated on ergometer. Monitor programmed to 2000m. Athlete self-initiates.</td></tr>
+            <tr><td>timingMethod</td><td>electronic (Concept2 monitor)</td></tr>
+            <tr><td>measurementStandard</td><td>Time displayed on Concept2 monitor at completion in mm:ss. Damper setting recorded.</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="ctx-10">
+          <table class="spec-table">
+            <tr><td>sportTags</td><td><div class="tags-wrap"><span class="tag-sm">crossfit</span><span class="tag-sm">military</span><span class="tag-sm">general_fitness</span></div></td></tr>
+            <tr><td>settingTags</td><td><div class="tags-wrap"><span class="tag-sm">gym</span></div></td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">standard</span></td></tr>
+            <tr><td>populationTags</td><td><div class="tags-wrap"><span class="tag-sm">general_adult</span><span class="tag-sm">masters_40</span><span class="tag-sm">masters_50</span><span class="tag-sm">high_school</span><span class="tag-sm">collegiate</span><span class="tag-sm">elite</span><span class="tag-sm">military</span></div></td></tr>
+            <tr><td>coachingNotes</td><td>Concept2 ergometer required — no substitutions. Damper setting must be noted on result record. Highly reproducible indoor environment.</td></tr>
+          </table>
+        </div>
+        <div class="version-bar"><div class="vb-item"><div class="vb-dot"></div>FITDAT v1.1</div><div class="vb-item">test_concept2_2k_row v1.0.0</div></div>
+      </div>
+    </div>
+
+    <!-- TEST 11: Push-Ups -->
+    <div class="test-card" data-component="muscular_endurance" data-equip="none">
+      <div class="test-card-header" onclick="toggleCard(this)">
+        <div class="test-card-num">11</div>
+        <div class="test-card-main">
+          <div class="test-card-name">Push-Ups — Max Reps</div>
+          <div class="test-card-meta">
+            <span class="tag component">Muscular endurance</span>
+            <span class="tag input">repetitions</span>
+            <span class="tag unit">reps</span>
+            <span class="tag cert">certification eligible</span>
+            <span class="tag group">rg_upper_push_strength</span>
+          </div>
+        </div>
+        <div class="test-card-toggle">+ expand</div>
+      </div>
+      <div class="test-card-body">
+        <div class="test-tabs">
+          <button class="test-tab active" onclick="showTab(this,'def-11')">TestDefinition</button>
+          <button class="test-tab" onclick="showTab(this,'proto-11')">TestProtocol</button>
+          <button class="test-tab" onclick="showTab(this,'ctx-11')">TestContext</button>
+        </div>
+        <div class="test-panel active" id="def-11">
+          <table class="spec-table">
+            <tr><td>testId</td><td><span class="spec-val-code">test_pushup_max</span></td></tr>
+            <tr><td>componentId</td><td>muscular_endurance</td></tr>
+            <tr><td>inputType</td><td>repetitions</td></tr>
+            <tr><td>canonicalUnit</td><td>repetitions</td></tr>
+            <tr><td>scoringDirection</td><td>More repetitions = higher score</td></tr>
+            <tr><td>replacementGroupId</td><td><span class="spec-val-code">rg_upper_push_strength</span> — alternate to Bench Press 1RM</td></tr>
+            <tr><td>version</td><td>1.0.0</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="proto-11">
+          <table class="spec-table">
+            <tr><td>protocolId</td><td><span class="spec-val-code">proto_pushup_max_v1</span></td></tr>
+            <tr><td>description</td><td>Standard push-up position: hands slightly wider than shoulder-width. Body in straight plank from head to heels. Lower chest to approximately 1–2 inches from floor. Full arm extension at top. No resting on floor. Hips must not sag or pike. Athlete may pause in top position only.</td></tr>
+            <tr><td>equipmentRequired</td><td>Flat non-slip surface</td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">none</span></td></tr>
+            <tr><td>measurementStandard</td><td>Integer count of complete valid repetitions.</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="ctx-11">
+          <table class="spec-table">
+            <tr><td>sportTags</td><td><div class="tags-wrap"><span class="tag-sm">military</span><span class="tag-sm">general_fitness</span><span class="tag-sm">crossfit</span><span class="tag-sm">fire</span><span class="tag-sm">law_enforcement</span></div></td></tr>
+            <tr><td>settingTags</td><td><div class="tags-wrap"><span class="tag-sm">gym</span><span class="tag-sm">home</span><span class="tag-sm">field</span><span class="tag-sm">outdoor_general</span></div></td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">none</span></td></tr>
+            <tr><td>populationTags</td><td><div class="tags-wrap"><span class="tag-sm">general_adult</span><span class="tag-sm">masters_40</span><span class="tag-sm">masters_50</span><span class="tag-sm">youth</span><span class="tag-sm">high_school</span><span class="tag-sm">collegiate</span><span class="tag-sm">military</span><span class="tag-sm">first_responder</span></div></td></tr>
+            <tr><td>coachingNotes</td><td>No equipment required. Highest accessibility of all strength tests. Sagging hips or piking invalidates the rep.</td></tr>
+          </table>
+        </div>
+        <div class="version-bar"><div class="vb-item"><div class="vb-dot"></div>FITDAT v1.1</div><div class="vb-item">test_pushup_max v1.0.0</div></div>
+      </div>
+    </div>
+
+    <!-- TEST 12: Medicine Ball Throw -->
+    <div class="test-card" data-component="power" data-equip="minimal">
+      <div class="test-card-header" onclick="toggleCard(this)">
+        <div class="test-card-num">12</div>
+        <div class="test-card-main">
+          <div class="test-card-name">Medicine Ball Throw</div>
+          <div class="test-card-meta">
+            <span class="tag component">Power</span>
+            <span class="tag input">distance</span>
+            <span class="tag unit">meters</span>
+            <span class="tag cert">certification eligible</span>
+            <span class="tag group">rg_upper_power</span>
+          </div>
+        </div>
+        <div class="test-card-toggle">+ expand</div>
+      </div>
+      <div class="test-card-body">
+        <div class="test-tabs">
+          <button class="test-tab active" onclick="showTab(this,'def-12')">TestDefinition</button>
+          <button class="test-tab" onclick="showTab(this,'proto-12')">TestProtocol</button>
+          <button class="test-tab" onclick="showTab(this,'ctx-12')">TestContext</button>
+        </div>
+        <div class="test-panel active" id="def-12">
+          <table class="spec-table">
+            <tr><td>testId</td><td><span class="spec-val-code">test_medicine_ball_throw</span></td></tr>
+            <tr><td>componentId</td><td>power</td></tr>
+            <tr><td>inputType</td><td>distance</td></tr>
+            <tr><td>canonicalUnit</td><td>meters</td></tr>
+            <tr><td>scoringDirection</td><td>Longer distance = higher score</td></tr>
+            <tr><td>normalizationRule</td><td><span class="spec-val-code">norm_ftin_to_m</span></td></tr>
+            <tr><td>replacementGroupId</td><td><span class="spec-val-code">rg_upper_power</span></td></tr>
+            <tr><td>version</td><td>1.0.0</td></tr>
+          </table>
+          <div class="coaching-note">Medicine ball weight must be standardized and recorded alongside the result. Standard weight groups are defined by the Score Set specification — not by FITDAT.</div>
+        </div>
+        <div class="test-panel" id="proto-12">
+          <table class="spec-table">
+            <tr><td>protocolId</td><td><span class="spec-val-code">proto_medicine_ball_throw_v1</span></td></tr>
+            <tr><td>description</td><td>Standing two-handed overhead medicine ball toss. Athlete stands behind marked release line. Ball held overhead with both hands. Full overhead throw — athlete may extend onto toes at release. No rotational or single-arm throw. Feet stationary at moment of release. Distance measured from release line to first contact point on landing.</td></tr>
+            <tr><td>equipmentRequired</td><td>Medicine ball (standardized weight), measuring tape or marked floor, flat surface, marked release line</td></tr>
+            <tr><td>startCondition</td><td>Standing behind release line. Ball held overhead. Feet stationary at release.</td></tr>
+            <tr><td>measurementStandard</td><td>Nearest 0.01 meters. First landing contact point. Best of two attempts.</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="ctx-12">
+          <table class="spec-table">
+            <tr><td>sportTags</td><td><div class="tags-wrap"><span class="tag-sm">baseball</span><span class="tag-sm">football</span><span class="tag-sm">basketball</span><span class="tag-sm">crossfit</span><span class="tag-sm">combine_general</span><span class="tag-sm">general_fitness</span></div></td></tr>
+            <tr><td>settingTags</td><td><div class="tags-wrap"><span class="tag-sm">gym</span><span class="tag-sm">field</span><span class="tag-sm">outdoor_general</span></div></td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">minimal</span></td></tr>
+            <tr><td>populationTags</td><td><div class="tags-wrap"><span class="tag-sm">general_adult</span><span class="tag-sm">high_school</span><span class="tag-sm">collegiate</span><span class="tag-sm">elite</span><span class="tag-sm">military</span></div></td></tr>
+            <tr><td>coachingNotes</td><td>Overhead toss only — chest pass or rotational throws are invalid for this protocol. Ball weight must match the Score Set specification.</td></tr>
+          </table>
+        </div>
+        <div class="version-bar"><div class="vb-item"><div class="vb-dot"></div>FITDAT v1.1</div><div class="vb-item">test_medicine_ball_throw v1.0.0</div></div>
+      </div>
+    </div>
+
+    <!-- TEST 13: Plank Hold -->
+    <div class="test-card" data-component="muscular_endurance" data-equip="none">
+      <div class="test-card-header" onclick="toggleCard(this)">
+        <div class="test-card-num">13</div>
+        <div class="test-card-main">
+          <div class="test-card-name">Plank Hold</div>
+          <div class="test-card-meta">
+            <span class="tag component">Muscular endurance</span>
+            <span class="tag input">secondsOnly</span>
+            <span class="tag unit">seconds</span>
+            <span class="tag cert">certification eligible</span>
+            <span class="tag group">rg_isometric_hold</span>
+          </div>
+        </div>
+        <div class="test-card-toggle">+ expand</div>
+      </div>
+      <div class="test-card-body">
+        <div class="test-tabs">
+          <button class="test-tab active" onclick="showTab(this,'def-13')">TestDefinition</button>
+          <button class="test-tab" onclick="showTab(this,'proto-13')">TestProtocol</button>
+          <button class="test-tab" onclick="showTab(this,'ctx-13')">TestContext</button>
+        </div>
+        <div class="test-panel active" id="def-13">
+          <table class="spec-table">
+            <tr><td>testId</td><td><span class="spec-val-code">test_plank_hold</span></td></tr>
+            <tr><td>componentId</td><td>muscular_endurance</td></tr>
+            <tr><td>inputType</td><td>secondsOnly</td></tr>
+            <tr><td>canonicalUnit</td><td>seconds</td></tr>
+            <tr><td>scoringDirection</td><td>Longer time = higher score</td></tr>
+            <tr><td>replacementGroupId</td><td><span class="spec-val-code">rg_isometric_hold</span> — alternate to Wall Sit</td></tr>
+            <tr><td>version</td><td>1.0.0</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="proto-13">
+          <table class="spec-table">
+            <tr><td>protocolId</td><td><span class="spec-val-code">proto_plank_hold_v1</span></td></tr>
+            <tr><td>description</td><td>Forearm plank position. Elbows directly under shoulders. Forearms flat on floor. Body straight from shoulders to ankles — no sagging hips, no pike. Feet hip-width apart. Head neutral. Timer starts when position is set and verified. Timer stops on any position break.</td></tr>
+            <tr><td>equipmentRequired</td><td>Flat non-slip surface, stopwatch, exercise mat optional</td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">none</span></td></tr>
+            <tr><td>measurementStandard</td><td>Nearest whole second. Single attempt.</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="ctx-13">
+          <table class="spec-table">
+            <tr><td>sportTags</td><td><div class="tags-wrap"><span class="tag-sm">general_fitness</span><span class="tag-sm">military</span><span class="tag-sm">crossfit</span><span class="tag-sm">fire</span><span class="tag-sm">law_enforcement</span></div></td></tr>
+            <tr><td>settingTags</td><td><div class="tags-wrap"><span class="tag-sm">gym</span><span class="tag-sm">home</span><span class="tag-sm">outdoor_general</span></div></td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">none</span></td></tr>
+            <tr><td>populationTags</td><td><div class="tags-wrap"><span class="tag-sm">general_adult</span><span class="tag-sm">masters_40</span><span class="tag-sm">masters_50</span><span class="tag-sm">masters_60plus</span><span class="tag-sm">youth</span><span class="tag-sm">military</span><span class="tag-sm">first_responder</span></div></td></tr>
+            <tr><td>coachingNotes</td><td>No equipment required beyond a flat surface. Sagging or piking at hips stops the clock immediately.</td></tr>
+          </table>
+        </div>
+        <div class="version-bar"><div class="vb-item"><div class="vb-dot"></div>FITDAT v1.1</div><div class="vb-item">test_plank_hold v1.0.0</div></div>
+      </div>
+    </div>
+
+    <!-- TEST 14: Back Squat 1RM -->
+    <div class="test-card" data-component="muscular_strength" data-equip="standard">
+      <div class="test-card-header" onclick="toggleCard(this)">
+        <div class="test-card-num">14</div>
+        <div class="test-card-main">
+          <div class="test-card-name">Back Squat — 1 Rep Max</div>
+          <div class="test-card-meta">
+            <span class="tag component">Muscular strength</span>
+            <span class="tag input">weight</span>
+            <span class="tag unit">kg</span>
+            <span class="tag cert">certification eligible</span>
+            <span class="tag group">rg_lower_strength</span>
+          </div>
+        </div>
+        <div class="test-card-toggle">+ expand</div>
+      </div>
+      <div class="test-card-body">
+        <div class="test-tabs">
+          <button class="test-tab active" onclick="showTab(this,'def-14')">TestDefinition</button>
+          <button class="test-tab" onclick="showTab(this,'proto-14')">TestProtocol</button>
+          <button class="test-tab" onclick="showTab(this,'ctx-14')">TestContext</button>
+        </div>
+        <div class="test-panel active" id="def-14">
+          <table class="spec-table">
+            <tr><td>testId</td><td><span class="spec-val-code">test_back_squat_1rm</span></td></tr>
+            <tr><td>componentId</td><td>muscular_strength</td></tr>
+            <tr><td>inputType</td><td>weight (with optional reps 1–8 for estimated 1RM)</td></tr>
+            <tr><td>canonicalUnit</td><td>kg</td></tr>
+            <tr><td>scoringDirection</td><td>Higher weight = higher score</td></tr>
+            <tr><td>normalizationRule</td><td><span class="spec-val-code">norm_lbs_to_kg</span></td></tr>
+            <tr><td>replacementGroupId</td><td><span class="spec-val-code">rg_lower_strength</span></td></tr>
+            <tr><td>version</td><td>1.0.0</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="proto-14">
+          <table class="spec-table">
+            <tr><td>protocolId</td><td><span class="spec-val-code">proto_back_squat_1rm_v1</span></td></tr>
+            <tr><td>description</td><td>Barbell on upper back (high or low bar — must be recorded). Feet shoulder-width apart, toes out slightly. Descent until hip crease below knee (parallel or below). Full hip and knee extension at top. No significant forward lean or butt wink. Direct 1RM or estimated 1RM from entered weight and reps (1–8).</td></tr>
+            <tr><td>equipmentRequired</td><td>Barbell, squat rack or power cage, weight plates, safety spotter or safeties</td></tr>
+            <tr><td>startCondition</td><td>Standing. Barbell on upper back. Position verified.</td></tr>
+            <tr><td>measurementStandard</td><td>Weight in lbs or kg. Bar position (high/low) recorded. Reps 1–8 for estimated max.</td></tr>
+          </table>
+        </div>
+        <div class="test-panel" id="ctx-14">
+          <table class="spec-table">
+            <tr><td>sportTags</td><td><div class="tags-wrap"><span class="tag-sm">football</span><span class="tag-sm">powerlifting</span><span class="tag-sm">crossfit</span><span class="tag-sm">military</span><span class="tag-sm">combine_general</span><span class="tag-sm">general_fitness</span></div></td></tr>
+            <tr><td>settingTags</td><td><div class="tags-wrap"><span class="tag-sm">gym</span></div></td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">standard</span></td></tr>
+            <tr><td>populationTags</td><td><div class="tags-wrap"><span class="tag-sm">general_adult</span><span class="tag-sm">high_school</span><span class="tag-sm">collegiate</span><span class="tag-sm">elite</span><span class="tag-sm">military</span></div></td></tr>
+            <tr><td>coachingNotes</td><td>Bar position (high or low) affects leverage and result comparability — must be noted. Spotter required. Gym setting only.</td></tr>
+          </table>
+        </div>
+        <div class="version-bar"><div class="vb-item"><div class="vb-dot"></div>FITDAT v1.1</div><div class="vb-item">test_back_squat_1rm v1.0.0</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer style="padding:28px 32px;border-top:1px solid var(--border);background:var(--surface2)">
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+    <div style="font-size:13px;color:var(--muted)">
+      <strong style="color:var(--ink)">FITDAT®</strong>
+      <span style="margin:0 8px;opacity:.4">·</span>
+      Governed by <a href="https://realfit.com" style="color:var(--muted);text-decoration:none">REALFIT®</a>
+      <span style="margin:0 8px;opacity:.4">·</span>
+      <a href="https://realfitscore.com" style="color:var(--muted);text-decoration:none">REALFITSCORE</a>
+      <span style="margin:0 8px;opacity:.4">·</span>
+      <a href="https://scoremy40.com" style="color:var(--muted);text-decoration:none">ScoreMy40</a>
+    </div>
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--faint)">FITDAT® v1.1 · © 2026 REALFIT®</div>
+  </div>
+</footer>
+
+<script>
+function toggleCard(header) {
+  const card = header.closest('.test-card');
+  const body = card.querySelector('.test-card-body');
+  const toggle = header.querySelector('.test-card-toggle');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  toggle.textContent = isOpen ? '+ expand' : '− collapse';
+}
+
+function showTab(btn, panelId) {
+  const card = btn.closest('.test-card-body');
+  card.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+  card.querySelectorAll('.test-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+}
+
+let activeFilter = 'all';
+let activeEquip = null;
+
+function setFilter(val, btn) {
+  activeFilter = val;
+  document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeEquip = null;
+  document.querySelectorAll('[data-equip]').forEach(b => b.classList.remove('active'));
+  applyFilters();
+}
+
+function setEquipFilter(val, btn) {
+  if (activeEquip === val) {
+    activeEquip = null;
+    btn.classList.remove('active');
+  } else {
+    activeEquip = val;
+    document.querySelectorAll('[data-equip]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  applyFilters();
+}
+
+function applyFilters() {
+  document.querySelectorAll('.test-card').forEach(card => {
+    const comp = card.dataset.component;
+    const equip = card.dataset.equip;
+    const compMatch = activeFilter === 'all' || comp === activeFilter;
+    const equipMatch = !activeEquip || equip === activeEquip;
+    card.classList.toggle('hidden', !(compMatch && equipMatch));
+  });
+}
+</script>
+</body>
+</html>
