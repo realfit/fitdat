@@ -137,6 +137,22 @@ nav{display:flex;align-items:center;gap:4px}
   .test-tabs{padding:0 12px;overflow-x:auto}
   .spec-table td:first-child{width:120px}
 }
+
+  /* collapsible sidebar sections */
+  .filter-section-header{display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:0;padding:4px 0;user-select:none}
+  .filter-section-header .filter-label{margin-bottom:0}
+  .filter-toggle{font-size:11px;color:var(--faint);transition:color .15s;flex-shrink:0}
+  .filter-section-header:hover .filter-toggle{color:var(--teal)}
+  .filter-btns-wrap{overflow:hidden;transition:max-height .25s ease;max-height:400px}
+  .filter-btns-wrap.collapsed{max-height:0}
+
+  /* secondary component tags */
+  .tag.component-secondary{background:var(--surface3);color:var(--muted);border:1px solid var(--border);font-size:10px;padding:2px 7px}
+  .tag.component-primary{background:var(--teal-light);color:var(--teal);border:1px solid rgba(10,110,86,.15)}
+
+  /* sport tags in sidebar */
+  .sport-group{margin-bottom:10px}
+  .sport-group-label{font-size:11px;color:var(--faint);font-weight:500;margin-bottom:4px;padding-left:2px;letter-spacing:.04em}
 </style>
 </head>
 <body>
@@ -176,23 +192,80 @@ nav{display:flex;align-items:center;gap:4px}
 
   <aside class="sidebar">
     <div class="filter-section">
-      <div class="filter-label">Filter by component</div>
-      <div class="filter-btns" id="componentFilters">
-        <button class="filter-btn active" data-filter="all" onclick="setFilter('all',this)">All tests <span class="count">14</span></button>
-        <button class="filter-btn" data-filter="speed" onclick="setFilter('speed',this)">Speed <span class="count">2</span></button>
-        <button class="filter-btn" data-filter="muscular_strength" onclick="setFilter('muscular_strength',this)">Muscular strength <span class="count">3</span></button>
-        <button class="filter-btn" data-filter="muscular_endurance" onclick="setFilter('muscular_endurance',this)">Muscular endurance <span class="count">6</span></button>
-        <button class="filter-btn" data-filter="cardiovascular_endurance" onclick="setFilter('cardiovascular_endurance',this)">Cardiovascular <span class="count">2</span></button>
-        <button class="filter-btn" data-filter="power" onclick="setFilter('power',this)">Power <span class="count">3</span></button>
-        <button class="filter-btn" data-filter="agility" onclick="setFilter('agility',this)">Agility <span class="count">1</span></button>
+      <div class="filter-section-header" onclick="toggleSection(this)">
+        <div class="filter-label">Fitness component</div>
+        <span class="filter-toggle">▾</span>
+      </div>
+      <div class="filter-btns-wrap">
+        <div class="filter-btns" id="componentFilters">
+          <button class="filter-btn active" data-filter="all" onclick="setFilter('all',this)">All tests <span class="count">14</span></button>
+          <button class="filter-btn" data-filter="speed" onclick="setFilter('speed',this)">Speed <span class="count">2</span></button>
+          <button class="filter-btn" data-filter="muscular_strength" onclick="setFilter('muscular_strength',this)">Muscular strength <span class="count">3</span></button>
+          <button class="filter-btn" data-filter="muscular_endurance" onclick="setFilter('muscular_endurance',this)">Muscular endurance <span class="count">6</span></button>
+          <button class="filter-btn" data-filter="cardiovascular_endurance" onclick="setFilter('cardiovascular_endurance',this)">Cardiovascular <span class="count">2</span></button>
+          <button class="filter-btn" data-filter="power" onclick="setFilter('power',this)">Power <span class="count">3</span></button>
+          <button class="filter-btn" data-filter="agility" onclick="setFilter('agility',this)">Agility <span class="count">1</span></button>
+        </div>
       </div>
     </div>
+
     <div class="filter-section">
-      <div class="filter-label">Filter by equipment</div>
-      <div class="filter-btns">
-        <button class="filter-btn" data-equip="none" onclick="setEquipFilter('none',this)">No equipment <span class="count">4</span></button>
-        <button class="filter-btn" data-equip="minimal" onclick="setEquipFilter('minimal',this)">Minimal <span class="count">6</span></button>
-        <button class="filter-btn" data-equip="standard" onclick="setEquipFilter('standard',this)">Standard gym <span class="count">4</span></button>
+      <div class="filter-section-header" onclick="toggleSection(this)">
+        <div class="filter-label">Equipment</div>
+        <span class="filter-toggle">▾</span>
+      </div>
+      <div class="filter-btns-wrap">
+        <div class="filter-btns">
+          <button class="filter-btn" data-equip="none" onclick="setEquipFilter('none',this)">No equipment <span class="count">4</span></button>
+          <button class="filter-btn" data-equip="minimal" onclick="setEquipFilter('minimal',this)">Minimal <span class="count">6</span></button>
+          <button class="filter-btn" data-equip="standard" onclick="setEquipFilter('standard',this)">Standard gym <span class="count">4</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-section">
+      <div class="filter-section-header" onclick="toggleSection(this)">
+        <div class="filter-label">Discipline</div>
+        <span class="filter-toggle">▾</span>
+      </div>
+      <div class="filter-btns-wrap collapsed">
+        <div class="filter-btns">
+          <button class="filter-btn" data-discipline="military" onclick="setDisciplineFilter('military',this)">Military &amp; first responder <span class="count">10</span></button>
+          <button class="filter-btn" data-discipline="field_sports" onclick="setDisciplineFilter('field_sports',this)">Field sports <span class="count">8</span></button>
+          <button class="filter-btn" data-discipline="strength" onclick="setDisciplineFilter('strength',this)">Strength &amp; barbell <span class="count">6</span></button>
+          <button class="filter-btn" data-discipline="endurance" onclick="setDisciplineFilter('endurance',this)">Endurance <span class="count">5</span></button>
+          <button class="filter-btn" data-discipline="crossfit" onclick="setDisciplineFilter('crossfit',this)">CrossFit <span class="count">8</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-section">
+      <div class="filter-section-header" onclick="toggleSection(this)">
+        <div class="filter-label">Sport</div>
+        <span class="filter-toggle">▾</span>
+      </div>
+      <div class="filter-btns-wrap collapsed">
+        <div class="filter-btns">
+          <div class="sport-group">
+            <div class="sport-group-label">Field sports</div>
+            <button class="filter-btn" data-sport="football" onclick="setSportFilter('football',this)">Football <span class="count">9</span></button>
+            <button class="filter-btn" data-sport="baseball" onclick="setSportFilter('baseball',this)">Baseball <span class="count">5</span></button>
+            <button class="filter-btn" data-sport="soccer" onclick="setSportFilter('soccer',this)">Soccer <span class="count">5</span></button>
+            <button class="filter-btn" data-sport="basketball" onclick="setSportFilter('basketball',this)">Basketball <span class="count">4</span></button>
+          </div>
+          <div class="sport-group">
+            <div class="sport-group-label">Military &amp; service</div>
+            <button class="filter-btn" data-sport="military" onclick="setSportFilter('military',this)">Military <span class="count">10</span></button>
+            <button class="filter-btn" data-sport="fire" onclick="setSportFilter('fire',this)">Fire / rescue <span class="count">6</span></button>
+            <button class="filter-btn" data-sport="law_enforcement" onclick="setSportFilter('law_enforcement',this)">Law enforcement <span class="count">5</span></button>
+          </div>
+          <div class="sport-group">
+            <div class="sport-group-label">Other</div>
+            <button class="filter-btn" data-sport="crossfit" onclick="setSportFilter('crossfit',this)">CrossFit <span class="count">8</span></button>
+            <button class="filter-btn" data-sport="track" onclick="setSportFilter('track',this)">Track &amp; field <span class="count">5</span></button>
+            <button class="filter-btn" data-sport="martial_arts" onclick="setSportFilter('martial_arts',this)">Martial arts <span class="count">1</span></button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="sidebar-note">
@@ -203,13 +276,13 @@ nav{display:flex;align-items:center;gap:4px}
   <div class="test-list" id="testList">
 
     <!-- TEST 1: 40 Yard Dash -->
-    <div class="test-card" data-component="speed" data-equip="minimal">
+    <div class="test-card" data-component="speed" data-equip="minimal" data-sports="football baseball soccer basketball combine_general track" data-disciplines="field_sports military">
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">01</div>
         <div class="test-card-main">
           <div class="test-card-name">40 Yard Dash</div>
           <div class="test-card-meta">
-            <span class="tag component">Speed</span>
+            <span class="tag component component-primary">Speed</span><span class="tag component-secondary">Power</span><span class="tag component-secondary">Agility</span>
             <span class="tag input">secondsOnly</span>
             <span class="tag unit">seconds</span>
             <span class="tag cert">certification eligible</span>
@@ -227,7 +300,7 @@ nav{display:flex;align-items:center;gap:4px}
         <div class="test-panel active" id="def-1">
           <table class="spec-table">
             <tr><td>testId</td><td><span class="spec-val-code">test_40yd_dash</span></td></tr>
-            <tr><td>componentId</td><td>speed</td></tr>
+            <tr><td>primaryComponent</td><td>speed</td></tr><tr><td>secondaryComponents</td><td>power · agility</td></tr>
             <tr><td>inputType</td><td>secondsOnly</td></tr>
             <tr><td>canonicalUnit</td><td>seconds</td></tr>
             <tr><td>scoringDirection</td><td>Lower time = higher score</td></tr>
@@ -270,13 +343,13 @@ nav{display:flex;align-items:center;gap:4px}
     </div>
 
     <!-- TEST 2: Standing Long Jump -->
-    <div class="test-card" data-component="power" data-equip="minimal">
+    <div class="test-card" data-component="power" data-equip="minimal" data-sports="football baseball soccer basketball combine_general track" data-disciplines="field_sports military">
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">02</div>
         <div class="test-card-main">
           <div class="test-card-name">Standing Long Jump</div>
           <div class="test-card-meta">
-            <span class="tag component">Power</span>
+            <span class="tag component component-primary">Power</span><span class="tag component-secondary">Muscular strength</span><span class="tag component-secondary">Agility</span>
             <span class="tag input">distance</span>
             <span class="tag unit">meters</span>
             <span class="tag cert">certification eligible</span>
@@ -294,7 +367,7 @@ nav{display:flex;align-items:center;gap:4px}
         <div class="test-panel active" id="def-2">
           <table class="spec-table">
             <tr><td>testId</td><td><span class="spec-val-code">test_standing_long_jump</span></td></tr>
-            <tr><td>componentId</td><td>power</td></tr>
+            <tr><td>primaryComponent</td><td>power</td></tr><tr><td>secondaryComponents</td><td>muscular_strength · agility</td></tr>
             <tr><td>inputType</td><td>distance</td></tr>
             <tr><td>canonicalUnit</td><td>meters</td></tr>
             <tr><td>scoringDirection</td><td>Longer distance = higher score</td></tr>
@@ -326,13 +399,13 @@ nav{display:flex;align-items:center;gap:4px}
     </div>
 
     <!-- TEST 3: Shuttle Run 60 Yards -->
-    <div class="test-card" data-component="agility" data-equip="minimal">
+    <div class="test-card" data-component="agility" data-equip="minimal" data-sports="football baseball soccer basketball combine_general" data-disciplines="field_sports">
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">03</div>
         <div class="test-card-main">
           <div class="test-card-name">Shuttle Run — 60 Yards</div>
           <div class="test-card-meta">
-            <span class="tag component">Agility</span>
+            <span class="tag component component-primary">Agility</span><span class="tag component-secondary">Speed</span>
             <span class="tag input">secondsOnly</span>
             <span class="tag unit">seconds</span>
             <span class="tag cert">certification eligible</span>
@@ -349,7 +422,7 @@ nav{display:flex;align-items:center;gap:4px}
         <div class="test-panel active" id="def-3">
           <table class="spec-table">
             <tr><td>testId</td><td><span class="spec-val-code">test_shuttle_60yd</span></td></tr>
-            <tr><td>componentId</td><td>agility</td></tr>
+            <tr><td>primaryComponent</td><td>agility</td></tr><tr><td>secondaryComponents</td><td>speed</td></tr>
             <tr><td>inputType</td><td>secondsOnly</td></tr>
             <tr><td>canonicalUnit</td><td>seconds</td></tr>
             <tr><td>scoringDirection</td><td>Lower time = higher score</td></tr>
@@ -382,13 +455,13 @@ nav{display:flex;align-items:center;gap:4px}
     </div>
 
     <!-- TEST 4: Bench Press 1RM -->
-    <div class="test-card" data-component="muscular_strength" data-equip="standard">
+    <div class="test-card" data-component="muscular_strength" data-equip="standard" data-sports="football baseball crossfit military combine_general general_fitness" data-disciplines="field_sports military strength crossfit">
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">04</div>
         <div class="test-card-main">
           <div class="test-card-name">Bench Press — 1 Rep Max</div>
           <div class="test-card-meta">
-            <span class="tag component">Muscular strength</span>
+            <span class="tag component component-primary">Muscular strength</span><span class="tag component-secondary">Power</span>
             <span class="tag input">weight</span>
             <span class="tag unit">kg</span>
             <span class="tag cert">certification eligible</span>
@@ -406,7 +479,7 @@ nav{display:flex;align-items:center;gap:4px}
         <div class="test-panel active" id="def-4">
           <table class="spec-table">
             <tr><td>testId</td><td><span class="spec-val-code">test_bench_press_1rm</span></td></tr>
-            <tr><td>componentId</td><td>muscular_strength</td></tr>
+            <tr><td>primaryComponent</td><td>muscular_strength</td></tr><tr><td>secondaryComponents</td><td>power</td></tr>
             <tr><td>inputType</td><td>weight (with optional reps 1–8 for estimated 1RM)</td></tr>
             <tr><td>canonicalUnit</td><td>kg</td></tr>
             <tr><td>scoringDirection</td><td>Higher weight = higher score</td></tr>
@@ -438,13 +511,13 @@ nav{display:flex;align-items:center;gap:4px}
     </div>
 
     <!-- TEST 5: Pull-Ups -->
-    <div class="test-card" data-component="muscular_endurance" data-equip="minimal">
+    <div class="test-card" data-component="muscular_endurance" data-equip="minimal" data-sports="military crossfit gymnastics general_fitness martial_arts" data-disciplines="military strength crossfit">
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">05</div>
         <div class="test-card-main">
           <div class="test-card-name">Pull-Ups — Max Reps</div>
           <div class="test-card-meta">
-            <span class="tag component">Muscular endurance</span>
+            <span class="tag component component-primary">Muscular endurance</span><span class="tag component-secondary">Muscular strength</span><span class="tag component-secondary">Power</span>
             <span class="tag input">repetitions</span>
             <span class="tag unit">reps</span>
             <span class="tag cert">certification eligible</span>
@@ -462,7 +535,7 @@ nav{display:flex;align-items:center;gap:4px}
         <div class="test-panel active" id="def-5">
           <table class="spec-table">
             <tr><td>testId</td><td><span class="spec-val-code">test_pullup_max</span></td></tr>
-            <tr><td>componentId</td><td>muscular_endurance</td></tr>
+            <tr><td>primaryComponent</td><td>muscular_endurance</td></tr><tr><td>secondaryComponents</td><td>muscular_strength · power</td></tr>
             <tr><td>inputType</td><td>repetitions</td></tr>
             <tr><td>canonicalUnit</td><td>repetitions</td></tr>
             <tr><td>scoringDirection</td><td>More repetitions = higher score</td></tr>
@@ -494,13 +567,13 @@ nav{display:flex;align-items:center;gap:4px}
     </div>
 
     <!-- TEST 6: 400m Sprint -->
-    <div class="test-card" data-component="muscular_endurance" data-equip="minimal">
+    <div class="test-card" data-component="muscular_endurance" data-equip="minimal" data-sports="track football soccer military combine_general general_fitness" data-disciplines="field_sports military endurance">
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">06</div>
         <div class="test-card-main">
           <div class="test-card-name">400m Sprint</div>
           <div class="test-card-meta">
-            <span class="tag component">Muscular endurance</span>
+            <span class="tag component component-primary">Muscular endurance</span>
             <span class="tag input">secondsOnly</span>
             <span class="tag unit">seconds</span>
             <span class="tag cert">certification eligible</span>
@@ -517,7 +590,7 @@ nav{display:flex;align-items:center;gap:4px}
         <div class="test-panel active" id="def-6">
           <table class="spec-table">
             <tr><td>testId</td><td><span class="spec-val-code">test_400m_sprint</span></td></tr>
-            <tr><td>componentId</td><td>muscular_endurance</td></tr>
+            <tr><td>primaryComponent</td><td>muscular_endurance</td></tr><tr><td>secondaryComponents</td><td>cardiovascular_endurance · speed</td></tr>
             <tr><td>inputType</td><td>secondsOnly</td></tr>
             <tr><td>canonicalUnit</td><td>seconds</td></tr>
             <tr><td>scoringDirection</td><td>Lower time = higher score</td></tr>
@@ -548,13 +621,13 @@ nav{display:flex;align-items:center;gap:4px}
     </div>
 
     <!-- TEST 7: Wall Sit -->
-    <div class="test-card" data-component="muscular_endurance" data-equip="none">
+    <div class="test-card" data-component="muscular_endurance" data-equip="none" data-sports="general_fitness military crossfit law_enforcement fire" data-disciplines="military crossfit">
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">07</div>
         <div class="test-card-main">
           <div class="test-card-name">Wall Sit</div>
           <div class="test-card-meta">
-            <span class="tag component">Muscular endurance</span>
+            <span class="tag component component-primary">Muscular endurance</span>
             <span class="tag input">secondsOnly</span>
             <span class="tag unit">seconds</span>
             <span class="tag cert">certification eligible</span>
@@ -572,7 +645,7 @@ nav{display:flex;align-items:center;gap:4px}
         <div class="test-panel active" id="def-7">
           <table class="spec-table">
             <tr><td>testId</td><td><span class="spec-val-code">test_wall_sit</span></td></tr>
-            <tr><td>componentId</td><td>muscular_endurance</td></tr>
+            <tr><td>primaryComponent</td><td>muscular_endurance</td></tr><tr><td>secondaryComponents</td><td>muscular_strength</td></tr>
             <tr><td>inputType</td><td>secondsOnly</td></tr>
             <tr><td>canonicalUnit</td><td>seconds</td></tr>
             <tr><td>scoringDirection</td><td>Longer time = higher score</td></tr>
@@ -603,13 +676,13 @@ nav{display:flex;align-items:center;gap:4px}
     </div>
 
     <!-- TEST 8: Squat Thrust Jumps -->
-    <div class="test-card" data-component="muscular_endurance" data-equip="none">
+    <div class="test-card" data-component="muscular_endurance" data-equip="none" data-sports="military crossfit fire law_enforcement general_fitness" data-disciplines="military crossfit">
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">08</div>
         <div class="test-card-main">
           <div class="test-card-name">Squat Thrust Jumps — 2 Minutes</div>
           <div class="test-card-meta">
-            <span class="tag component">Muscular endurance</span>
+            <span class="tag component component-primary">Muscular endurance</span>
             <span class="tag input">repetitions</span>
             <span class="tag unit">reps</span>
             <span class="tag cert">certification eligible</span>
@@ -626,7 +699,7 @@ nav{display:flex;align-items:center;gap:4px}
         <div class="test-panel active" id="def-8">
           <table class="spec-table">
             <tr><td>testId</td><td><span class="spec-val-code">test_squat_thrust_jump_2min</span></td></tr>
-            <tr><td>componentId</td><td>muscular_endurance</td></tr>
+            <tr><td>primaryComponent</td><td>muscular_endurance</td></tr><tr><td>secondaryComponents</td><td>muscular_strength · cardiovascular_endurance · power · agility</td></tr>
             <tr><td>inputType</td><td>repetitions</td></tr>
             <tr><td>canonicalUnit</td><td>repetitions</td></tr>
             <tr><td>scoringDirection</td><td>More repetitions = higher score</td></tr>
@@ -657,13 +730,13 @@ nav{display:flex;align-items:center;gap:4px}
     </div>
 
     <!-- TEST 9: 5K Run -->
-    <div class="test-card" data-component="cardiovascular_endurance" data-equip="minimal">
+    <div class="test-card" data-component="cardiovascular_endurance" data-equip="minimal" data-sports="track military general_fitness crossfit fire law_enforcement" data-disciplines="military endurance crossfit">
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">09</div>
         <div class="test-card-main">
           <div class="test-card-name">5K Run</div>
           <div class="test-card-meta">
-            <span class="tag component">Cardiovascular endurance</span>
+            <span class="tag component component-primary">Cardiovascular endurance</span>
             <span class="tag input">minutesSeconds</span>
             <span class="tag unit">seconds</span>
             <span class="tag cert">certification eligible</span>
@@ -681,7 +754,7 @@ nav{display:flex;align-items:center;gap:4px}
         <div class="test-panel active" id="def-9">
           <table class="spec-table">
             <tr><td>testId</td><td><span class="spec-val-code">test_5k_run</span></td></tr>
-            <tr><td>componentId</td><td>cardiovascular_endurance</td></tr>
+            <tr><td>primaryComponent</td><td>cardiovascular_endurance</td></tr><tr><td>secondaryComponents</td><td>muscular_endurance · speed</td></tr>
             <tr><td>inputType</td><td>minutesSeconds</td></tr>
             <tr><td>canonicalUnit</td><td>seconds</td></tr>
             <tr><td>scoringDirection</td><td>Lower time = higher score</td></tr>
@@ -712,13 +785,13 @@ nav{display:flex;align-items:center;gap:4px}
     </div>
 
     <!-- TEST 10: Concept2 Row 2000m -->
-    <div class="test-card" data-component="cardiovascular_endurance" data-equip="standard">
+    <div class="test-card" data-component="cardiovascular_endurance" data-equip="standard" data-sports="crossfit military general_fitness" data-disciplines="military endurance crossfit">
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">10</div>
         <div class="test-card-main">
           <div class="test-card-name">Concept2 Row — 2000m</div>
           <div class="test-card-meta">
-            <span class="tag component">Cardiovascular endurance</span>
+            <span class="tag component component-primary">Cardiovascular endurance</span>
             <span class="tag input">minutesSeconds</span>
             <span class="tag unit">seconds</span>
             <span class="tag cert">certification eligible</span>
@@ -736,7 +809,7 @@ nav{display:flex;align-items:center;gap:4px}
         <div class="test-panel active" id="def-10">
           <table class="spec-table">
             <tr><td>testId</td><td><span class="spec-val-code">test_concept2_2k_row</span></td></tr>
-            <tr><td>componentId</td><td>cardiovascular_endurance</td></tr>
+            <tr><td>primaryComponent</td><td>cardiovascular_endurance</td></tr><tr><td>secondaryComponents</td><td>muscular_endurance</td></tr>
             <tr><td>inputType</td><td>minutesSeconds</td></tr>
             <tr><td>canonicalUnit</td><td>seconds</td></tr>
             <tr><td>scoringDirection</td><td>Lower time = higher score</td></tr>
@@ -769,13 +842,13 @@ nav{display:flex;align-items:center;gap:4px}
     </div>
 
     <!-- TEST 11: Push-Ups -->
-    <div class="test-card" data-component="muscular_endurance" data-equip="none">
+    <div class="test-card" data-component="muscular_endurance" data-equip="none" data-sports="military general_fitness crossfit fire law_enforcement" data-disciplines="military strength crossfit">
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">11</div>
         <div class="test-card-main">
           <div class="test-card-name">Push-Ups — Max Reps</div>
           <div class="test-card-meta">
-            <span class="tag component">Muscular endurance</span>
+            <span class="tag component component-primary">Muscular endurance</span>
             <span class="tag input">repetitions</span>
             <span class="tag unit">reps</span>
             <span class="tag cert">certification eligible</span>
@@ -793,7 +866,7 @@ nav{display:flex;align-items:center;gap:4px}
         <div class="test-panel active" id="def-11">
           <table class="spec-table">
             <tr><td>testId</td><td><span class="spec-val-code">test_pushup_max</span></td></tr>
-            <tr><td>componentId</td><td>muscular_endurance</td></tr>
+            <tr><td>primaryComponent</td><td>muscular_endurance</td></tr><tr><td>secondaryComponents</td><td>muscular_strength</td></tr>
             <tr><td>inputType</td><td>repetitions</td></tr>
             <tr><td>canonicalUnit</td><td>repetitions</td></tr>
             <tr><td>scoringDirection</td><td>More repetitions = higher score</td></tr>
@@ -824,13 +897,13 @@ nav{display:flex;align-items:center;gap:4px}
     </div>
 
     <!-- TEST 12: Medicine Ball Throw -->
-    <div class="test-card" data-component="power" data-equip="minimal">
+    <div class="test-card" data-component="power" data-equip="minimal" data-sports="baseball football basketball crossfit combine_general general_fitness" data-disciplines="field_sports strength crossfit">
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">12</div>
         <div class="test-card-main">
           <div class="test-card-name">Medicine Ball Throw</div>
           <div class="test-card-meta">
-            <span class="tag component">Power</span>
+            <span class="tag component component-primary">Power</span><span class="tag component-secondary">Muscular strength</span>
             <span class="tag input">distance</span>
             <span class="tag unit">meters</span>
             <span class="tag cert">certification eligible</span>
@@ -848,7 +921,7 @@ nav{display:flex;align-items:center;gap:4px}
         <div class="test-panel active" id="def-12">
           <table class="spec-table">
             <tr><td>testId</td><td><span class="spec-val-code">test_medicine_ball_throw</span></td></tr>
-            <tr><td>componentId</td><td>power</td></tr>
+            <tr><td>primaryComponent</td><td>power</td></tr><tr><td>secondaryComponents</td><td>muscular_strength</td></tr>
             <tr><td>inputType</td><td>distance</td></tr>
             <tr><td>canonicalUnit</td><td>meters</td></tr>
             <tr><td>scoringDirection</td><td>Longer distance = higher score</td></tr>
@@ -881,13 +954,13 @@ nav{display:flex;align-items:center;gap:4px}
     </div>
 
     <!-- TEST 13: Plank Hold -->
-    <div class="test-card" data-component="muscular_endurance" data-equip="none">
+    <div class="test-card" data-component="muscular_endurance" data-equip="none" data-sports="general_fitness military crossfit fire law_enforcement" data-disciplines="military crossfit">
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">13</div>
         <div class="test-card-main">
           <div class="test-card-name">Plank Hold</div>
           <div class="test-card-meta">
-            <span class="tag component">Muscular endurance</span>
+            <span class="tag component component-primary">Muscular endurance</span>
             <span class="tag input">secondsOnly</span>
             <span class="tag unit">seconds</span>
             <span class="tag cert">certification eligible</span>
@@ -905,7 +978,7 @@ nav{display:flex;align-items:center;gap:4px}
         <div class="test-panel active" id="def-13">
           <table class="spec-table">
             <tr><td>testId</td><td><span class="spec-val-code">test_plank_hold</span></td></tr>
-            <tr><td>componentId</td><td>muscular_endurance</td></tr>
+            <tr><td>primaryComponent</td><td>muscular_endurance</td></tr><tr><td>secondaryComponents</td><td>muscular_strength</td></tr>
             <tr><td>inputType</td><td>secondsOnly</td></tr>
             <tr><td>canonicalUnit</td><td>seconds</td></tr>
             <tr><td>scoringDirection</td><td>Longer time = higher score</td></tr>
@@ -936,13 +1009,13 @@ nav{display:flex;align-items:center;gap:4px}
     </div>
 
     <!-- TEST 14: Back Squat 1RM -->
-    <div class="test-card" data-component="muscular_strength" data-equip="standard">
+    <div class="test-card" data-component="muscular_strength" data-equip="standard" data-sports="football powerlifting crossfit military combine_general general_fitness" data-disciplines="field_sports military strength crossfit">
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">14</div>
         <div class="test-card-main">
           <div class="test-card-name">Back Squat — 1 Rep Max</div>
           <div class="test-card-meta">
-            <span class="tag component">Muscular strength</span>
+            <span class="tag component component-primary">Muscular strength</span><span class="tag component-secondary">Power</span>
             <span class="tag input">weight</span>
             <span class="tag unit">kg</span>
             <span class="tag cert">certification eligible</span>
@@ -960,7 +1033,7 @@ nav{display:flex;align-items:center;gap:4px}
         <div class="test-panel active" id="def-14">
           <table class="spec-table">
             <tr><td>testId</td><td><span class="spec-val-code">test_back_squat_1rm</span></td></tr>
-            <tr><td>componentId</td><td>muscular_strength</td></tr>
+            <tr><td>primaryComponent</td><td>muscular_strength</td></tr><tr><td>secondaryComponents</td><td>power</td></tr>
             <tr><td>inputType</td><td>weight (with optional reps 1–8 for estimated 1RM)</td></tr>
             <tr><td>canonicalUnit</td><td>kg</td></tr>
             <tr><td>scoringDirection</td><td>Higher weight = higher score</td></tr>
@@ -1027,27 +1100,47 @@ function showTab(btn, panelId) {
   document.getElementById(panelId).classList.add('active');
 }
 
+function toggleSection(header) {
+  const wrap = header.nextElementSibling;
+  const toggle = header.querySelector('.filter-toggle');
+  const collapsed = wrap.classList.toggle('collapsed');
+  toggle.textContent = collapsed ? '▸' : '▾';
+}
+
 let activeFilter = 'all';
 let activeEquip = null;
+let activeDiscipline = null;
+let activeSport = null;
 
 function setFilter(val, btn) {
   activeFilter = val;
   document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  activeEquip = null;
-  document.querySelectorAll('[data-equip]').forEach(b => b.classList.remove('active'));
   applyFilters();
 }
 
 function setEquipFilter(val, btn) {
-  if (activeEquip === val) {
-    activeEquip = null;
-    btn.classList.remove('active');
-  } else {
-    activeEquip = val;
-    document.querySelectorAll('[data-equip]').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  }
+  activeEquip = activeEquip === val ? null : val;
+  document.querySelectorAll('[data-equip]').forEach(b => b.classList.remove('active'));
+  if (activeEquip) btn.classList.add('active');
+  applyFilters();
+}
+
+function setDisciplineFilter(val, btn) {
+  activeDiscipline = activeDiscipline === val ? null : val;
+  activeSport = null;
+  document.querySelectorAll('[data-discipline]').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('[data-sport]').forEach(b => b.classList.remove('active'));
+  if (activeDiscipline) btn.classList.add('active');
+  applyFilters();
+}
+
+function setSportFilter(val, btn) {
+  activeSport = activeSport === val ? null : val;
+  activeDiscipline = null;
+  document.querySelectorAll('[data-sport]').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('[data-discipline]').forEach(b => b.classList.remove('active'));
+  if (activeSport) btn.classList.add('active');
   applyFilters();
 }
 
@@ -1055,9 +1148,13 @@ function applyFilters() {
   document.querySelectorAll('.test-card').forEach(card => {
     const comp = card.dataset.component;
     const equip = card.dataset.equip;
+    const sports = card.dataset.sports || '';
+    const disciplines = card.dataset.disciplines || '';
     const compMatch = activeFilter === 'all' || comp === activeFilter;
     const equipMatch = !activeEquip || equip === activeEquip;
-    card.classList.toggle('hidden', !(compMatch && equipMatch));
+    const disciplineMatch = !activeDiscipline || disciplines.includes(activeDiscipline);
+    const sportMatch = !activeSport || sports.includes(activeSport);
+    card.classList.toggle('hidden', !(compMatch && equipMatch && disciplineMatch && sportMatch));
   });
 }
 </script>
