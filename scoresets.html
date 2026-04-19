@@ -150,8 +150,7 @@ nav{display:flex;align-items:center;gap:4px}
     <nav>
       <a href="library.html" class="nav-link nav-link-keep">Library</a>
       <a href="scoresets.html" class="nav-link nav-link-keep active">Score Sets</a>
-      <a href="demo.html" class="nav-link nav-link-keep">Demo</a>
-      <div class="nav-divider"></div>
+            <div class="nav-divider"></div>
       <a href="https://realfit.com" target="_blank" rel="noopener" class="nav-badge">Governed by REALFIT®</a>
     </nav>
   </div>
@@ -263,7 +262,7 @@ nav{display:flex;align-items:center;gap:4px}
       <div class="ss-header" onclick="toggleSS(this)">
         <div class="ss-icon army">AFT</div>
         <div class="ss-meta">
-          <div class="ss-eyebrow">U.S. Army · Effective June 1, 2025</div>
+          <div class="ss-eyebrow">Illustrative example · U.S. Army · Effective June 1, 2025</div>
           <div class="ss-name">Army Fitness Test (AFT)</div>
           <div class="ss-desc">The official physical fitness test for all U.S. Army soldiers, replacing the ACFT in June 2025. Five events scored 0–100 each. Minimum 60 per event required. Combat MOS soldiers need 350 total; general standard is 300.</div>
           <div class="ss-badges">
@@ -343,7 +342,7 @@ nav{display:flex;align-items:center;gap:4px}
       <div class="ss-header" onclick="toggleSS(this)">
         <div class="ss-icon marines">PFT</div>
         <div class="ss-meta">
-          <div class="ss-eyebrow">U.S. Marine Corps · Annual requirement</div>
+          <div class="ss-eyebrow">Illustrative example · U.S. Marine Corps · Annual requirement</div>
           <div class="ss-name">Marine Corps Physical Fitness Test (PFT)</div>
           <div class="ss-desc">Three-event annual fitness test for all Marines. Pull-ups (or push-ups), plank, and a 3-mile run. Perfect score is 300. Marines cannot score minimum standards and pass — "exceeding the standard is the standard."</div>
           <div class="ss-badges">
@@ -418,7 +417,7 @@ nav{display:flex;align-items:center;gap:4px}
       <div class="ss-header" onclick="toggleSS(this)">
         <div class="ss-icon nfl">NFL</div>
         <div class="ss-meta">
-          <div class="ss-eyebrow">NFL Scouting Combine · Annual · Indianapolis</div>
+          <div class="ss-eyebrow">Illustrative example · NFL Scouting Combine · Annual · Indianapolis</div>
           <div class="ss-name">NFL Scouting Combine</div>
           <div class="ss-desc">The premier evaluation for NFL draft prospects. Six athletic tests measured in a standardized setting. No single passing score — results are interpreted by scouts relative to positional averages and historical benchmarks. Speed and explosion are prized above all.</div>
           <div class="ss-badges">
@@ -511,9 +510,9 @@ nav{display:flex;align-items:center;gap:4px}
   <div class="build-cta">
     <div>
       <h2>Want to build your own Score Set?</h2>
-      <p>FITDAT is open infrastructure. Any developer can use FITDAT test definitions to build a custom Score Set — your own scoring curves, component weights, and reference bands, built on top of standardized, reproducible test definitions. REALFIT certification is available for Score Sets that meet specification requirements.</p>
+      <p>FITDAT provides everything you need — Tests, Standards, Reference Bands, feedback tables, developer tools, and API access. Select your tests from the library, define your component weights and aggregation method, specify your Reference Bands with descriptive feedback at every score level, and publish a fully specified Score Set. REALFIT certification is available for Score Sets that meet specification requirements.</p>
     </div>
-    <a href="https://fitdat.com" class="build-cta-btn">Explore FITDAT →</a>
+    <a href="architecture.html" class="build-cta-btn">View the architecture →</a>
   </div>
 
 </div>
@@ -543,5 +542,21 @@ function toggleSS(header) {
   toggle.textContent = isOpen ? '+ expand' : '− collapse';
 }
 </script>
+
+<div style="background:#0f0e0c;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+  <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+    <span style="font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.22)">REALFIT&reg; ecosystem</span>
+  </div>
+  <div style="display:flex;gap:18px;flex-wrap:wrap">
+    <a href="https://realfit.com" style="font-size:12px;color:rgba(255,255,255,.38);text-decoration:none">REALFIT.com</a>
+    <a href="https://fitdat.com" style="font-size:12px;color:rgba(255,255,255,.38);text-decoration:none">FITDAT.com</a>
+    <a href="https://realfitscore.com" style="font-size:12px;color:rgba(255,255,255,.38);text-decoration:none">Score estimator</a>
+    <a href="https://scoremyfitness.com" style="font-size:12px;color:rgba(255,255,255,.38);text-decoration:none">ScoreMyFitness</a>
+    <a href="https://scoremy40.com" style="font-size:12px;color:rgba(255,255,255,.38);text-decoration:none">ScoreMy40</a>
+    <a href="https://fitdat.com/scoring-spec.html" style="font-size:12px;color:rgba(255,255,255,.38);text-decoration:none">Scoring spec</a>
+    <a href="mailto:hello@realfit.com" style="font-size:12px;color:rgba(255,255,255,.38);text-decoration:none">Contact</a>
+  </div>
+  <div style="font-size:11px;color:rgba(255,255,255,.18)">&copy; 2026 REALFIT&reg; &middot; FITDAT&reg;</div>
+</div>
 </body>
 </html>

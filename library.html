@@ -171,20 +171,19 @@ nav{display:flex;align-items:center;gap:4px}
 
 <div class="page-header">
   <div class="page-header-inner">
-    <div class="breadcrumb"><a href="index.html">FITDAT®</a><span>/</span>Test library</div>
+    <div class="breadcrumb"><a href="index.html">FITDAT&#174;</a><span>/</span>Test library</div>
     <h1>Test library</h1>
-    <p>The current REALFIT Absolute Score™ battery — 14 tests fully specified to FITDAT v1.1. The library grows as new tests reach full specification. Click any test to expand all three specification layers.</p>
+    <p>FITDAT v1 was instantiated with 14 fully specified tests — the same tests that form the REALFIT Absolute Score. These are not the only tests that matter. They are a demonstration of what the library requires: complete protocol definitions, versioned metrics, component assignments with rationale, and population context. <strong>Every future test must meet the same standard before it is published.</strong> The library grows as the community commits to that level of rigor. Click any test to expand all three specification layers.</p>
   </div>
 </div>
 
 <div class="lib-stats">
   <div class="lib-stats-inner">
-    <div class="stat-item"><strong>14</strong> tests currently specified</div>
+    <div class="stat-item"><strong>14</strong> tests in v1</div>
     <div class="stat-item"><strong>6</strong> core components</div>
-    <div class="stat-item"><strong>3</strong> normalization rules</div>
-    <div class="stat-item"><strong>8</strong> replacement groups</div>
     <div class="stat-item"><strong>FITDAT v1.1</strong></div>
-    <div class="stat-item">Governed by <strong>REALFIT®</strong></div>
+    <div class="stat-item">Governed by <strong>REALFIT&#174;</strong></div>
+    <div class="stat-item" style="color:var(--teal,#1D9E75)">&#8627; Library is open for contribution</div>
   </div>
 </div>
 
@@ -217,8 +216,9 @@ nav{display:flex;align-items:center;gap:4px}
       <div class="filter-btns-wrap">
         <div class="filter-btns">
           <button class="filter-btn" data-equip="none" onclick="setEquipFilter('none',this)">No equipment <span class="count">4</span></button>
-          <button class="filter-btn" data-equip="minimal" onclick="setEquipFilter('minimal',this)">Minimal <span class="count">6</span></button>
-          <button class="filter-btn" data-equip="standard" onclick="setEquipFilter('standard',this)">Standard gym <span class="count">4</span></button>
+          <button class="filter-btn" data-equip="basic" onclick="setEquipFilter('basic',this)">Basic <span class="count">5</span></button>
+          <button class="filter-btn" data-equip="standard" onclick="setEquipFilter('standard',this)">Standard gym <span class="count">2</span></button>
+          <button class="filter-btn" data-equip="professional" onclick="setEquipFilter('professional',this)">Professional <span class="count">2</span></button>
         </div>
       </div>
     </div>
@@ -276,11 +276,11 @@ nav{display:flex;align-items:center;gap:4px}
   <div class="test-list" id="testList">
 
     <!-- TEST 1: 40 Yard Dash -->
-    <div class="test-card" data-component="speed" data-equip="minimal" data-sports="football baseball soccer basketball combine_general track" data-disciplines="field_sports military">
+    <div class="test-card" data-component="speed" data-equip="professional" data-sports="football baseball soccer basketball combine_general track" data-disciplines="field_sports military">
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">01</div>
         <div class="test-card-main">
-          <div class="test-card-name">40 Yard Dash</div>
+          <div class="test-card-name">40 Yard Dash <a href="https://www.youtube.com/watch?v=4bxJU4WeG3A" target="_blank" style="font-size:11px;color:#1D9E75;font-weight:500;letter-spacing:.04em;margin-left:10px;text-decoration:none">&#9654; Watch</a> <span style="font-size:10px;color:var(--faint);font-style:italic;font-weight:400">(legacy branding)</span></div>
           <div class="test-card-meta">
             <span class="tag component component-primary">Speed</span><span class="tag component-secondary">Power</span><span class="tag component-secondary">Agility</span>
             <span class="tag input">secondsOnly</span>
@@ -324,7 +324,7 @@ nav{display:flex;align-items:center;gap:4px}
           <table class="spec-table">
             <tr><td>sportTags</td><td><div class="tags-wrap"><span class="tag-sm">football</span><span class="tag-sm">baseball</span><span class="tag-sm">soccer</span><span class="tag-sm">basketball</span><span class="tag-sm">combine_general</span><span class="tag-sm">track</span></div></td></tr>
             <tr><td>settingTags</td><td><div class="tags-wrap"><span class="tag-sm">field</span><span class="tag-sm">track</span></div></td></tr>
-            <tr><td>equipmentProfile</td><td><span class="tag equip">minimal</span></td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">basic</span></td></tr>
             <tr><td>populationTags</td><td><div class="tags-wrap"><span class="tag-sm">general_adult</span><span class="tag-sm">youth</span><span class="tag-sm">high_school</span><span class="tag-sm">collegiate</span><span class="tag-sm">elite</span></div></td></tr>
             <tr><td>ecosystemRelevance</td><td>
               <div class="relevance-bars">
@@ -343,11 +343,11 @@ nav{display:flex;align-items:center;gap:4px}
     </div>
 
     <!-- TEST 2: Standing Long Jump -->
-    <div class="test-card" data-component="power" data-equip="minimal" data-sports="football baseball soccer basketball combine_general track" data-disciplines="field_sports military">
+    <div class="test-card" data-component="power" data-equip="basic" data-sports="football baseball soccer basketball combine_general track" data-disciplines="field_sports military">
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">02</div>
         <div class="test-card-main">
-          <div class="test-card-name">Standing Long Jump</div>
+          <div class="test-card-name">Standing Long Jump <a href="https://www.youtube.com/watch?v=i6yjHDzUc5I" target="_blank" style="font-size:11px;color:#1D9E75;font-weight:500;letter-spacing:.04em;margin-left:10px;text-decoration:none">&#9654; Watch</a> <span style="font-size:10px;color:var(--faint);font-style:italic;font-weight:400">(legacy branding)</span></div>
           <div class="test-card-meta">
             <span class="tag component component-primary">Power</span><span class="tag component-secondary">Muscular strength</span><span class="tag component-secondary">Agility</span>
             <span class="tag input">distance</span>
@@ -389,7 +389,7 @@ nav{display:flex;align-items:center;gap:4px}
           <table class="spec-table">
             <tr><td>sportTags</td><td><div class="tags-wrap"><span class="tag-sm">football</span><span class="tag-sm">baseball</span><span class="tag-sm">soccer</span><span class="tag-sm">basketball</span><span class="tag-sm">combine_general</span><span class="tag-sm">track</span></div></td></tr>
             <tr><td>settingTags</td><td><div class="tags-wrap"><span class="tag-sm">field</span><span class="tag-sm">gym</span><span class="tag-sm">track</span><span class="tag-sm">outdoor_general</span></div></td></tr>
-            <tr><td>equipmentProfile</td><td><span class="tag equip">minimal</span></td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">basic</span></td></tr>
             <tr><td>populationTags</td><td><div class="tags-wrap"><span class="tag-sm">general_adult</span><span class="tag-sm">youth</span><span class="tag-sm">high_school</span><span class="tag-sm">collegiate</span><span class="tag-sm">elite</span><span class="tag-sm">military</span></div></td></tr>
             <tr><td>coachingNotes</td><td>Requires only flat surface and measuring tape. Usable indoors on gym floor with tape markings.</td></tr>
           </table>
@@ -399,11 +399,11 @@ nav{display:flex;align-items:center;gap:4px}
     </div>
 
     <!-- TEST 3: Shuttle Run 60 Yards -->
-    <div class="test-card" data-component="agility" data-equip="minimal" data-sports="football baseball soccer basketball combine_general" data-disciplines="field_sports">
+    <div class="test-card" data-component="agility" data-equip="basic" data-sports="football baseball soccer basketball combine_general" data-disciplines="field_sports">
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">03</div>
         <div class="test-card-main">
-          <div class="test-card-name">Shuttle Run — 60 Yards</div>
+          <div class="test-card-name">Shuttle Run — 60 Yards <a href="https://www.youtube.com/watch?v=MjTUcZsY_Pc" target="_blank" style="font-size:11px;color:#1D9E75;font-weight:500;letter-spacing:.04em;margin-left:10px;text-decoration:none">&#9654; Watch</a> <span style="font-size:10px;color:var(--faint);font-style:italic;font-weight:400">(legacy branding)</span></div>
           <div class="test-card-meta">
             <span class="tag component component-primary">Agility</span><span class="tag component-secondary">Speed</span>
             <span class="tag input">secondsOnly</span>
@@ -445,7 +445,7 @@ nav{display:flex;align-items:center;gap:4px}
           <table class="spec-table">
             <tr><td>sportTags</td><td><div class="tags-wrap"><span class="tag-sm">football</span><span class="tag-sm">baseball</span><span class="tag-sm">soccer</span><span class="tag-sm">basketball</span><span class="tag-sm">combine_general</span></div></td></tr>
             <tr><td>settingTags</td><td><div class="tags-wrap"><span class="tag-sm">field</span><span class="tag-sm">gym</span><span class="tag-sm">track</span></div></td></tr>
-            <tr><td>equipmentProfile</td><td><span class="tag equip">minimal</span></td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">basic</span></td></tr>
             <tr><td>populationTags</td><td><div class="tags-wrap"><span class="tag-sm">general_adult</span><span class="tag-sm">youth</span><span class="tag-sm">high_school</span><span class="tag-sm">collegiate</span><span class="tag-sm">elite</span></div></td></tr>
             <tr><td>coachingNotes</td><td>Turnaround lines must be clearly marked and consistent. Turf or rubberized surface recommended.</td></tr>
           </table>
@@ -459,7 +459,7 @@ nav{display:flex;align-items:center;gap:4px}
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">04</div>
         <div class="test-card-main">
-          <div class="test-card-name">Bench Press — 1 Rep Max</div>
+          <div class="test-card-name">Bench Press — 1 Rep Max <a href="https://www.youtube.com/watch?v=KSRR0oXSEO4" target="_blank" style="font-size:11px;color:#1D9E75;font-weight:500;letter-spacing:.04em;margin-left:10px;text-decoration:none">&#9654; Watch</a> <span style="font-size:10px;color:var(--faint);font-style:italic;font-weight:400">(legacy branding)</span></div>
           <div class="test-card-meta">
             <span class="tag component component-primary">Muscular strength</span><span class="tag component-secondary">Power</span>
             <span class="tag input">weight</span>
@@ -511,11 +511,11 @@ nav{display:flex;align-items:center;gap:4px}
     </div>
 
     <!-- TEST 5: Pull-Ups -->
-    <div class="test-card" data-component="muscular_endurance" data-equip="minimal" data-sports="military crossfit gymnastics general_fitness martial_arts" data-disciplines="military strength crossfit">
+    <div class="test-card" data-component="muscular_endurance" data-equip="basic" data-sports="military crossfit gymnastics general_fitness martial_arts" data-disciplines="military strength crossfit">
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">05</div>
         <div class="test-card-main">
-          <div class="test-card-name">Pull-Ups — Max Reps</div>
+          <div class="test-card-name">Pull-Ups — Max Reps <a href="https://www.youtube.com/watch?v=_y8q99b_ZyE" target="_blank" style="font-size:11px;color:#1D9E75;font-weight:500;letter-spacing:.04em;margin-left:10px;text-decoration:none">&#9654; Watch</a> <span style="font-size:10px;color:var(--faint);font-style:italic;font-weight:400">(legacy branding)</span></div>
           <div class="test-card-meta">
             <span class="tag component component-primary">Muscular endurance</span><span class="tag component-secondary">Muscular strength</span><span class="tag component-secondary">Power</span>
             <span class="tag input">repetitions</span>
@@ -557,7 +557,7 @@ nav{display:flex;align-items:center;gap:4px}
           <table class="spec-table">
             <tr><td>sportTags</td><td><div class="tags-wrap"><span class="tag-sm">military</span><span class="tag-sm">crossfit</span><span class="tag-sm">gymnastics</span><span class="tag-sm">general_fitness</span><span class="tag-sm">martial_arts</span></div></td></tr>
             <tr><td>settingTags</td><td><div class="tags-wrap"><span class="tag-sm">gym</span><span class="tag-sm">outdoor_general</span><span class="tag-sm">home</span></div></td></tr>
-            <tr><td>equipmentProfile</td><td><span class="tag equip">minimal</span></td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">basic</span></td></tr>
             <tr><td>populationTags</td><td><div class="tags-wrap"><span class="tag-sm">general_adult</span><span class="tag-sm">youth</span><span class="tag-sm">high_school</span><span class="tag-sm">collegiate</span><span class="tag-sm">elite</span><span class="tag-sm">military</span><span class="tag-sm">first_responder</span></div></td></tr>
             <tr><td>coachingNotes</td><td>Dead hang and controlled descent required. Kipping invalidates the rep. Widely used in military and first responder standards.</td></tr>
           </table>
@@ -567,7 +567,7 @@ nav{display:flex;align-items:center;gap:4px}
     </div>
 
     <!-- TEST 6: 400m Sprint -->
-    <div class="test-card" data-component="muscular_endurance" data-equip="minimal" data-sports="track football soccer military combine_general general_fitness" data-disciplines="field_sports military endurance">
+    <div class="test-card" data-component="muscular_endurance" data-equip="basic" data-sports="track football soccer military combine_general general_fitness" data-disciplines="field_sports military endurance">
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">06</div>
         <div class="test-card-main">
@@ -611,7 +611,7 @@ nav{display:flex;align-items:center;gap:4px}
           <table class="spec-table">
             <tr><td>sportTags</td><td><div class="tags-wrap"><span class="tag-sm">track</span><span class="tag-sm">football</span><span class="tag-sm">soccer</span><span class="tag-sm">military</span><span class="tag-sm">combine_general</span><span class="tag-sm">general_fitness</span></div></td></tr>
             <tr><td>settingTags</td><td><div class="tags-wrap"><span class="tag-sm">track</span><span class="tag-sm">field</span><span class="tag-sm">outdoor_general</span></div></td></tr>
-            <tr><td>equipmentProfile</td><td><span class="tag equip">minimal</span></td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">basic</span></td></tr>
             <tr><td>populationTags</td><td><div class="tags-wrap"><span class="tag-sm">general_adult</span><span class="tag-sm">youth</span><span class="tag-sm">high_school</span><span class="tag-sm">collegiate</span><span class="tag-sm">elite</span><span class="tag-sm">military</span><span class="tag-sm">first_responder</span></div></td></tr>
             <tr><td>coachingNotes</td><td>Use 400m track when available for standard conditions. Full effort single attempt.</td></tr>
           </table>
@@ -625,7 +625,7 @@ nav{display:flex;align-items:center;gap:4px}
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">07</div>
         <div class="test-card-main">
-          <div class="test-card-name">Wall Sit</div>
+          <div class="test-card-name">Wall Sit <a href="https://www.youtube.com/watch?v=9ZMMhqfpSqw" target="_blank" style="font-size:11px;color:#1D9E75;font-weight:500;letter-spacing:.04em;margin-left:10px;text-decoration:none">&#9654; Watch</a> <span style="font-size:10px;color:var(--faint);font-style:italic;font-weight:400">(legacy branding)</span></div>
           <div class="test-card-meta">
             <span class="tag component component-primary">Muscular endurance</span>
             <span class="tag input">secondsOnly</span>
@@ -680,7 +680,7 @@ nav{display:flex;align-items:center;gap:4px}
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">08</div>
         <div class="test-card-main">
-          <div class="test-card-name">Squat Thrust Jumps — 2 Minutes</div>
+          <div class="test-card-name">Squat Thrust Jumps — 2 Minutes <a href="https://www.youtube.com/watch?v=v1CeSxsyxZ8" target="_blank" style="font-size:11px;color:#1D9E75;font-weight:500;letter-spacing:.04em;margin-left:10px;text-decoration:none">&#9654; Watch</a> <span style="font-size:10px;color:var(--faint);font-style:italic;font-weight:400">(legacy branding)</span></div>
           <div class="test-card-meta">
             <span class="tag component component-primary">Muscular endurance</span>
             <span class="tag input">repetitions</span>
@@ -730,7 +730,7 @@ nav{display:flex;align-items:center;gap:4px}
     </div>
 
     <!-- TEST 9: 5K Run -->
-    <div class="test-card" data-component="cardiovascular_endurance" data-equip="minimal" data-sports="track military general_fitness crossfit fire law_enforcement" data-disciplines="military endurance crossfit">
+    <div class="test-card" data-component="cardiovascular_endurance" data-equip="basic" data-sports="track military general_fitness crossfit fire law_enforcement" data-disciplines="military endurance crossfit">
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">09</div>
         <div class="test-card-main">
@@ -775,7 +775,7 @@ nav{display:flex;align-items:center;gap:4px}
           <table class="spec-table">
             <tr><td>sportTags</td><td><div class="tags-wrap"><span class="tag-sm">track</span><span class="tag-sm">military</span><span class="tag-sm">general_fitness</span><span class="tag-sm">crossfit</span><span class="tag-sm">fire</span><span class="tag-sm">law_enforcement</span></div></td></tr>
             <tr><td>settingTags</td><td><div class="tags-wrap"><span class="tag-sm">track</span><span class="tag-sm">outdoor_general</span></div></td></tr>
-            <tr><td>equipmentProfile</td><td><span class="tag equip">minimal</span></td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">basic</span></td></tr>
             <tr><td>populationTags</td><td><div class="tags-wrap"><span class="tag-sm">general_adult</span><span class="tag-sm">masters_40</span><span class="tag-sm">masters_50</span><span class="tag-sm">masters_60plus</span><span class="tag-sm">youth</span><span class="tag-sm">high_school</span><span class="tag-sm">collegiate</span><span class="tag-sm">military</span><span class="tag-sm">first_responder</span></div></td></tr>
             <tr><td>coachingNotes</td><td>GPS watch or certified measured course required for Official certification. Flat course preferred for comparability.</td></tr>
           </table>
@@ -785,7 +785,7 @@ nav{display:flex;align-items:center;gap:4px}
     </div>
 
     <!-- TEST 10: Concept2 Row 2000m -->
-    <div class="test-card" data-component="cardiovascular_endurance" data-equip="standard" data-sports="crossfit military general_fitness" data-disciplines="military endurance crossfit">
+    <div class="test-card" data-component="cardiovascular_endurance" data-equip="professional" data-sports="crossfit military general_fitness" data-disciplines="military endurance crossfit">
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">10</div>
         <div class="test-card-main">
@@ -846,7 +846,7 @@ nav{display:flex;align-items:center;gap:4px}
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">11</div>
         <div class="test-card-main">
-          <div class="test-card-name">Push-Ups — Max Reps</div>
+          <div class="test-card-name">Push-Ups — Max Reps <a href="https://www.youtube.com/watch?v=b4apa0uuoxA" target="_blank" style="font-size:11px;color:#1D9E75;font-weight:500;letter-spacing:.04em;margin-left:10px;text-decoration:none">&#9654; Watch</a> <span style="font-size:10px;color:var(--faint);font-style:italic;font-weight:400">(legacy branding)</span></div>
           <div class="test-card-meta">
             <span class="tag component component-primary">Muscular endurance</span>
             <span class="tag input">repetitions</span>
@@ -897,11 +897,11 @@ nav{display:flex;align-items:center;gap:4px}
     </div>
 
     <!-- TEST 12: Medicine Ball Throw -->
-    <div class="test-card" data-component="power" data-equip="minimal" data-sports="baseball football basketball crossfit combine_general general_fitness" data-disciplines="field_sports strength crossfit">
+    <div class="test-card" data-component="power" data-equip="basic" data-sports="baseball football basketball crossfit combine_general general_fitness" data-disciplines="field_sports strength crossfit">
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">12</div>
         <div class="test-card-main">
-          <div class="test-card-name">Medicine Ball Throw</div>
+          <div class="test-card-name">Medicine Ball Throw <a href="https://www.youtube.com/watch?v=AhRoD7Huio0" target="_blank" style="font-size:11px;color:#1D9E75;font-weight:500;letter-spacing:.04em;margin-left:10px;text-decoration:none">&#9654; Watch</a> <span style="font-size:10px;color:var(--faint);font-style:italic;font-weight:400">(legacy branding)</span></div>
           <div class="test-card-meta">
             <span class="tag component component-primary">Power</span><span class="tag component-secondary">Muscular strength</span>
             <span class="tag input">distance</span>
@@ -944,7 +944,7 @@ nav{display:flex;align-items:center;gap:4px}
           <table class="spec-table">
             <tr><td>sportTags</td><td><div class="tags-wrap"><span class="tag-sm">baseball</span><span class="tag-sm">football</span><span class="tag-sm">basketball</span><span class="tag-sm">crossfit</span><span class="tag-sm">combine_general</span><span class="tag-sm">general_fitness</span></div></td></tr>
             <tr><td>settingTags</td><td><div class="tags-wrap"><span class="tag-sm">gym</span><span class="tag-sm">field</span><span class="tag-sm">outdoor_general</span></div></td></tr>
-            <tr><td>equipmentProfile</td><td><span class="tag equip">minimal</span></td></tr>
+            <tr><td>equipmentProfile</td><td><span class="tag equip">basic</span></td></tr>
             <tr><td>populationTags</td><td><div class="tags-wrap"><span class="tag-sm">general_adult</span><span class="tag-sm">high_school</span><span class="tag-sm">collegiate</span><span class="tag-sm">elite</span><span class="tag-sm">military</span></div></td></tr>
             <tr><td>coachingNotes</td><td>Overhead toss only — chest pass or rotational throws are invalid for this protocol. Ball weight must match the Score Set specification.</td></tr>
           </table>
@@ -958,7 +958,7 @@ nav{display:flex;align-items:center;gap:4px}
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">13</div>
         <div class="test-card-main">
-          <div class="test-card-name">Plank Hold</div>
+          <div class="test-card-name">Plank Hold <a href="https://www.youtube.com/watch?v=E7yEB02VOBw" target="_blank" style="font-size:11px;color:#1D9E75;font-weight:500;letter-spacing:.04em;margin-left:10px;text-decoration:none">&#9654; Watch</a> <span style="font-size:10px;color:var(--faint);font-style:italic;font-weight:400">(legacy branding)</span></div>
           <div class="test-card-meta">
             <span class="tag component component-primary">Muscular endurance</span>
             <span class="tag input">secondsOnly</span>
@@ -1013,7 +1013,7 @@ nav{display:flex;align-items:center;gap:4px}
       <div class="test-card-header" onclick="toggleCard(this)">
         <div class="test-card-num">14</div>
         <div class="test-card-main">
-          <div class="test-card-name">Back Squat — 1 Rep Max</div>
+          <div class="test-card-name">Back Squat — 1 Rep Max <a href="https://www.youtube.com/watch?v=AwhuZ9yeVnU" target="_blank" style="font-size:11px;color:#1D9E75;font-weight:500;letter-spacing:.04em;margin-left:10px;text-decoration:none">&#9654; Watch</a> <span style="font-size:10px;color:var(--faint);font-style:italic;font-weight:400">(legacy branding)</span></div>
           <div class="test-card-meta">
             <span class="tag component component-primary">Muscular strength</span><span class="tag component-secondary">Power</span>
             <span class="tag input">weight</span>
@@ -1158,5 +1158,21 @@ function applyFilters() {
   });
 }
 </script>
+
+<div style="background:#0f0e0c;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+  <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+    <span style="font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.22)">REALFIT&reg; ecosystem</span>
+  </div>
+  <div style="display:flex;gap:18px;flex-wrap:wrap">
+    <a href="https://realfit.com" style="font-size:12px;color:rgba(255,255,255,.38);text-decoration:none">REALFIT.com</a>
+    <a href="https://fitdat.com" style="font-size:12px;color:rgba(255,255,255,.38);text-decoration:none">FITDAT.com</a>
+    <a href="https://realfitscore.com" style="font-size:12px;color:rgba(255,255,255,.38);text-decoration:none">Score estimator</a>
+    <a href="https://scoremyfitness.com" style="font-size:12px;color:rgba(255,255,255,.38);text-decoration:none">ScoreMyFitness</a>
+    <a href="https://scoremy40.com" style="font-size:12px;color:rgba(255,255,255,.38);text-decoration:none">ScoreMy40</a>
+    <a href="https://fitdat.com/scoring-spec.html" style="font-size:12px;color:rgba(255,255,255,.38);text-decoration:none">Scoring spec</a>
+    <a href="mailto:hello@realfit.com" style="font-size:12px;color:rgba(255,255,255,.38);text-decoration:none">Contact</a>
+  </div>
+  <div style="font-size:11px;color:rgba(255,255,255,.18)">&copy; 2026 REALFIT&reg; &middot; FITDAT&reg;</div>
+</div>
 </body>
 </html>

@@ -193,16 +193,18 @@ nav{display:flex;align-items:center;gap:4px}
     </div>
 
     <div class="rationale">
-      <strong>Design philosophy — why an absolute standard is a better benchmark.</strong> The score is deliberately population-neutral and age-neutral. A 700 means the same thing regardless of who earned it — there are no age adjustments, no gender adjustments, no occupation adjustments. This is intentional, and it matters for three reasons.
-    </div>
-    <div class="rationale" style="margin-top:8px">
-      <strong>Progress tracking.</strong> An age-adjusted or population-normed score can make you look like you're improving when you're actually declining — because the reference population is getting slower alongside you. The Absolute Score doesn't move unless you do. A 650 at 45 means you are genuinely as fit as a 650 at 25. That's the only benchmark that tells you whether your training is working.
-    </div>
-    <div class="rationale" style="margin-top:8px">
-      <strong>Aging honestly.</strong> Most fitness scoring systems make you look better as you age simply because the comparison group gets older too. The Absolute Score declines as fitness declines — which is uncomfortable but accurate. It gives you real information about what's happening to your body over time, which is the only basis for making real decisions about it.
-    </div>
-    <div class="rationale" style="margin-top:8px">
-      <strong>Cross-context comparison.</strong> A score earned in a high school gym and a score earned at an NFL combine are measured against the same standard. This makes REALFIT Absolute Scores comparable across populations, environments, institutions, and years. Score Sets that want age-normed or population-specific interpretations can layer Reference Bands on top — the underlying score does not change. The score measures what your body can actually do today, against a universal standard that never moves.
+      <strong>Design philosophy — why an absolute standard is a better benchmark.</strong> The score is deliberately population-neutral and age-neutral. A 700 means the same thing regardless of who earned it — there are no age adjustments, no gender adjustments, no occupation adjustments. This is intentional, and it matters for three reasons:
+      <div style="margin-top:14px;display:flex;flex-direction:column;gap:10px">
+        <div style="background:#fff;border:1px solid rgba(5,80,174,.12);border-radius:4px;padding:12px 16px">
+          <strong style="display:block;margin-bottom:4px">1. Progress tracking.</strong> An age-adjusted or population-normed score can make you look like you're improving when you're actually declining — because the reference population is getting slower alongside you. The Absolute Score doesn't move unless you do. A 650 at 45 means you are genuinely as fit as a 650 at 25. That's the only benchmark that tells you whether your training is working.
+        </div>
+        <div style="background:#fff;border:1px solid rgba(5,80,174,.12);border-radius:4px;padding:12px 16px">
+          <strong style="display:block;margin-bottom:4px">2. Aging honestly.</strong> Most fitness scoring systems make you look better as you age simply because the comparison group gets older too. The Absolute Score declines as fitness declines — which is uncomfortable but accurate. It gives you real information about what's happening to your body over time, which is the only basis for making real decisions about it.
+        </div>
+        <div style="background:#fff;border:1px solid rgba(5,80,174,.12);border-radius:4px;padding:12px 16px">
+          <strong style="display:block;margin-bottom:4px">3. Cross-context comparison.</strong> A score earned in a high school gym and a score earned at an NFL combine are measured against the same standard. This makes REALFIT Absolute Scores comparable across populations, environments, institutions, and years. Score Sets that want age-normed or population-specific interpretations can layer Reference Bands on top — the underlying score does not change.
+        </div>
+      </div>
     </div>
 
     <table class="weight-table">
@@ -853,7 +855,7 @@ Back Squat — 1RM:           Muscular Strength 85% · Power 15%</div>
       <div class="test-score-card">
         <div class="test-score-card-header">
           <div class="tsc-name">Medicine Ball Throw</div>
-          <div class="tsc-meta">test_medicine_ball_throw · meters · higher = higher score</div>
+          <div class="tsc-meta">test_medicine_ball_throw · 8 lb ball · meters · higher = higher score</div>
         </div>
         <table class="threshold-table">
           <tr class="avg"><td class="th-band">Average (500)</td><td class="th-val">6.10–6.22m (20')</td><td class="th-score">500</td></tr>
@@ -957,12 +959,12 @@ Back Squat — 1RM:           Muscular Strength 85% · Power 15%</div>
     <div>
       <div style="font-size:16px;font-weight:600;color:var(--ink);margin-bottom:8px">Disagree with something?</div>
       <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:16px">If you think a scoring threshold is wrong, a component weight is unjustified, or an aggregation decision is flawed — tell us. This specification exists to be scrutinized. That's the point. Challenges to the methodology strengthen the standard.</p>
-      <a href="https://realfit.com/standards" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;background:var(--ink);color:#fff;border-radius:6px;font-size:13px;font-weight:500;text-decoration:none">Submit feedback via REALFIT.com →</a>
+      <a href="https://realfit.com/contact" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;background:var(--ink);color:#fff;border-radius:6px;font-size:13px;font-weight:500;text-decoration:none">Submit feedback via REALFIT.com →</a>
     </div>
     <div>
       <div style="font-size:16px;font-weight:600;color:var(--ink);margin-bottom:8px">Build your own Score Set</div>
       <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:16px">This specification is a reference implementation showing how a Score Set should be built on FITDAT. Developers are encouraged to use it as a starting point — use the same tests, different weights, or entirely different scoring logic. The FITDAT library is the foundation either way.</p>
-      <a href="architecture.html" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;background:transparent;color:var(--teal);border:1px solid rgba(10,110,86,.3);border-radius:6px;font-size:13px;font-weight:500;text-decoration:none">Developer documentation →</a>
+      <a href="architecture.html" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;background:transparent;color:var(--teal);border:1px solid rgba(10,110,86,.3);border-radius:6px;font-size:13px;font-weight:500;text-decoration:none">View the architecture →</a>
     </div>
   </div>
 
@@ -983,5 +985,21 @@ Back Squat — 1RM:           Muscular Strength 85% · Power 15%</div>
   </div>
 </footer>
 
+
+<div style="background:#0f0e0c;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+  <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+    <span style="font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.22)">REALFIT&reg; ecosystem</span>
+  </div>
+  <div style="display:flex;gap:18px;flex-wrap:wrap">
+    <a href="https://realfit.com" style="font-size:12px;color:rgba(255,255,255,.38);text-decoration:none">REALFIT.com</a>
+    <a href="https://fitdat.com" style="font-size:12px;color:rgba(255,255,255,.38);text-decoration:none">FITDAT.com</a>
+    <a href="https://realfitscore.com" style="font-size:12px;color:rgba(255,255,255,.38);text-decoration:none">Score estimator</a>
+    <a href="https://scoremyfitness.com" style="font-size:12px;color:rgba(255,255,255,.38);text-decoration:none">ScoreMyFitness</a>
+    <a href="https://scoremy40.com" style="font-size:12px;color:rgba(255,255,255,.38);text-decoration:none">ScoreMy40</a>
+    <a href="https://fitdat.com/scoring-spec.html" style="font-size:12px;color:rgba(255,255,255,.38);text-decoration:none">Scoring spec</a>
+    <a href="mailto:hello@realfit.com" style="font-size:12px;color:rgba(255,255,255,.38);text-decoration:none">Contact</a>
+  </div>
+  <div style="font-size:11px;color:rgba(255,255,255,.18)">&copy; 2026 REALFIT&reg; &middot; FITDAT&reg;</div>
+</div>
 </body>
 </html>
