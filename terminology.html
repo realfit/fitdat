@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>FITDAT® Terminology &amp; Lexicon — Canonical Definitions</title>
+<meta name="description" content="The canonical reference for all FITDAT and REALFIT terminology. Every term used in the ecosystem — Test, Protocol, Metric, Score Set, Reference Band, and more — defined precisely.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#0f0e0c;--muted:#5a5855;--faint:#9a9790;--rule:#dedad4;--bg:#f8f7f4;--surface:#fff;--blue:#185EA5;--teal:#1D9E75;--amber:#b8860b;--purple:#534AB7;}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.75;color:var(--ink);background:var(--bg);width:100%}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* HEADER */
+header{background:var(--surface);border-bottom:1px solid var(--rule);padding:0 48px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;width:100%}
+.logo{display:flex;align-items:baseline;text-decoration:none}
+.logo-fit{font-size:13px;font-weight:300;letter-spacing:.22em;text-transform:uppercase;color:var(--teal)}
+.logo-dat{font-size:13px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--ink)}
+.logo-sup{font-size:8px;color:var(--faint);vertical-align:super;margin-left:1px}
+.logo-tag{font-size:11px;color:var(--faint);margin-left:12px;padding-left:12px;border-left:1px solid var(--rule);letter-spacing:.04em}
+nav{display:flex;align-items:center;gap:24px}
+nav a{font-size:13px;color:var(--muted);text-decoration:none;transition:color .15s}
+nav a:hover{color:var(--ink)}
+.nav-cta{padding:7px 16px;border:1px solid var(--rule);border-radius:2px;font-size:13px;font-weight:500;color:var(--ink)!important;transition:all .15s}
+.nav-cta:hover{border-color:var(--ink);text-decoration:none!important}
+
+/* PAGE HEADER */
+.page-header{background:var(--surface);border-bottom:1px solid var(--rule);padding:52px 48px 44px}
+.page-header-inner{max-width:760px;margin:0 auto}
+.breadcrumb{font-size:12px;color:var(--faint);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.breadcrumb a{color:var(--faint);text-decoration:none;transition:color .15s}
+.breadcrumb a:hover{color:var(--ink)}
+.breadcrumb span{color:var(--rule)}
+h1{font-size:clamp(28px,3.5vw,42px);font-weight:400;line-height:1.1;color:var(--ink);margin-bottom:16px;letter-spacing:-.01em}
+.page-intro{font-size:16px;color:var(--muted);line-height:1.8;max-width:640px;margin-bottom:20px}
+.arch-note{font-size:14px;font-weight:500;color:var(--ink);padding:14px 18px;border-left:3px solid var(--teal);background:#f0faf6;line-height:1.7}
+
+/* SECTION NAV */
+.section-nav{background:var(--bg);border-bottom:1px solid var(--rule);padding:14px 48px;position:sticky;top:56px;z-index:90}
+.section-nav-inner{max-width:760px;margin:0 auto;display:flex;gap:6px;flex-wrap:wrap}
+.snav-btn{padding:5px 14px;border:1px solid var(--rule);border-radius:2px;font-size:12px;color:var(--muted);text-decoration:none;transition:all .15s;background:var(--surface)}
+.snav-btn:hover{border-color:var(--ink);color:var(--ink);text-decoration:none}
+
+/* CONTENT */
+.content{max-width:760px;margin:0 auto;padding:0 48px 80px}
+
+/* TERM SECTIONS */
+.term-section{padding-top:56px}
+.term-section-header{margin-bottom:8px}
+.term-section-kicker{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px}
+.sk-teal{color:var(--teal)}.sk-blue{color:var(--blue)}.sk-amber{color:var(--amber)}.sk-purple{color:var(--purple)}.sk-faint{color:var(--faint)}
+.term-section h2{font-size:clamp(20px,2.5vw,28px);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:6px}
+.term-section-desc{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:24px;font-style:italic;border-bottom:1px solid var(--rule);padding-bottom:16px}
+
+/* TERM ROWS */
+.term-list{display:flex;flex-direction:column;gap:0}
+.term-row{display:grid;grid-template-columns:220px 1fr;gap:0;border-top:1px solid var(--rule);padding:20px 0}
+.term-row:last-child{border-bottom:1px solid var(--rule)}
+.term-left{padding-right:24px}
+.term-name{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.term-type{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.term-body{font-size:15px;color:var(--muted);line-height:1.75}
+.term-body strong{color:var(--ink);font-weight:500}
+.term-body em{color:var(--muted);font-style:italic}
+.term-example{font-size:13px;color:var(--faint);line-height:1.65;margin-top:10px;padding:10px 14px;background:var(--bg);border-left:2px solid var(--rule)}
+
+/* GROUP HEADER */
+.group-header{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);padding:20px 0 10px;border-bottom:2px solid var(--rule);margin-bottom:0}
+
+/* FOOTER */
+footer{background:var(--surface);border-top:1px solid var(--rule);padding:28px 48px;width:100%}
+.ft-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+.ft-brand{font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--ink)}
+.ft-links{display:flex;gap:20px;flex-wrap:wrap}
+.ft-links a{font-size:12px;color:var(--faint);text-decoration:none;transition:color .15s}
+.ft-links a:hover{color:var(--ink)}
+.ft-copy{font-size:11px;color:var(--faint)}
+.eco-footer{background:#0a0908;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;width:100%}
+.ef-label{font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.18)}
+.ef-links{display:flex;gap:16px;flex-wrap:wrap}
+.ef-links a{font-size:12px;color:rgba(255,255,255,.32);text-decoration:none;transition:color .15s}
+.ef-links a:hover{color:rgba(255,255,255,.7)}
+.ef-copy{font-size:11px;color:rgba(255,255,255,.14)}
+
+@media(max-width:768px){
+  header,.page-header,.section-nav{padding-left:20px;padding-right:20px}
+  .content{padding-left:20px;padding-right:20px}
+  .term-row{grid-template-columns:1fr;gap:6px}
+  .term-left{padding-right:0}
+  footer{padding:24px 20px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo" style="text-decoration:none">
+    <span class="logo-fit">FIT</span><span class="logo-dat">DAT</span><span class="logo-sup">&#174;</span>
+    <span class="logo-tag">The open language of fitness</span>
+  </a>
+  <nav>
+    <a href="library.html">Test library</a>
+    <a href="scoresets.html">Score sets</a>
+    <a href="scoring-spec.html">Scoring spec</a>
+    <a href="architecture.html">Architecture</a>
+    <a href="https://realfit.com" class="nav-cta">REALFIT.com</a>
+  </nav>
+</header>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb"><a href="index.html">FITDAT&#174;</a><span>/</span>Terminology</div>
+    <h1>Terminology &amp; Lexicon</h1>
+    <p class="page-intro">The canonical reference for all FITDAT&#174; and REALFIT&#174; terminology. Every term used across the ecosystem — in the library, scoring specifications, developer guides, and platform documentation — is defined here. All other documents derive their definitions from this source.</p>
+    <div class="arch-note"><strong>Critical architectural distinction.</strong> FITDAT is neutral infrastructure — it defines what tests are and how measurements are recorded. It has no opinions about scoring, weights, or what constitutes a good result. Score Sets are built by selecting Tests from the FITDAT library, and contain all the opinions. The REALFIT Absolute Score is one Score Set. Any organization can build a different Score Set on the same FITDAT tests with completely different parameters.</div>
+  </div>
+</div>
+
+<div class="section-nav">
+  <div class="section-nav-inner">
+    <a href="#section1" class="snav-btn">1 — FITDAT data model</a>
+    <a href="#section2" class="snav-btn">2 — Score Set layer</a>
+    <a href="#section3" class="snav-btn">3 — Platform &amp; ecosystem</a>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- SECTION 1 -->
+  <div class="term-section" id="section1">
+    <div class="term-section-header">
+      <div class="term-section-kicker sk-teal">Section 1</div>
+      <h2>FITDAT data model</h2>
+    </div>
+    <p class="term-section-desc">The neutral infrastructure layer. These objects exist independently of any Score Set. FITDAT defines what tests are and how measurements are recorded — it has no opinions about scoring, weights, or interpretation.</p>
+
+    <div class="group-header">Core object types</div>
+    <div class="term-list">
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Test</div>
+          <div class="term-type">Object type</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">A standardized assessment that defines and measures a specific physical capability construct. A Test is stable as long as the underlying construct remains unchanged. Tests are the atomic unit of FITDAT — every other object ultimately references a Test.</div>
+          <div class="term-example">The 40 Yard Dash measures explosive linear speed. The Test definition is stable regardless of how or where it is administered.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Protocol</div>
+          <div class="term-type">Object type</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">Defines the execution rules, equipment, conditions, and versioning for a Test. Multiple Protocols may exist per Test provided the underlying capability construct is preserved. Protocols are versioned — a change creates a new Protocol version, not a new Test. Measurements from different Protocols cannot share StandardSets unless explicitly defined.</div>
+          <div class="term-example">A Bench Press Test may have protocols for free barbell and Smith machine. Both measure upper body pushing strength — different execution, same construct.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Metric</div>
+          <div class="term-type">Object type</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">Defines the unit of measurement, precision, and directionality for a Test result. Directionality specifies whether higher or lower values represent better performance.</div>
+          <div class="term-example">40 Yard Dash → seconds, hundredths precision, lower = better. Pull-Ups → repetitions, whole number, higher = better.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Measurement</div>
+          <div class="term-type">Object type</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">An immutable recorded fact: a single result produced by administering a Test under a specific Protocol. Once recorded, a Measurement cannot be altered. It carries a Tier designation (Tier 1 or Tier 2) indicating how it was recorded. <strong>Measurements are facts — they have no inherent scoring or interpretation.</strong> Standards, scores, and interpretations sit above them and may change over time. The Measurement never changes.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Component</div>
+          <div class="term-type">Object type</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">A descriptive physical quality expressed by a Test — for example Speed, Strength, Power, Endurance, or Agility. Tests may express multiple Components. Component mappings are descriptive metadata only — they do not encode scoring weight and carry no calculation significance.</div>
+          <div class="term-example">The Standing Long Jump expresses both Power and Agility. These labels describe what the test reflects. How much those Components contribute to a score is defined by the Score Set, not by the test definition.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Population</div>
+          <div class="term-type">Object type</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">A defined reference cohort used as the basis for a StandardSet. Populations may be defined by age group, sex, sport, occupation, or other criteria. FITDAT does not prescribe which Populations must exist — it provides the framework for defining them.</div>
+          <div class="term-example">General Adult, High School Athlete, Military Recruit, Fire Service Candidate.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">StandardSet</div>
+          <div class="term-type">Object type</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">A versioned performance reference distribution tied to a specific combination of Test + Protocol + Metric + Population. StandardSets define what performance levels mean for a specific cohort. They are curated reference distributions — not crowd-sourced — and are versioned independently from Tests and Protocols. StandardSets provide the interpretive reference for scoring tables — but the scoring tables themselves are defined by the Score Set, not by FITDAT.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group-header" style="margin-top:16px">Measurement trust tiers</div>
+    <div class="term-list">
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Tier 1 Measurement</div>
+          <div class="term-type">Trust designation</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">A self-recorded Measurement. The athlete enters their own result via a REALFIT-compliant application. Tier 1 is broadly accessible, high-volume, and self-attested. Valid for personal tracking, trend analysis, and consumer-facing applications. Tier 1 is a property of the Measurement itself — what Tier 1 results are eligible for is determined by the Score Set or institution, not by FITDAT.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Tier 2 Measurement</div>
+          <div class="term-type">Trust designation</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">An Official-certified Measurement. A credentialed REALFIT Official administers and validates the test under defined Protocol conditions. Tier 2 carries an auditable chain of custody and is suitable for institutional use. Whether a Score Set requires Tier 2 is the Score Set's decision, not FITDAT's.</div>
+          <div class="term-example">Analogous to the difference between self-reported income and verified income on a loan application — the same data type, fundamentally different institutional trust.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group-header" style="margin-top:16px">Governance principles</div>
+    <div class="term-list">
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Version</div>
+          <div class="term-type">Governance principle</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">An immutable, timestamped snapshot of any governed FITDAT object — Test, Protocol, StandardSet, or Score Set. Prior versions are never deleted. Any Measurement recorded against a specific version can be correctly interpreted indefinitely.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Attribution</div>
+          <div class="term-type">Governance principle</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">When FITDAT documents a protocol originating from an external organization — a military branch, law enforcement agency, or sports governing body — full credit is given to the originating organization. FITDAT does not claim authorship of third-party protocols. It adds versioning, discoverability, and standardized metadata without modifying protocol content. FITDAT becomes the version-of-record for protocols that originating organizations may not formally version themselves.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Data Dictionary</div>
+          <div class="term-type">Infrastructure</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">The canonical reference for all FITDAT object types, field definitions, units, and measurement type specifications. The authoritative reference for any implementer building on FITDAT.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="term-section" id="section2">
+    <div class="term-section-header">
+      <div class="term-section-kicker sk-blue">Section 2</div>
+      <h2>Score Set layer</h2>
+    </div>
+    <p class="term-section-desc">Score Sets are built by selecting and weighting Tests from the FITDAT library. This is where decisions live: which tests, which weights, how long certifications last, how scores are interpreted. Every Score Set makes its own choices using this vocabulary.</p>
+
+    <div class="term-list">
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Score Set</div>
+          <div class="term-type">Definition object</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">A versioned, named definition that specifies how to transform Measurements from selected Tests into a composite score for a particular purpose and population. A Score Set selects Tests from the FITDAT library, references specific Protocols, declares a calculation model, defines component weights, specifies certification rules, sets a Reference Band, and maintains version history. Also referred to as an Index. <strong>Score Sets are where decisions live.</strong> The FITDAT library provides the Tests — the Score Set decides how to use them.</div>
+          <div class="term-example">A fire department fitness standard, a gym assessment program, and the REALFIT Absolute Score are all Score Sets that select from the same FITDAT test library.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Index</div>
+          <div class="term-type">Synonym</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">Synonym for Score Set. The terms are interchangeable. Index is commonly used in investor and institutional contexts; Score Set is the preferred technical term within FITDAT documentation.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Score Set Archetype</div>
+          <div class="term-type">Calculation model</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">The calculation model type used by a Score Set. Supported archetypes: <strong>Weighted Composite</strong> (component weights sum to 100%), <strong>Simple Aggregate</strong> (sum or average of test scores), <strong>Pass/Fail Threshold</strong> (binary result per test), <strong>Minimum Per Test</strong> (floor score required on each test), <strong>Feedback Only</strong> (no composite score, results and bands only), and Hybrid combinations.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Component Weight</div>
+          <div class="term-type">Score Set parameter</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">Defined within a Score Set: the percentage contribution of a fitness component to the overall score in a Weighted Composite archetype. Component Weights are a Score Set value — they do not exist in the test definition itself. The same Tests can carry different weights in different Score Sets.</div>
+          <div class="term-example">A soccer Score Set might weight Speed at 30% and Strength at 10%. The REALFIT Absolute Score weights all six components differently. FITDAT tests do not have inherent weights — only Score Sets do.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Reference Band</div>
+          <div class="term-type">Score Set parameter</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">Defined within a Score Set: a non-scoring, human-interpretive layer that maps score ranges to descriptive labels. Every Score Set must define at least one Reference Band. Reference Bands provide contextual meaning — they describe, they do not score.</div>
+          <div class="term-example">REALFIT Absolute Score bands: 0–99 Not Yet Fit · 100–299 Minimally Fit · 300–499 Moderately Fit · 500–699 Well Fit · 700–849 Exceptionally Fit · 850–1,000 Maximally Fit. A different Score Set defines its own bands.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Certification Window</div>
+          <div class="term-type">Score Set parameter</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">Defined within a Score Set: the period for which a certified Measurement is considered current and valid for that Score Set's purposes. Set by the Score Set author — not a FITDAT rule. Different Score Sets may define different windows based on their intended use.</div>
+          <div class="term-example">The REALFIT Absolute Score sets 90 days. A corporate annual wellness program might set 365 days. A military pre-deployment screen might set 30 days. FITDAT provides the Measurement — the Score Set decides how long it stays valid.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Aggregation Method</div>
+          <div class="term-type">Score Set parameter</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">Defined within a Score Set: the rule specifying how component scores combine into an overall score. May be weighted average, simple average, minimum threshold, or custom formula depending on the Score Set archetype.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Score Set Version</div>
+          <div class="term-type">Versioning</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">An immutable snapshot of a Score Set's complete definition at a point in time — including all referenced FITDAT tests and protocol versions, component weights, Reference Bands, Certification Window, and calculation model. Version history is mandatory. Changing any parameter creates a new version. <strong>Score Set versioning ensures that any result ever produced by a Score Set can be reproduced and correctly interpreted — even if the Score Set is later updated.</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="term-section" id="section3">
+    <div class="term-section-header">
+      <div class="term-section-kicker sk-purple">Section 3</div>
+      <h2>REALFIT platform &amp; ecosystem</h2>
+    </div>
+    <p class="term-section-desc">Platform infrastructure, ecosystem participants, certification and governance. These terms belong to the REALFIT platform layer — above both FITDAT and the Score Set layer.</p>
+
+    <div class="group-header">Platform infrastructure</div>
+    <div class="term-list">
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">FITDAT API</div>
+          <div class="term-type">Infrastructure</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">Programmatic access to FITDAT definitions, Score Set submissions, measurement data, and Standards references. The developer track for technical builders creating certified applications on FITDAT.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">REALFIT Studio</div>
+          <div class="term-type">Infrastructure</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">The no-code Score Set builder within the REALFIT Platform. Enables organizations, affiliates, teams, and community members to build, configure, and publish Score Sets without programmatic development. Supports all Score Set archetypes, Official management, and results reporting.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Benchmark Library</div>
+          <div class="term-type">Data asset</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">A crowd-sourced, anonymized population dataset built from opt-in member-contributed Measurements. Dynamic and continuously growing — distinct from curated StandardSets. No personally identifiable information is stored. Surfaces percentile rankings, score distribution curves, and peer group comparisons. <strong>One of REALFIT's most defensible long-term data assets</strong> — a proprietary, continuously compounding dataset that cannot be replicated without REALFIT's scale of standardized measurement.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group-header" style="margin-top:16px">Ecosystem participants</div>
+    <div class="term-list">
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Member</div>
+          <div class="term-type">Participant</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">A consumer end-user of the REALFIT platform. Records Tier 1 Measurements, accesses the REALFIT Absolute Score, builds personal Score Sets, and may submit results for Official certification to earn Tier 2 status. Represents all fitness levels.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Official</div>
+          <div class="term-type">Participant</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">A REALFIT-credentialed individual or organization authorized to administer tests and certify results as Tier 2 Measurements. Officials are the sole gatekeepers of certified data. Credentials are auditable and revocable. Officials may be individuals (trainers, coaches) or organizations (gyms, institutions).</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Organization</div>
+          <div class="term-type">Participant</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">A gym, employer, healthcare institution, or other entity that builds branded fitness programs using REALFIT Studio. May credential their own Officials to run certified assessments at scale.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Affiliate</div>
+          <div class="term-type">Participant</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">A military branch, law enforcement agency, fire department, or government organization building operational fitness standards on FITDAT. Affiliates maintain independent governance of their Score Sets while referencing FITDAT definitions.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Developer</div>
+          <div class="term-type">Participant</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">A third-party builder implementing FITDAT to create certified applications or proprietary Score Sets. Access via REALFIT Studio (no-code) or FITDAT API (programmatic). Must declare all FITDAT references and Score Set versions to achieve certification.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group-header" style="margin-top:16px">Certification &amp; governance</div>
+    <div class="term-list">
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">REALFIT Certification</div>
+          <div class="term-type">Governance</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">Formal compliance status awarded to applications, Score Sets, Organizations, and Officials that meet REALFIT's structural and operational requirements. Auditable, versioned, and revocable. <strong>Does not imply endorsement of scoring philosophy</strong> — only structural compliance.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Credentialing</div>
+          <div class="term-type">Governance</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">The process by which an individual or organization becomes a REALFIT Certified Official. Involves completing a training program covering Protocol administration, measurement standards, and certification integrity.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group-header" style="margin-top:16px">Events</div>
+    <div class="term-list">
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Event</div>
+          <div class="term-type">Platform feature</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">A time-bounded, Official-certified testing session created by an Organization or Affiliate. Structured with a participant list, live scoring, a leaderboard, and configurable post-event result handling. All results must be Tier 2 — no self-recorded results accepted. May be in-person or virtual.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Live Scoring</div>
+          <div class="term-type">Platform feature</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">Real-time publication of certified results to the Event Leaderboard as Officials certify them during the active Event window.</div>
+        </div>
+      </div>
+      <div class="term-row">
+        <div class="term-left">
+          <div class="term-name">Leaderboard</div>
+          <div class="term-type">Platform feature</div>
+        </div>
+        <div class="term-right">
+          <div class="term-body">The ranked display of certified results within an Event. Visibility is configurable: restricted to registered participants or publicly visible.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end content -->
+
+<footer>
+  <div class="ft-inner">
+    <div class="ft-brand">FITDAT&#174; &mdash; Governed by REALFIT&#174;</div>
+    <div class="ft-links">
+      <a href="index.html">Home</a>
+      <a href="library.html">Test library</a>
+      <a href="scoresets.html">Score sets</a>
+      <a href="scoring-spec.html">Scoring spec</a>
+      <a href="https://realfit.com">REALFIT.com</a>
+      <a href="mailto:hello@realfit.com">Contact</a>
+    </div>
+    <div class="ft-copy">&copy; 2026 REALFIT&#174; &middot; FITDAT&#174;</div>
+  </div>
+</footer>
+
+<div class="eco-footer">
+  <span class="ef-label">REALFIT&#174; ecosystem</span>
+  <div class="ef-links">
+    <a href="https://realfit.com">REALFIT.com</a>
+    <a href="https://fitdat.com">FITDAT.com</a>
+    <a href="https://realfitscore.com">Absolute Score</a>
+    <a href="https://scoremyfitness.com">ScoreMyFitness</a>
+    <a href="https://scoremy40.com">ScoreMy40</a>
+    <a href="mailto:hello@realfit.com">Contact</a>
+  </div>
+  <span class="ef-copy">&copy; 2026 REALFIT&#174;</span>
+</div>
+
+</body>
+</html>
